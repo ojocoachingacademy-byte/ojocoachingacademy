@@ -997,6 +997,135 @@ section h2 {
     font-size: 0.85rem;
 }
 
+/* Review Page */
+.review-section {
+    padding: 5rem 0;
+    background: var(--bg-light);
+    min-height: calc(100vh - 200px);
+}
+
+.review-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow-lg);
+}
+
+.review-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+    text-align: center;
+}
+
+.review-subtitle {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+}
+
+.review-form {
+    margin-top: 2rem;
+}
+
+.rating-input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.rating-input input[type="radio"] {
+    display: none;
+}
+
+.rating-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.rating-label:hover {
+    border-color: var(--primary-color);
+    background: rgba(0, 168, 89, 0.05);
+}
+
+.rating-input input[type="radio"]:checked + .rating-label {
+    border-color: var(--primary-color);
+    background: rgba(0, 168, 89, 0.1);
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.form-group small {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin-top: 0.25rem;
+    width: auto;
+    cursor: pointer;
+}
+
+.checkbox-label span {
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+.review-success-message {
+    text-align: center;
+    padding: 2rem;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 2rem;
+    background: var(--primary-color);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.review-success-message h2 {
+    font-size: 2rem;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.review-success-message p {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+}
+
+.hidden {
+    display: none !important;
+}
+
 /* Booking Page */
 .booking-section {
     padding: 3rem 0;
