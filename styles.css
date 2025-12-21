@@ -650,6 +650,61 @@ section h2 {
     margin-bottom: 0;
 }
 
+/* Blog Preview Section */
+.blog-preview {
+    background: var(--white);
+    padding: 5rem 0;
+}
+
+.blog-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.blog-preview-card {
+    background: var(--bg-light);
+    border-radius: 15px;
+    padding: 2.5rem;
+    text-align: center;
+    border: 2px solid transparent;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.blog-preview-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.blog-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.blog-preview-card h3 {
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.blog-preview-card p {
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+.coming-soon {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
 /* Photo Gallery Section */
 .gallery {
     background: var(--bg-light);
@@ -878,8 +933,35 @@ section h2 {
     box-shadow: var(--shadow-lg);
     z-index: 999;
     opacity: 0.95;
-    transition: opacity 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
     display: block;
+    animation: floatIn 0.5s ease-out;
+}
+
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(-20px);
+    }
+    to {
+        opacity: 0.95;
+        transform: translateY(-50%) translateX(0);
+    }
+}
+
+.floating-side-review.right {
+    animation-name: floatInRight;
+}
+
+@keyframes floatInRight {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(20px);
+    }
+    to {
+        opacity: 0.95;
+        transform: translateY(-50%) translateX(0);
+    }
 }
 
 .floating-side-review:hover {
