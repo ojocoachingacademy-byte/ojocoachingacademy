@@ -184,3 +184,55 @@ window.addEventListener('scroll', function() {
     }, false);
 })();
 
+// FAQ Accordion Functionality
+(function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        if (question) {
+            question.addEventListener('click', function() {
+                // Close other items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        }
+    });
+})();
+
+// Floating Side Reviews
+(function() {
+    const testimonials = [
+        { text: '"Tobi is very insightful and provides helpful cues to improve. He\'s a wonderful coach!"', author: 'Daniela S.' },
+        { text: '"Tobi has helped my swing so much in just two lessons!"', author: 'Luke B.' },
+        { text: '"If you want to improve your game, Tobi is your guy. He is kind, patient and prompt."', author: 'Toni G.' },
+        { text: '"Tobi is a great tennis instructor. He quickly identified problems and customized drills to fix them."', author: 'Willie' },
+        { text: '"Tobi has a really deep understanding of the game and knows how to communicate that to students."', author: 'Rockwell' }
+    ];
+    
+    let currentReview = 0;
+    const leftFloatingReview = document.getElementById('left-floating-review');
+    const rightFloatingReview = document.getElementById('right-floating-review');
+    
+    function updateFloatingReviews() {
+        if (leftFloatingReview) {
+            const review = testimonials[currentReview % testimonials.length];
+            leftFloatingReview.innerHTML = `<div class="floating-review-content">"${review.text}"<br><strong>- ${review.author}</strong></div>`;
+        }
+        if (rightFloatingReview) {
+            const review = testimonials[(currentReview + 1) % testimonials.length];
+            rightFloatingReview.innerHTML = `<div class="floating-review-content">"${review.text}"<br><strong>- ${review.author}</strong></div>`;
+        }
+        currentReview++;
+    }
+    
+    // Update reviews every 8 seconds
+    setInterval(updateFloatingReviews, 8000);
+    updateFloatingReviews(); // Initial load
+})();
+
