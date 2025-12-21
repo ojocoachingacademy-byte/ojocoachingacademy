@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed - Ojo Coaching Academy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-brand">
+                <img src="IMG_2507.PNG" alt="Ojo Coaching Academy Logo">
+                <span>Ojo Coaching Academy</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="confirmation-section">
+        <div class="container">
+            <div class="confirmation-container">
+                <div class="confirmation-icon">✓</div>
+                <h1>Booking Confirmed!</h1>
+                <p class="confirmation-message">Thank you for your booking. Your payment has been processed successfully.</p>
+                
+                <div class="confirmation-details">
+                    <h2>Next Steps</h2>
+                    <div class="next-steps">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Contact Us to Schedule</h3>
+                                <p>Please call or email us to schedule the specific date and time for your first lesson.</p>
+                            </div>
+                        </div>
+                        <div class="contact-methods">
+                            <a href="tel:16199815772" class="contact-button phone">
+                                <span class="contact-icon">📞</span>
+                                <div>
+                                    <strong>Call Us</strong>
+                                    <p>(619) 981-5772</p>
+                                </div>
+                            </a>
+                            <a href="mailto:tobi@ojocoachingacademy.com" class="contact-button email">
+                                <span class="contact-icon">✉️</span>
+                                <div>
+                                    <strong>Email Us</strong>
+                                    <p>tobi@ojocoachingacademy.com</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="booking-info">
+                        <h3>Booking Reference</h3>
+                        <p class="booking-ref" id="booking-reference">Loading...</p>
+                        <p class="booking-note">Please keep this reference number for your records.</p>
+                    </div>
+                </div>
+
+                <div class="confirmation-actions">
+                    <a href="index.html" class="btn-primary">Return to Home</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Ojo Coaching Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Get booking reference from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookingRef = urlParams.get('ref') || 'TEN-' + Date.now().toString().slice(-6);
+        document.getElementById('booking-reference').textContent = bookingRef;
+    </script>
+</body>
+</html>
+

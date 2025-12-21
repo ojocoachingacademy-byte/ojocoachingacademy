@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Lesson - Ojo Coaching Academy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-brand">
+                <img src="IMG_2507.PNG" alt="Ojo Coaching Academy Logo">
+                <span>Ojo Coaching Academy</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="booking-section">
+        <div class="container">
+            <div class="booking-container">
+                <div class="booking-header">
+                    <h1>Book Your Tennis Lesson</h1>
+                    <p>Fill out the form below to reserve your lesson package</p>
+                </div>
+
+                <form id="booking-form" class="booking-form">
+                    <div class="form-section">
+                        <h2>Select Package Type</h2>
+                        <div class="package-type-selection" style="margin-bottom: 2rem;">
+                            <label class="package-type-option">
+                                <input type="radio" name="packageType" value="private" checked>
+                                <span>Private Lessons</span>
+                            </label>
+                            <label class="package-type-option">
+                                <input type="radio" name="packageType" value="semiprivate">
+                                <span>Semi-Private (2 people)</span>
+                            </label>
+                            <label class="package-type-option">
+                                <input type="radio" name="packageType" value="gift">
+                                <span>Gift Package</span>
+                            </label>
+                        </div>
+                        
+                        <h3 id="package-type-title" style="margin-bottom: 1.5rem;">Private Lesson Packages</h3>
+                        <div class="package-selection" id="private-packages">
+                            <label class="package-option">
+                                <input type="radio" name="package" value="single" data-price="100" data-name="Single Lesson">
+                                <div class="package-card">
+                                    <h3>Single Lesson</h3>
+                                    <div class="package-price">$100</div>
+                                    <p>1-hour private lesson</p>
+                                </div>
+                            </label>
+                            <label class="package-option">
+                                <input type="radio" name="package" value="5pack" data-price="450" data-name="5-Hour Package" checked>
+                                <div class="package-card featured">
+                                    <div class="popular-badge-small">Popular</div>
+                                    <h3>5-Hour Package</h3>
+                                    <div class="package-price">$450</div>
+                                    <p>Save $50 - 5 one-hour lessons</p>
+                                </div>
+                            </label>
+                            <label class="package-option">
+                                <input type="radio" name="package" value="20pack" data-price="1400" data-name="20-Hour Package">
+                                <div class="package-card">
+                                    <h3>20-Hour Package</h3>
+                                    <div class="package-price">$1400</div>
+                                    <p>Save $600 - 20 one-hour lessons</p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="package-selection" id="semiprivate-packages" style="display: none;">
+                            <label class="package-option">
+                                <input type="radio" name="package" value="semi-single" data-price="120" data-name="Semi-Private Single Session">
+                                <div class="package-card">
+                                    <h3>Single Session</h3>
+                                    <div class="package-price">$120</div>
+                                    <p>1-hour for 2 people</p>
+                                </div>
+                            </label>
+                            <label class="package-option">
+                                <input type="radio" name="package" value="semi-5pack" data-price="500" data-name="Semi-Private 5-Hour Package" checked>
+                                <div class="package-card featured">
+                                    <div class="popular-badge-small">Popular</div>
+                                    <h3>5-Hour Package</h3>
+                                    <div class="package-price">$500</div>
+                                    <p>Save $100 - 5 hours for 2</p>
+                                </div>
+                            </label>
+                            <label class="package-option">
+                                <input type="radio" name="package" value="semi-20pack" data-price="1600" data-name="Semi-Private 20-Hour Package">
+                                <div class="package-card">
+                                    <h3>20-Hour Package</h3>
+                                    <div class="package-price">$1600</div>
+                                    <p>Save $800 - 20 hours for 2</p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="package-selection" id="gift-packages" style="display: none; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                            <label class="package-option">
+                                <input type="radio" name="package" value="gift-1" data-price="100" data-name="1-Hour Gift Lesson" checked>
+                                <div class="package-card">
+                                    <h3>1-Hour Gift</h3>
+                                    <div class="package-price">$100</div>
+                                    <p>Perfect gift</p>
+                                </div>
+                            </label>
+                            <label class="package-option">
+                                <input type="radio" name="package" value="gift-3" data-price="250" data-name="3-Hour Gift Package">
+                                <div class="package-card featured">
+                                    <div class="popular-badge-small">Best Value</div>
+                                    <h3>3-Hour Gift</h3>
+                                    <div class="package-price">$250</div>
+                                    <p>Save $50</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2>Your Information</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="experience">Tennis Experience Level *</label>
+                            <select id="experience" name="experience" required>
+                                <option value="">Select your level</option>
+                                <option value="beginner">Beginner - Just starting out</option>
+                                <option value="intermediate">Intermediate - Play regularly</option>
+                                <option value="advanced">Advanced - Competitive player</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="goals">What are your goals? (Optional)</label>
+                            <textarea id="goals" name="goals" rows="3" placeholder="Tell us what you'd like to improve or work on..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2>Payment</h2>
+                        <div class="payment-summary">
+                            <div class="summary-row">
+                                <span>Selected Package:</span>
+                                <span id="summary-package">5-Hour Package</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total:</span>
+                                <span id="summary-total">$450.00</span>
+                            </div>
+                        </div>
+
+                        <div id="card-element" class="stripe-element">
+                            <!-- Stripe Elements will create form elements here -->
+                        </div>
+                        <div id="card-errors" role="alert" class="error-message"></div>
+
+                        <div class="payment-info">
+                            <p>🔒 Secure payment powered by Stripe</p>
+                            <p class="small-text">After payment, we'll contact you to schedule your first lesson time.</p>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-large btn-submit" id="submit-button">
+                        Complete Booking & Pay
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Ojo Coaching Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="booking.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
