@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /confirmation.html
+
+Sitemap: https://ojocoachingacademy.com/sitemap.xml
+
