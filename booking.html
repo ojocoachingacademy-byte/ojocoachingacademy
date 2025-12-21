@@ -207,6 +207,22 @@
                         Complete Booking & Pay
                     </button>
                 </form>
+                
+                <!-- Hidden static form for Netlify to parse -->
+                <form name="booking" netlify netlify-honeypot="bot-field" hidden>
+                    <input type="hidden" name="form-name" value="booking">
+                    <input type="text" name="firstName">
+                    <input type="text" name="lastName">
+                    <input type="email" name="email">
+                    <input type="tel" name="phone">
+                    <input type="text" name="package">
+                    <input type="text" name="packageType">
+                    <input type="text" name="experience">
+                    <textarea name="goals"></textarea>
+                    <input type="text" name="bookingReference">
+                    <input type="text" name="price">
+                    <input type="text" name="timestamp">
+                </form>
             </div>
         </div>
     </section>

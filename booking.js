@@ -187,6 +187,7 @@ form.addEventListener('submit', async function(event) {
         netlifyFormData.append('email', bookingInfo.email);
         netlifyFormData.append('phone', bookingInfo.phone);
         netlifyFormData.append('package', bookingInfo.package);
+        netlifyFormData.append('packageType', document.querySelector('input[name="packageType"]:checked')?.value || '');
         netlifyFormData.append('price', bookingInfo.price);
         netlifyFormData.append('experience', bookingInfo.experience);
         netlifyFormData.append('goals', bookingInfo.goals || '');
