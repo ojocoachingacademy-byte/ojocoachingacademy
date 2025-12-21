@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Book your tennis lesson with Ojo Coaching Academy. Choose from private lessons, semi-private lessons, or gift packages. PTR certified coach in San Diego.">
+    <link rel="icon" type="image/png" href="IMG_2507.PNG">
     <title>Book Your Lesson - Ojo Coaching Academy</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,7 +42,11 @@
                     <p>Fill out the form below to reserve your lesson package</p>
                 </div>
 
-                <form id="booking-form" class="booking-form">
+                <form id="booking-form" class="booking-form" name="booking" netlify netlify-honeypot="bot-field" data-netlify="true">
+                    <input type="hidden" name="form-name" value="booking">
+                    <p style="display: none;">
+                        <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                    </p>
                     <div class="form-section">
                         <h2>Select Package Type</h2>
                         <div class="package-type-selection" style="margin-bottom: 2rem;">

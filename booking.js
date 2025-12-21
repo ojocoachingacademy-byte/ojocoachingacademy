@@ -1,6 +1,5 @@
 // Initialize Stripe
-// IMPORTANT: Replace 'pk_test_your_publishable_key' with your actual Stripe publishable key
-const stripe = Stripe('pk_test_your_publishable_key');
+const stripe = Stripe('pk_live_51SgcB8QjxWCW85VVPpXWHwiObtV0uCADnDPfEGP6hK6brSwXDDb37cAlTmKP0B4tqkJDW84mjgMv8eMFszIbnHF300zd6T7NCK');
 const elements = stripe.elements();
 
 // Create card element
@@ -166,7 +165,7 @@ form.addEventListener('submit', async function(event) {
         // Generate booking reference
         const bookingRef = 'TEN-' + Date.now().toString().slice(-6);
         
-        // Store booking info in sessionStorage (or send to server)
+        // Prepare booking info
         const bookingInfo = {
             reference: bookingRef,
             firstName: formData.get('firstName'),
@@ -180,6 +179,27 @@ form.addEventListener('submit', async function(event) {
             timestamp: new Date().toISOString(),
         };
         
+        // Submit to Netlify Forms
+        const netlifyFormData = new FormData();
+        netlifyFormData.append('form-name', 'booking');
+        netlifyFormData.append('firstName', bookingInfo.firstName);
+        netlifyFormData.append('lastName', bookingInfo.lastName);
+        netlifyFormData.append('email', bookingInfo.email);
+        netlifyFormData.append('phone', bookingInfo.phone);
+        netlifyFormData.append('package', bookingInfo.package);
+        netlifyFormData.append('price', bookingInfo.price);
+        netlifyFormData.append('experience', bookingInfo.experience);
+        netlifyFormData.append('goals', bookingInfo.goals || '');
+        netlifyFormData.append('bookingReference', bookingRef);
+        netlifyFormData.append('timestamp', bookingInfo.timestamp);
+        
+        // Submit to Netlify (non-blocking - don't wait for response)
+        fetch('/', {
+            method: 'POST',
+            body: netlifyFormData
+        }).catch(err => console.log('Form submission error:', err));
+        
+        // Store booking info in sessionStorage
         sessionStorage.setItem('bookingInfo', JSON.stringify(bookingInfo));
         
         // Redirect to confirmation page
