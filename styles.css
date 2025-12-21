@@ -632,6 +632,53 @@ section h2 {
     padding: 2rem 0;
 }
 
+/* Floating CTA Button */
+.floating-cta {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 1.25rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 20px rgba(0, 168, 89, 0.4);
+    z-index: 1000;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: pulse 2s infinite;
+}
+
+.floating-cta:hover {
+    background: var(--primary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 25px rgba(0, 168, 89, 0.5);
+    color: var(--white);
+    text-decoration: none;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 4px 20px rgba(0, 168, 89, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 30px rgba(0, 168, 89, 0.6);
+    }
+    100% {
+        box-shadow: 0 4px 20px rgba(0, 168, 89, 0.4);
+    }
+}
+
+.floating-cta.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(100px);
+}
+
 /* Booking Page */
 .booking-section {
     padding: 3rem 0;
