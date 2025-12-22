@@ -280,6 +280,14 @@ section h2 {
     background: #000;
 }
 
+/* YouTube iframe embed styling */
+.video-container iframe {
+    width: 100%;
+    height: 450px;
+    border-radius: 15px;
+    border: none;
+}
+
 /* Services Section */
 .services {
     background: var(--bg-light);
