@@ -465,6 +465,30 @@ function openImageModal(imageSrc) {
         {
             author: "Jeff",
             text: "Tobi was able to quickly identify and help correct a couple of fundamentals that have really helped improve my game."
+        },
+        {
+            author: "David M.",
+            text: "As an experienced player, I was looking for a coach who could help me take my game to the next level. Toby's insights and guidance have been invaluable in helping me refine my technique and strategy."
+        },
+        {
+            author: "Julian S.",
+            text: "Toby is an excellent tennis coach who truly cares about his students' progress. He is patient, kind, and always willing to answer any questions. I would highly recommend him to players of all levels."
+        },
+        {
+            author: "Julia S.",
+            text: "Toby is a fantastic tennis instructor! He really knows how to connect with his students and help them improve their game. As a beginner, I felt very comfortable learning from him. Highly recommend!"
+        },
+        {
+            author: "Lisa T.",
+            text: "Toby's passion for tennis is infectious! His enthusiasm for the sport has inspired me to take my game more seriously and has helped me develop a love for the game. Highly recommend him as a coach."
+        },
+        {
+            author: "Marcus H.",
+            text: "I have been playing tennis for years but had never worked with a coach before. Toby's expertise and attention to detail have helped me improve my game in ways I never thought possible."
+        },
+        {
+            author: "Lea G.",
+            text: "I have worked with several tennis coaches over the years, but Toby is by far the best. He takes the time to understand his students' goals and tailor his lessons to their needs."
         }
     ];
     
