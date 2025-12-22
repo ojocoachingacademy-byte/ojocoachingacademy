@@ -1,49 +1,59 @@
-// Initialize Stripe with mobile payment options
-const stripe = Stripe('pk_live_51SgcB8QjxWCW85VVPpXWHwiObtV0uCADnDPfEGP6hK6brSwXDDb37cAlTmKP0B4tqkJDW84mjgMv8eMFszIbnHF300zd6T7NCK', {
-    // Enable Apple Pay and Google Pay
-    betas: ['payment_element_beta_1']
-});
-const elements = stripe.elements({
-    appearance: {
-        theme: 'stripe',
-        variables: {
-            colorPrimary: '#00a859',
-            colorBackground: '#ffffff',
-            colorText: '#1a1a1a',
-            colorDanger: '#df1b41',
-            fontFamily: 'Poppins, system-ui, sans-serif',
-            spacingUnit: '4px',
-            borderRadius: '8px'
-        }
-    }
-});
+// Wait for DOM to be ready before initializing Stripe
+let cardElement; // Make cardElement accessible globally
 
-// Create card element
-const cardElement = elements.create('card', {
-    style: {
-        base: {
-            fontSize: '16px',
-            color: '#2d3748',
-            fontFamily: '"Poppins", sans-serif',
-            '::placeholder': {
-                color: '#a0aec0',
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Stripe
+    const stripe = Stripe('pk_live_51SgcB8QjxWCW85VVPpXWHwiObtV0uCADnDPfEGP6hK6brSwXDDb37cAlTmKP0B4tqkJDW84mjgMv8eMFszIbnHF300zd6T7NCK');
+    const elements = stripe.elements({
+        appearance: {
+            theme: 'stripe',
+            variables: {
+                colorPrimary: '#00a859',
+                colorBackground: '#ffffff',
+                colorText: '#1a1a1a',
+                colorDanger: '#df1b41',
+                fontFamily: 'Poppins, system-ui, sans-serif',
+                spacingUnit: '4px',
+                borderRadius: '8px'
+            }
+        }
+    });
+
+    // Create card element
+    cardElement = elements.create('card', {
+        style: {
+            base: {
+                fontSize: '16px',
+                color: '#2d3748',
+                fontFamily: '"Poppins", sans-serif',
+                '::placeholder': {
+                    color: '#a0aec0',
+                },
+            },
+            invalid: {
+                color: '#dc3545',
             },
         },
-        invalid: {
-            color: '#dc3545',
-        },
-    },
-});
+    });
 
-cardElement.mount('#card-element');
-
-// Handle real-time validation errors from the card Element
-cardElement.on('change', function(event) {
-    const displayError = document.getElementById('card-errors');
-    if (event.error) {
-        displayError.textContent = event.error.message;
+    // Mount the card element to the payment-element container
+    const paymentElementContainer = document.getElementById('payment-element');
+    if (paymentElementContainer) {
+        cardElement.mount('#payment-element');
+        
+        // Handle real-time validation errors from the card Element
+        cardElement.on('change', function(event) {
+            const displayError = document.getElementById('payment-errors');
+            if (displayError) {
+                if (event.error) {
+                    displayError.textContent = event.error.message;
+                } else {
+                    displayError.textContent = '';
+                }
+            }
+        });
     } else {
-        displayError.textContent = '';
+        console.error('Payment element container not found. Make sure the form is loaded.');
     }
 });
 
