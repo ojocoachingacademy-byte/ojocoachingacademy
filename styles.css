@@ -854,16 +854,6 @@ section h2 {
     text-decoration: underline;
 }
 
-.btn-call-now {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--primary-color);
-    text-decoration: none;
-}
-
-.btn-call-now:hover {
-    text-decoration: underline;
-}
 
 /* Footer */
 .footer {
