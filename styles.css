@@ -1512,12 +1512,12 @@ section h2 {
 }
 
 .floating-review-left {
-    left: 20px;
+    left: calc((100% - 1200px) / 2 - 320px);
     display: none; /* Shown only on large screens */
 }
 
 .floating-review-right {
-    right: 20px;
+    right: calc((100% - 1200px) / 2 - 320px);
     display: none; /* Shown only on large screens */
 }
 
@@ -1562,8 +1562,8 @@ section h2 {
     text-align: right;
 }
 
-/* Show floating reviews on large desktop screens only */
-@media (min-width: 1400px) {
+/* Show floating reviews on large desktop screens only - when there's enough space */
+@media (min-width: 1600px) {
     .floating-side-reviews {
         display: block;
     }
@@ -1575,7 +1575,7 @@ section h2 {
 }
 
 /* Hide on smaller screens to avoid obstruction */
-@media (max-width: 1399px) {
+@media (max-width: 1599px) {
     .floating-review {
         display: none !important;
     }

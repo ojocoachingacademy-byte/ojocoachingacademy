@@ -388,16 +388,31 @@ function openBioModal(title, student, bio) {
     const rightReview = document.getElementById('floating-review-right');
     
     function updateFloatingReviews() {
-        // Only show on desktop (screen width > 1400px)
-        if (window.innerWidth < 1400) {
+        // Only show on desktop when there's enough space (screen width >= 1600px)
+        // This ensures reviews don't overlap with the 1200px container
+        if (window.innerWidth < 1600) {
             if (leftReview) leftReview.style.display = 'none';
             if (rightReview) rightReview.style.display = 'none';
             return;
         }
         
-        // Show on desktop
-        if (leftReview) leftReview.style.display = 'block';
-        if (rightReview) rightReview.style.display = 'block';
+        // Show on desktop - position outside the container
+        if (leftReview) {
+            leftReview.style.display = 'block';
+            const containerWidth = 1200;
+            const reviewWidth = 280;
+            const margin = 40;
+            const leftPosition = (window.innerWidth - containerWidth) / 2 - reviewWidth - margin;
+            leftReview.style.left = `${Math.max(20, leftPosition)}px`;
+        }
+        if (rightReview) {
+            rightReview.style.display = 'block';
+            const containerWidth = 1200;
+            const reviewWidth = 280;
+            const margin = 40;
+            const rightPosition = (window.innerWidth - containerWidth) / 2 - reviewWidth - margin;
+            rightReview.style.right = `${Math.max(20, rightPosition)}px`;
+        }
         
         // Update left review
         if (leftReviewText && leftReviewAuthor) {
@@ -455,7 +470,7 @@ function openBioModal(title, student, bio) {
     
     // Update position on scroll (keep them centered vertically)
     window.addEventListener('scroll', () => {
-        if (window.innerWidth >= 1400) {
+        if (window.innerWidth >= 1600) {
             if (leftReview) {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                 const windowHeight = window.innerHeight;
