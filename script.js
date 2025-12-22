@@ -323,8 +323,8 @@ function openImageModal(imageSrc) {
     const rightReview = document.getElementById('floating-review-right');
     
     function updateFloatingReviews() {
-        // Only show on desktop (screen width > 1600px)
-        if (window.innerWidth < 1600) {
+        // Only show on desktop (screen width > 1400px)
+        if (window.innerWidth < 1400) {
             if (leftReview) leftReview.style.display = 'none';
             if (rightReview) rightReview.style.display = 'none';
             return;
@@ -390,7 +390,7 @@ function openImageModal(imageSrc) {
     
     // Update position on scroll (keep them centered vertically)
     window.addEventListener('scroll', () => {
-        if (window.innerWidth >= 1600) {
+        if (window.innerWidth >= 1400) {
             if (leftReview) {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                 const windowHeight = window.innerHeight;
