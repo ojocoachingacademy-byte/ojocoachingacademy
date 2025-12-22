@@ -2102,9 +2102,20 @@ section h2 {
         height: 250px;
     }
 
-    .gallery-item.featured {
-        grid-column: span 1;
-        grid-row: span 1;
+    .gallery-item {
+        flex: 0 0 calc(50% - 0.75rem); /* 2 items per view on tablets */
+    }
+    
+    .gallery-carousel {
+        padding: 0 50px;
+    }
+
+    .gallery-item {
+        flex: 0 0 100%; /* 1 item per view on mobile */
+    }
+    
+    .gallery-carousel {
+        padding: 0 50px;
     }
 
     .testimonials-carousel {

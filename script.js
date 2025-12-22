@@ -254,3 +254,109 @@ function openImageModal(imageSrc) {
     document.addEventListener('keydown', escHandler);
 }
 
+// Gallery Carousel Functionality
+(function() {
+    const galleryCarousel = document.querySelector('.gallery-carousel');
+    if (!galleryCarousel) return;
+    
+    const galleryTrack = galleryCarousel.querySelector('.gallery-track');
+    const galleryItems = galleryTrack ? galleryTrack.querySelectorAll('.gallery-item') : [];
+    const prevBtn = galleryCarousel.querySelector('.carousel-btn.prev');
+    const nextBtn = galleryCarousel.querySelector('.carousel-btn.next');
+    
+    if (galleryItems.length === 0) return;
+    
+    let currentIndex = 0;
+    let autoRotateInterval;
+    
+    function getItemsPerView() {
+        const width = window.innerWidth;
+        if (width <= 768) return 1;
+        if (width <= 1024) return 2;
+        return 4; // Desktop: 4 items
+    }
+    
+    function updateCarousel() {
+        if (!galleryTrack) return;
+        
+        let itemsPerView = getItemsPerView();
+        const containerPadding = 120; // 60px on each side
+        const visibleWidth = galleryCarousel.offsetWidth - containerPadding;
+        
+        if (galleryItems[0]) {
+            const itemRect = galleryItems[0].getBoundingClientRect();
+            const itemWidth = itemRect.width;
+            const computedStyle = window.getComputedStyle(galleryTrack);
+            const gap = parseFloat(computedStyle.gap) || 24;
+            
+            const slideWidth = (itemWidth + gap) * itemsPerView;
+            const translateX = -(currentIndex * slideWidth);
+            galleryTrack.style.transform = `translateX(${translateX}px)`;
+        }
+    }
+    
+    function nextSlide() {
+        let itemsPerView = getItemsPerView();
+        const totalSlides = Math.ceil(galleryItems.length / itemsPerView);
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateCarousel();
+    }
+    
+    function prevSlide() {
+        let itemsPerView = getItemsPerView();
+        const totalSlides = Math.ceil(galleryItems.length / itemsPerView);
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        updateCarousel();
+    }
+    
+    function startAutoRotate() {
+        if (autoRotateInterval) clearInterval(autoRotateInterval);
+        autoRotateInterval = setInterval(nextSlide, 4000); // Rotate every 4 seconds
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            startAutoRotate();
+        });
+    }
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            startAutoRotate();
+        });
+    }
+    
+    // Pause auto-rotate on hover
+    galleryCarousel.addEventListener('mouseenter', () => {
+        if (autoRotateInterval) clearInterval(autoRotateInterval);
+    });
+    
+    galleryCarousel.addEventListener('mouseleave', () => {
+        startAutoRotate();
+    });
+    
+    // Handle window resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            currentIndex = 0;
+            updateCarousel();
+        }, 250);
+    });
+    
+    // Wait for images to load
+    window.addEventListener('load', () => {
+        updateCarousel();
+        startAutoRotate();
+    });
+    
+    // Initialize immediately as fallback
+    setTimeout(() => {
+        updateCarousel();
+        startAutoRotate();
+    }, 100);
+})();
+
