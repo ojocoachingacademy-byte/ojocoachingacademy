@@ -181,6 +181,20 @@ form.addEventListener('submit', async function(event) {
         // Generate booking reference
         const bookingRef = 'TEN-' + Date.now().toString().slice(-6);
         
+        // Track booking conversion in Google Analytics
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'begin_checkout', {
+                'currency': 'USD',
+                'value': parseFloat(packagePrice),
+                'items': [{
+                    'item_name': packageName,
+                    'item_category': document.querySelector('input[name="packageType"]:checked')?.value || 'Private',
+                    'price': parseFloat(packagePrice),
+                    'quantity': 1
+                }]
+            });
+        }
+        
         // Prepare booking info
         const bookingInfo = {
             reference: bookingRef,
@@ -194,6 +208,11 @@ form.addEventListener('submit', async function(event) {
             goals: formData.get('goals'),
             timestamp: new Date().toISOString(),
         };
+        
+        // Store booking info for confirmation page and analytics
+        sessionStorage.setItem('bookingPrice', packagePrice);
+        sessionStorage.setItem('bookingPackage', packageName);
+        sessionStorage.setItem('bookingPackageType', document.querySelector('input[name="packageType"]:checked')?.value || 'Private');
         
         // Submit to Netlify Forms
         const netlifyFormData = new FormData();

@@ -95,6 +95,42 @@
         const urlParams = new URLSearchParams(window.location.search);
         const bookingRef = urlParams.get('ref') || 'TEN-' + Date.now().toString().slice(-6);
         document.getElementById('booking-reference').textContent = bookingRef;
+        
+        // Show review request after 5 seconds (can be adjusted)
+        setTimeout(function() {
+            const reviewRequest = document.getElementById('review-request');
+            if (reviewRequest) {
+                reviewRequest.style.display = 'block';
+                reviewRequest.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+                // Track review request view in Google Analytics
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'view_item', {
+                        'item_name': 'Review Request',
+                        'item_category': 'Conversion'
+                    });
+                }
+            }
+        }, 5000);
+        
+        // Track booking conversion in Google Analytics
+        if (typeof gtag !== 'undefined') {
+            const bookingPrice = sessionStorage.getItem('bookingPrice') || 0;
+            const bookingPackage = sessionStorage.getItem('bookingPackage') || 'Tennis Lesson';
+            const bookingPackageType = sessionStorage.getItem('bookingPackageType') || 'Private';
+            
+            gtag('event', 'purchase', {
+                'transaction_id': bookingRef,
+                'value': parseFloat(bookingPrice),
+                'currency': 'USD',
+                'items': [{
+                    'item_name': bookingPackage,
+                    'item_category': bookingPackageType,
+                    'price': parseFloat(bookingPrice),
+                    'quantity': 1
+                }]
+            });
+        }
     </script>
 </body>
 </html>
