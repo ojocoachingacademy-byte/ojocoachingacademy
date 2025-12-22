@@ -243,45 +243,62 @@
         <div class="container">
             <h2>Lesson Packages</h2>
             <p class="section-subtitle">Choose the package that works best for you</p>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Single Lesson</h3>
-                    <div class="price">$100</div>
-                    <p class="price-duration">per hour</p>
-                    <ul class="pricing-features">
-                        <li>1-hour private lesson</li>
-                        <li>Personalized instruction</li>
-                        <li>Assessment of strengths & weaknesses</li>
-                        <li>Customized drills</li>
-                    </ul>
-                </div>
-                <div class="pricing-card featured">
-                    <div class="popular-badge">Most Popular</div>
-                    <h3>5-Hour Package</h3>
-                    <div class="price">$450</div>
-                    <p class="price-duration">$90 per hour</p>
-                    <ul class="pricing-features">
-                        <li>5 one-hour private lessons</li>
-                        <li>Save $50 vs. single lessons</li>
-                        <li>Progress tracking</li>
-                        <li>Video analysis included</li>
-                        <li>Custom training program</li>
-                    </ul>
-                </div>
-                <div class="pricing-card">
-                    <h3>20-Hour Package</h3>
-                    <div class="price">$1400</div>
-                    <p class="price-duration">$70 per hour</p>
-                    <ul class="pricing-features">
-                        <li>20 one-hour private lessons</li>
-                        <li>Save $600 vs. single lessons</li>
-                        <li>Comprehensive progress tracking</li>
-                        <li>Weekly video analysis</li>
-                        <li>Long-term training plan</li>
-                        <li>Priority scheduling</li>
-                    </ul>
-                </div>
+            
+            <!-- Package Type Tabs -->
+            <div class="pricing-tabs">
+                <button class="pricing-tab active" data-tab="private" aria-label="View private lesson packages">
+                    Private Lessons
+                </button>
+                <button class="pricing-tab" data-tab="semi-private" aria-label="View semi-private lesson packages">
+                    Semi-Private Lessons
+                </button>
+                <button class="pricing-tab" data-tab="gifts" aria-label="View gift lesson packages">
+                    Gift Packages
+                </button>
             </div>
+
+            <!-- Private Lessons -->
+            <div class="pricing-content active" id="private-packages" role="tabpanel">
+                <p class="pricing-content-subtitle">One-on-one personalized tennis instruction</p>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3>Single Lesson</h3>
+                        <div class="price">$100</div>
+                        <p class="price-duration">per hour</p>
+                        <ul class="pricing-features">
+                            <li>1-hour private lesson</li>
+                            <li>Personalized instruction</li>
+                            <li>Assessment of strengths & weaknesses</li>
+                            <li>Customized drills</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card featured">
+                        <div class="popular-badge">Most Popular</div>
+                        <h3>5-Hour Package</h3>
+                        <div class="price">$450</div>
+                        <p class="price-duration">$90 per hour</p>
+                        <ul class="pricing-features">
+                            <li>5 one-hour private lessons</li>
+                            <li>Save $50 vs. single lessons</li>
+                            <li>Progress tracking</li>
+                            <li>Video analysis included</li>
+                            <li>Custom training program</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card">
+                        <h3>20-Hour Package</h3>
+                        <div class="price">$1400</div>
+                        <p class="price-duration">$70 per hour</p>
+                        <ul class="pricing-features">
+                            <li>20 one-hour private lessons</li>
+                            <li>Save $600 vs. single lessons</li>
+                            <li>Comprehensive progress tracking</li>
+                            <li>Weekly video analysis</li>
+                            <li>Long-term training plan</li>
+                            <li>Priority scheduling</li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="pricing-note">
                     <p>* All private lesson packages can be used over a flexible time period.</p>
                 </div>
@@ -291,41 +308,41 @@
             <div class="pricing-content" id="semi-private-packages" role="tabpanel" style="display: none;">
                 <p class="pricing-content-subtitle">Perfect for couples, friends, or family members</p>
                 <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Single Session</h3>
-                    <div class="price">$120</div>
-                    <p class="price-duration">per hour for 2 people</p>
-                    <ul class="pricing-features">
-                        <li>1-hour semi-private lesson</li>
-                        <li>Instruction for 2 people</li>
-                        <li>Personalized attention for both</li>
-                        <li>Perfect for couples or friends</li>
-                    </ul>
-                </div>
-                <div class="pricing-card featured">
-                    <div class="popular-badge">Popular</div>
-                    <h3>5-Hour Package</h3>
-                    <div class="price">$500</div>
-                    <p class="price-duration">$100 per hour for 2</p>
-                    <ul class="pricing-features">
-                        <li>5 one-hour semi-private lessons</li>
-                        <li>Save $100 vs. single sessions</li>
-                        <li>Progress tracking for both</li>
-                        <li>Custom training program</li>
-                    </ul>
-                </div>
-                <div class="pricing-card">
-                    <h3>20-Hour Package</h3>
-                    <div class="price">$1600</div>
-                    <p class="price-duration">$80 per hour for 2</p>
-                    <ul class="pricing-features">
-                        <li>20 one-hour semi-private lessons</li>
-                        <li>Save $800 vs. single sessions</li>
-                        <li>Comprehensive progress tracking</li>
-                        <li>Best value for couples</li>
-                        <li>Priority scheduling</li>
-                    </ul>
-                </div>
+                    <div class="pricing-card">
+                        <h3>Single Session</h3>
+                        <div class="price">$120</div>
+                        <p class="price-duration">per hour for 2 people</p>
+                        <ul class="pricing-features">
+                            <li>1-hour semi-private lesson</li>
+                            <li>Instruction for 2 people</li>
+                            <li>Personalized attention for both</li>
+                            <li>Perfect for couples or friends</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card featured">
+                        <div class="popular-badge">Popular</div>
+                        <h3>5-Hour Package</h3>
+                        <div class="price">$500</div>
+                        <p class="price-duration">$100 per hour for 2</p>
+                        <ul class="pricing-features">
+                            <li>5 one-hour semi-private lessons</li>
+                            <li>Save $100 vs. single sessions</li>
+                            <li>Progress tracking for both</li>
+                            <li>Custom training program</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card">
+                        <h3>20-Hour Package</h3>
+                        <div class="price">$1600</div>
+                        <p class="price-duration">$80 per hour for 2</p>
+                        <ul class="pricing-features">
+                            <li>20 one-hour semi-private lessons</li>
+                            <li>Save $800 vs. single sessions</li>
+                            <li>Comprehensive progress tracking</li>
+                            <li>Best value for couples</li>
+                            <li>Priority scheduling</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -333,30 +350,30 @@
             <div class="pricing-content" id="gifts-packages" role="tabpanel" style="display: none;">
                 <p class="pricing-content-subtitle">Give the gift of tennis to a friend or family member</p>
                 <div class="pricing-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); max-width: 800px; margin: 0 auto;">
-                <div class="pricing-card">
-                    <h3>1-Hour Gift Lesson</h3>
-                    <div class="price">$100</div>
-                    <p class="price-duration">perfect gift for beginners</p>
-                    <ul class="pricing-features">
-                        <li>1-hour private lesson</li>
-                        <li>Gift certificate included</li>
-                        <li>Flexible scheduling</li>
-                        <li>Perfect for any skill level</li>
-                    </ul>
-                </div>
-                <div class="pricing-card featured">
-                    <div class="popular-badge">Best Value</div>
-                    <h3>3-Hour Gift Package</h3>
-                    <div class="price">$250</div>
-                    <p class="price-duration">$83.33 per hour</p>
-                    <ul class="pricing-features">
-                        <li>3 one-hour private lessons</li>
-                        <li>Save $50 vs. single gift</li>
-                        <li>Gift certificate included</li>
-                        <li>Great for improving skills</li>
-                        <li>Flexible scheduling</li>
-                    </ul>
-                </div>
+                    <div class="pricing-card">
+                        <h3>1-Hour Gift Lesson</h3>
+                        <div class="price">$100</div>
+                        <p class="price-duration">perfect gift for beginners</p>
+                        <ul class="pricing-features">
+                            <li>1-hour private lesson</li>
+                            <li>Gift certificate included</li>
+                            <li>Flexible scheduling</li>
+                            <li>Perfect for any skill level</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card featured">
+                        <div class="popular-badge">Best Value</div>
+                        <h3>3-Hour Gift Package</h3>
+                        <div class="price">$250</div>
+                        <p class="price-duration">$83.33 per hour</p>
+                        <ul class="pricing-features">
+                            <li>3 one-hour private lessons</li>
+                            <li>Save $50 vs. single gift</li>
+                            <li>Gift certificate included</li>
+                            <li>Great for improving skills</li>
+                            <li>Flexible scheduling</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
