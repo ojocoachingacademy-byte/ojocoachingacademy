@@ -214,4 +214,43 @@ window.addEventListener('scroll', function() {
     });
 })();
 
+// Image Modal for Success Stories
+function openImageModal(imageSrc) {
+    // Create modal overlay
+    const modal = document.createElement('div');
+    modal.className = 'image-modal-overlay';
+    modal.innerHTML = `
+        <div class="image-modal-content">
+            <span class="image-modal-close">&times;</span>
+            <img src="${imageSrc}" alt="Full size image">
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+    
+    // Close on X click
+    modal.querySelector('.image-modal-close').addEventListener('click', () => {
+        document.body.removeChild(modal);
+        document.body.style.overflow = '';
+    });
+    
+    // Close on overlay click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            document.body.removeChild(modal);
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // Close on ESC key
+    const escHandler = (e) => {
+        if (e.key === 'Escape') {
+            document.body.removeChild(modal);
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', escHandler);
+        }
+    };
+    document.addEventListener('keydown', escHandler);
+}
 
