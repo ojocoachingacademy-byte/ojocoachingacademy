@@ -254,6 +254,163 @@ function openImageModal(imageSrc) {
     document.addEventListener('keydown', escHandler);
 }
 
+// Floating Side Reviews (Desktop Only)
+(function() {
+    // Review data
+    const reviews = [
+        {
+            author: "Daniela S.",
+            text: "Tobi is very insightful in identifying issues and provides helpful cues to improve. He's very patient and knows a lot about body mechanics."
+        },
+        {
+            author: "Srinath T.",
+            text: "Good first session with great feedback on my play. Looking forward to my follow-up lessons with him😃"
+        },
+        {
+            author: "Toni G.",
+            text: "If you want to improve your game, Tobi is your guy. He is kind, patient and prompt. Thank you for taking the time to share your expertise with me."
+        },
+        {
+            author: "Sonya",
+            text: "Tobi is patient, fun and engaging. He makes our lessons interactive, challenging and interesting. The results of his coaching have been dramatic!"
+        },
+        {
+            author: "Rafael",
+            text: "Tobi is a very detail-oriented tennis coach. His main focus is to identify and improve the mechanical and psychological foundations of your game."
+        },
+        {
+            author: "Luke B.",
+            text: "Tobi has helped my swing so much in just two lessons"
+        },
+        {
+            author: "Willie",
+            text: "Tobi is a great tennis instructor. In 5 minutes of court time, he identified the problems with my forehand and customized drills to make the fix."
+        },
+        {
+            author: "Rockwell",
+            text: "Tobi has a really deep understanding of the game. And equally important he knows how to communicate that to his students to actually get them to improve, quickly."
+        },
+        {
+            author: "Michael K.",
+            text: "I was initially hesitant to take tennis lessons, but Toby's friendly demeanor and expertise quickly put me at ease. He is a great teacher."
+        },
+        {
+            author: "Millie",
+            text: "Over the past 6 months with Tobi's coaching I have developed from being able to hold a rally for 2-3 shots to serving well and consistently!"
+        },
+        {
+            author: "Rajesh",
+            text: "Been practicing Tennis on my own for couple of years. Getting coaching from Tobi has been wonderful. I could see my game is getting better."
+        },
+        {
+            author: "Rachel C.",
+            text: "Toby is an amazing tennis coach! He is patient, knowledgeable, and always willing to go the extra mile to help his students succeed."
+        },
+        {
+            author: "Jeff",
+            text: "Tobi was able to quickly identify and help correct a couple of fundamentals that have really helped improve my game."
+        }
+    ];
+    
+    let leftReviewIndex = 0;
+    let rightReviewIndex = Math.floor(reviews.length / 2); // Start right side at different point
+    
+    const leftReviewText = document.getElementById('floating-review-text-left');
+    const leftReviewAuthor = document.getElementById('floating-review-author-left');
+    const rightReviewText = document.getElementById('floating-review-text-right');
+    const rightReviewAuthor = document.getElementById('floating-review-author-right');
+    const leftReview = document.getElementById('floating-review-left');
+    const rightReview = document.getElementById('floating-review-right');
+    
+    function updateFloatingReviews() {
+        // Only show on desktop (screen width > 1600px)
+        if (window.innerWidth < 1600) {
+            if (leftReview) leftReview.style.display = 'none';
+            if (rightReview) rightReview.style.display = 'none';
+            return;
+        }
+        
+        // Show on desktop
+        if (leftReview) leftReview.style.display = 'block';
+        if (rightReview) rightReview.style.display = 'block';
+        
+        // Update left review
+        if (leftReviewText && leftReviewAuthor) {
+            const review = reviews[leftReviewIndex];
+            leftReviewText.textContent = `"${review.text}"`;
+            leftReviewAuthor.textContent = `- ${review.author}`;
+        }
+        
+        // Update right review
+        if (rightReviewText && rightReviewAuthor) {
+            const review = reviews[rightReviewIndex];
+            rightReviewText.textContent = `"${review.text}"`;
+            rightReviewAuthor.textContent = `- ${review.author}`;
+        }
+    }
+    
+    function rotateReviews() {
+        // Rotate left review
+        leftReviewIndex = (leftReviewIndex + 1) % reviews.length;
+        
+        // Rotate right review (different timing)
+        rightReviewIndex = (rightReviewIndex + 1) % reviews.length;
+        
+        // Ensure they're different
+        if (leftReviewIndex === rightReviewIndex) {
+            rightReviewIndex = (rightReviewIndex + 1) % reviews.length;
+        }
+        
+        // Fade out
+        if (leftReview) leftReview.style.opacity = '0';
+        if (rightReview) rightReview.style.opacity = '0';
+        
+        // Update and fade in
+        setTimeout(() => {
+            updateFloatingReviews();
+            if (leftReview) leftReview.style.opacity = '1';
+            if (rightReview) rightReview.style.opacity = '1';
+        }, 300);
+    }
+    
+    // Initialize
+    updateFloatingReviews();
+    
+    // Rotate every 8 seconds
+    setInterval(rotateReviews, 8000);
+    
+    // Handle window resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            updateFloatingReviews();
+        }, 250);
+    });
+    
+    // Update position on scroll (keep them centered vertically)
+    window.addEventListener('scroll', () => {
+        if (window.innerWidth >= 1600) {
+            if (leftReview) {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const windowHeight = window.innerHeight;
+                const scrollPercent = scrollTop / (document.documentElement.scrollHeight - windowHeight);
+                const maxOffset = 200; // Maximum offset from center
+                const offset = scrollPercent * maxOffset - maxOffset / 2;
+                leftReview.style.transform = `translateY(calc(-50% + ${offset}px))`;
+            }
+            if (rightReview) {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const windowHeight = window.innerHeight;
+                const scrollPercent = scrollTop / (document.documentElement.scrollHeight - windowHeight);
+                const maxOffset = 200;
+                const offset = scrollPercent * maxOffset - maxOffset / 2;
+                rightReview.style.transform = `translateY(calc(-50% + ${offset}px))`;
+            }
+        }
+    });
+})();
+
 // Gallery Carousel Functionality
 (function() {
     const galleryCarousel = document.querySelector('.gallery-carousel');
