@@ -194,10 +194,13 @@
                             </div>
                         </div>
 
-                        <div id="card-element" class="stripe-element">
-                            <!-- Stripe Elements will create form elements here -->
+                        <div id="payment-element" class="stripe-element">
+                            <!-- Stripe Payment Element will create form elements here (includes mobile payment options) -->
                         </div>
-                        <div id="card-errors" role="alert" class="error-message"></div>
+                        <div id="payment-errors" role="alert" class="error-message"></div>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-light); text-align: center;">
+                            💳 Accepts all major cards, Apple Pay, and Google Pay
+                        </p>
 
                         <div class="payment-info">
                             <p>🔒 Secure payment powered by Stripe</p>

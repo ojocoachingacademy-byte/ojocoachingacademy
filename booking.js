@@ -1,6 +1,22 @@
-// Initialize Stripe
-const stripe = Stripe('pk_live_51SgcB8QjxWCW85VVPpXWHwiObtV0uCADnDPfEGP6hK6brSwXDDb37cAlTmKP0B4tqkJDW84mjgMv8eMFszIbnHF300zd6T7NCK');
-const elements = stripe.elements();
+// Initialize Stripe with mobile payment options
+const stripe = Stripe('pk_live_51SgcB8QjxWCW85VVPpXWHwiObtV0uCADnDPfEGP6hK6brSwXDDb37cAlTmKP0B4tqkJDW84mjgMv8eMFszIbnHF300zd6T7NCK', {
+    // Enable Apple Pay and Google Pay
+    betas: ['payment_element_beta_1']
+});
+const elements = stripe.elements({
+    appearance: {
+        theme: 'stripe',
+        variables: {
+            colorPrimary: '#00a859',
+            colorBackground: '#ffffff',
+            colorText: '#1a1a1a',
+            colorDanger: '#df1b41',
+            fontFamily: 'Poppins, system-ui, sans-serif',
+            spacingUnit: '4px',
+            borderRadius: '8px'
+        }
+    }
+});
 
 // Create card element
 const cardElement = elements.create('card', {

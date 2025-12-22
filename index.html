@@ -26,6 +26,27 @@
     <link rel="canonical" href="https://ojocoachingacademy.com/">
     <link rel="stylesheet" href="styles.css">
     
+    <!-- Google Analytics & Google Ads -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX', {
+            'linker': {
+                'domains': ['ojocoachingacademy.com']
+            }
+        });
+        
+        // Enhanced ecommerce tracking for Google Ads
+        gtag('config', 'AW-XXXXXXXXXX');
+    </script>
+    <!-- 
+    TODO: Replace G-XXXXXXXXXX with your actual Google Analytics 4 Measurement ID
+    TODO: Replace AW-XXXXXXXXXX with your Google Ads conversion ID if you have one
+    You can find these in your Google Analytics property settings
+    -->
+    
     <!-- Structured Data (Schema.org) -->
     <script type="application/ld+json">
     {
@@ -138,7 +159,7 @@
     <nav class="navbar">
         <div class="container">
             <a href="#home" class="nav-brand">
-                <img src="IMG_2507.PNG" alt="Ojo Coaching Academy Logo">
+                <img src="IMG_2507.PNG" alt="Ojo Coaching Academy Logo" loading="eager" width="150" height="50">
                 <span>Ojo Coaching Academy</span>
             </a>
             <ul class="nav-menu">
@@ -169,10 +190,10 @@
                     <p class="hero-subtitle">PTR Certified Tennis Coach | 17+ Years Playing | 14+ Years Teaching | San Diego, California</p>
                 </div>
                 <div class="hero-center">
-                    <img src="tennis profile pic.png" alt="Coach Tobi Ojo - PTR Certified Tennis Coach at Ojo Coaching Academy" class="hero-profile-image">
+                        <img src="tennis profile pic.png" alt="Coach Tobi Ojo - PTR Certified Tennis Coach at Ojo Coaching Academy" class="hero-profile-image" loading="eager" width="400" height="400">
                 </div>
                 <div class="hero-right">
-                    <img src="IMG_2507.PNG" alt="Ojo Coaching Academy Logo - Professional Tennis Coaching" class="hero-logo">
+                        <img src="IMG_2507.PNG" alt="Ojo Coaching Academy Logo - Professional Tennis Coaching" class="hero-logo" loading="eager" width="200" height="67">
                 </div>
             </div>
             <div class="hero-button-container">
@@ -567,23 +588,95 @@
         </div>
     </section>
 
+    <section id="success-stories" class="success-stories">
+        <div class="container">
+            <h2>Student Success Stories</h2>
+            <p class="section-subtitle">Real results from real students - See how our coaching has transformed their game</p>
+            <div class="success-stories-grid">
+                <div class="success-story-card">
+                    <div class="success-story-image">
+                        <img src="Photos and videos/IMG_0963.jpeg" alt="Student success story - Tennis improvement" loading="lazy">
+                    </div>
+                    <div class="success-story-content">
+                        <h3>Student Progress</h3>
+                        <p>From beginner to confident player - see the transformation</p>
+                    </div>
+                </div>
+                <div class="success-story-card">
+                    <div class="success-story-image">
+                        <img src="Photos and videos/IMG_1041.jpeg" alt="Tennis lesson success - Skill development" loading="lazy">
+                    </div>
+                    <div class="success-story-content">
+                        <h3>Skill Development</h3>
+                        <p>Consistent practice leads to measurable improvement</p>
+                    </div>
+                </div>
+                <div class="success-story-card">
+                    <div class="success-story-image">
+                        <img src="Photos and videos/IMG_1619.jpeg" alt="Tennis coaching results - Technique improvement" loading="lazy">
+                    </div>
+                    <div class="success-story-content">
+                        <h3>Technique Mastery</h3>
+                        <p>Perfecting form through personalized instruction</p>
+                    </div>
+                </div>
+                <div class="success-story-card">
+                    <div class="success-story-image">
+                        <img src="Photos and videos/IMG_1888.jpeg" alt="Tennis student achievement - Game improvement" loading="lazy">
+                    </div>
+                    <div class="success-story-content">
+                        <h3>Game Improvement</h3>
+                        <p>Strategic coaching leads to winning results</p>
+                    </div>
+                </div>
+                <div class="success-story-card">
+                    <div class="success-story-image">
+                        <img src="Photos and videos/IMG_3457.jpeg" alt="Tennis lesson progress - Student achievement" loading="lazy">
+                    </div>
+                    <div class="success-story-content">
+                        <h3>Progress Through Practice</h3>
+                        <p>Dedication and expert coaching create champions</p>
+                    </div>
+                </div>
+                <div class="success-story-card">
+                    <div class="success-story-image">
+                        <img src="Photos and videos/IMG_5752.jpeg" alt="Tennis coaching success - Skill advancement" loading="lazy">
+                    </div>
+                    <div class="success-story-content">
+                        <h3>Advanced Skills</h3>
+                        <p>Taking your game to the next level</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="blog" class="blog-preview">
         <div class="container">
             <h2>Tennis Tips & Insights</h2>
-            <p class="section-subtitle">Coming soon - Expert tips and guides to improve your game</p>
+            <p class="section-subtitle">Expert tips, techniques, and strategies to improve your game</p>
             <div class="blog-preview-grid">
                 <div class="blog-preview-card">
                     <div class="blog-icon">📝</div>
                     <h3>5 Common Tennis Mistakes Beginners Make</h3>
                     <p>Learn about the most common mistakes new players make and how to avoid them from day one.</p>
-                    <span class="coming-soon">Coming Soon</span>
+                    <a href="blog.html" class="btn-primary">Read Blog →</a>
                 </div>
                 <div class="blog-preview-card">
                     <div class="blog-icon">🎾</div>
                     <h3>How to Choose the Right Tennis Racquet</h3>
                     <p>A comprehensive guide to selecting the perfect racquet for your playing style and skill level.</p>
-                    <span class="coming-soon">Coming Soon</span>
+                    <a href="blog.html" class="btn-primary">Read Blog →</a>
                 </div>
+                <div class="blog-preview-card">
+                    <div class="blog-icon">💪</div>
+                    <h3>5 Drills to Improve Your Serve</h3>
+                    <p>Master the most important shot in tennis with these proven practice drills and techniques.</p>
+                    <a href="blog.html" class="btn-primary">Read Blog →</a>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="blog.html" class="btn-primary">View All Blog Posts</a>
             </div>
         </div>
     </section>
@@ -593,25 +686,25 @@
             <h2>Photo Gallery</h2>
             <div class="gallery-grid">
                 <div class="gallery-item featured">
-                    <img src="tennis profile pic.png" alt="Tobi Ojo - PTR Certified Tennis Coach at Ojo Coaching Academy in San Diego">
+                    <img src="tennis profile pic.png" alt="Tobi Ojo - PTR Certified Tennis Coach at Ojo Coaching Academy in San Diego" loading="eager" width="800" height="600">
                 </div>
                 <div class="gallery-item">
-                    <img src="IMG_4946.JPEG" alt="Private tennis lesson at Colina Del Sol Park San Diego">
+                    <img src="IMG_4946.JPEG" alt="Private tennis lesson at Colina Del Sol Park San Diego" loading="lazy" width="600" height="400">
                 </div>
                 <div class="gallery-item">
-                    <img src="Tennis at sectionals.JPEG" alt="Tennis coaching and training at sectionals tournament">
+                    <img src="Tennis at sectionals.JPEG" alt="Tennis coaching and training at sectionals tournament" loading="lazy" width="600" height="400">
                 </div>
                 <div class="gallery-item">
-                    <img src="unnamed (1).jpg" alt="Tennis coaching session with Ojo Coaching Academy">
+                    <img src="unnamed (1).jpg" alt="Tennis coaching session with Ojo Coaching Academy" loading="lazy" width="600" height="400">
                 </div>
                 <div class="gallery-item">
-                    <img src="unnamed (2).jpg" alt="Professional tennis instruction and training">
+                    <img src="unnamed (2).jpg" alt="Professional tennis instruction and training" loading="lazy" width="600" height="400">
                 </div>
                 <div class="gallery-item">
-                    <img src="unnamed (3).jpg" alt="Tennis lesson and skill development coaching">
+                    <img src="unnamed (3).jpg" alt="Tennis lesson and skill development coaching" loading="lazy" width="600" height="400">
                 </div>
                 <div class="gallery-item">
-                    <img src="unnamed (4).jpg" alt="Tennis coaching and technique improvement">
+                    <img src="unnamed (4).jpg" alt="Tennis coaching and technique improvement" loading="lazy" width="600" height="400">
                 </div>
             </div>
         </div>
