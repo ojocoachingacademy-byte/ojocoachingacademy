@@ -411,6 +411,155 @@ function openImageModal(imageSrc) {
     });
 })();
 
+// Mobile Review Widget
+(function() {
+    const reviews = [
+        {
+            author: "Daniela S.",
+            text: "Tobi is very insightful in identifying issues and provides helpful cues to improve. He's very patient and knows a lot about body mechanics."
+        },
+        {
+            author: "Srinath T.",
+            text: "Good first session with great feedback on my play. Looking forward to my follow-up lessons with him😃"
+        },
+        {
+            author: "Toni G.",
+            text: "If you want to improve your game, Tobi is your guy. He is kind, patient and prompt. Thank you for taking the time to share your expertise with me."
+        },
+        {
+            author: "Sonya",
+            text: "Tobi is patient, fun and engaging. He makes our lessons interactive, challenging and interesting. The results of his coaching have been dramatic!"
+        },
+        {
+            author: "Rafael",
+            text: "Tobi is a very detail-oriented tennis coach. His main focus is to identify and improve the mechanical and psychological foundations of your game."
+        },
+        {
+            author: "Luke B.",
+            text: "Tobi has helped my swing so much in just two lessons"
+        },
+        {
+            author: "Willie",
+            text: "Tobi is a great tennis instructor. In 5 minutes of court time, he identified the problems with my forehand and customized drills to make the fix."
+        },
+        {
+            author: "Rockwell",
+            text: "Tobi has a really deep understanding of the game. And equally important he knows how to communicate that to his students to actually get them to improve, quickly."
+        },
+        {
+            author: "Michael K.",
+            text: "I was initially hesitant to take tennis lessons, but Toby's friendly demeanor and expertise quickly put me at ease. He is a great teacher."
+        },
+        {
+            author: "Millie",
+            text: "Over the past 6 months with Tobi's coaching I have developed from being able to hold a rally for 2-3 shots to serving well and consistently!"
+        },
+        {
+            author: "Rajesh",
+            text: "Been practicing Tennis on my own for couple of years. Getting coaching from Tobi has been wonderful. I could see my game is getting better."
+        },
+        {
+            author: "Rachel C.",
+            text: "Toby is an amazing tennis coach! He is patient, knowledgeable, and always willing to go the extra mile to help his students succeed."
+        },
+        {
+            author: "Jeff",
+            text: "Tobi was able to quickly identify and help correct a couple of fundamentals that have really helped improve my game."
+        }
+    ];
+    
+    const mobileWidget = document.getElementById('mobile-review-widget');
+    const mobileToggle = document.getElementById('mobile-review-toggle');
+    const mobileContent = document.getElementById('mobile-review-content');
+    const mobileClose = document.getElementById('mobile-review-close');
+    const mobileText = document.getElementById('mobile-review-text-mobile');
+    const mobileAuthor = document.getElementById('mobile-review-author-mobile');
+    const mobileCounter = document.getElementById('mobile-review-counter');
+    const mobilePrev = document.getElementById('mobile-review-prev');
+    const mobileNext = document.getElementById('mobile-review-next');
+    
+    if (!mobileWidget || !mobileToggle) return;
+    
+    let currentMobileIndex = 0;
+    
+    function updateMobileReview() {
+        if (mobileText && mobileAuthor && mobileCounter) {
+            const review = reviews[currentMobileIndex];
+            mobileText.textContent = `"${review.text}"`;
+            mobileAuthor.textContent = `- ${review.author}`;
+            mobileCounter.textContent = `${currentMobileIndex + 1} / ${reviews.length}`;
+        }
+    }
+    
+    function toggleMobileWidget() {
+        if (mobileWidget) {
+            mobileWidget.classList.toggle('active');
+        }
+    }
+    
+    function nextMobileReview() {
+        currentMobileIndex = (currentMobileIndex + 1) % reviews.length;
+        updateMobileReview();
+    }
+    
+    function prevMobileReview() {
+        currentMobileIndex = (currentMobileIndex - 1 + reviews.length) % reviews.length;
+        updateMobileReview();
+    }
+    
+    // Event listeners
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', toggleMobileWidget);
+    }
+    
+    if (mobileClose) {
+        mobileClose.addEventListener('click', toggleMobileWidget);
+    }
+    
+    if (mobileNext) {
+        mobileNext.addEventListener('click', nextMobileReview);
+    }
+    
+    if (mobilePrev) {
+        mobilePrev.addEventListener('click', prevMobileReview);
+    }
+    
+    // Close when clicking outside (on the overlay)
+    if (mobileContent) {
+        mobileContent.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    }
+    
+    // Initialize
+    updateMobileReview();
+    
+    // Auto-rotate reviews when widget is open
+    let mobileRotateInterval;
+    function startMobileRotation() {
+        if (mobileRotateInterval) clearInterval(mobileRotateInterval);
+        if (mobileWidget && mobileWidget.classList.contains('active')) {
+            mobileRotateInterval = setInterval(() => {
+                nextMobileReview();
+            }, 6000);
+        }
+    }
+    
+    // Start rotation when widget opens
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', () => {
+            setTimeout(startMobileRotation, 300);
+        });
+    }
+    
+    // Stop rotation when widget closes
+    if (mobileClose) {
+        mobileClose.addEventListener('click', () => {
+            if (mobileRotateInterval) clearInterval(mobileRotateInterval);
+        });
+    }
+})();
+
 // Gallery Carousel Functionality
 (function() {
     const galleryCarousel = document.querySelector('.gallery-carousel');
