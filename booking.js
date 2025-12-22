@@ -229,11 +229,32 @@ form.addEventListener('submit', async function(event) {
         netlifyFormData.append('bookingReference', bookingRef);
         netlifyFormData.append('timestamp', bookingInfo.timestamp);
         
-        // Submit to Netlify (non-blocking - don't wait for response)
+        // Submit to Netlify Forms (non-blocking - don't wait for response)
         fetch('/', {
             method: 'POST',
             body: netlifyFormData
         }).catch(err => console.log('Form submission error:', err));
+        
+        // Send booking confirmation email via Netlify Function
+        // This automatically sends confirmation email to customer and notification to coach
+        fetch('/.netlify/functions/send-booking-confirmation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                firstName: bookingInfo.firstName,
+                lastName: bookingInfo.lastName,
+                email: bookingInfo.email,
+                phone: bookingInfo.phone,
+                package: bookingInfo.package,
+                packageType: document.querySelector('input[name="packageType"]:checked')?.value || 'Private',
+                price: bookingInfo.price,
+                bookingReference: bookingRef,
+                experience: bookingInfo.experience,
+                goals: bookingInfo.goals || ''
+            })
+        }).catch(err => console.log('Email sending error:', err));
         
         // Store booking info in sessionStorage
         sessionStorage.setItem('bookingInfo', JSON.stringify(bookingInfo));
