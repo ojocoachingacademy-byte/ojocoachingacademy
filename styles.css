@@ -1184,11 +1184,19 @@ section h2 {
     background: var(--bg-light);
 }
 
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
+.gallery-carousel {
+    position: relative;
+    overflow: hidden;
     margin-top: 3rem;
+    padding: 0 60px;
+    width: 100%;
+}
+
+.gallery-track {
+    display: flex;
+    transition: transform 0.6s ease-in-out;
+    gap: 1.5rem;
+    width: 100%;
 }
 
 .gallery-item {
@@ -1197,7 +1205,10 @@ section h2 {
     border-radius: 15px;
     box-shadow: var(--shadow);
     cursor: pointer;
-    aspect-ratio: 4/3;
+    flex: 0 0 calc(25% - 1.125rem); /* For 4 items per view with gap */
+    min-width: 0;
+    aspect-ratio: 1;
+    transition: transform 0.3s;
 }
 
 .gallery-item img {
@@ -1212,13 +1223,30 @@ section h2 {
     background: var(--bg-light);
 }
 
-.gallery-item:hover img {
-    transform: scale(1.1);
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
 }
 
-.gallery-item.featured {
-    grid-column: span 2;
-    grid-row: span 2;
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Gallery Navigation Buttons */
+.gallery-carousel .carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+    left: 0;
+    right: 0;
+}
+
+.gallery-carousel .carousel-btn {
+    pointer-events: all;
 }
 
 /* Legal Pages */
