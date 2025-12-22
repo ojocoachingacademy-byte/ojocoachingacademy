@@ -254,6 +254,47 @@ function openImageModal(imageSrc) {
     document.addEventListener('keydown', escHandler);
 }
 
+function openBioModal(title, student, bio) {
+    // Create modal overlay
+    const modal = document.createElement('div');
+    modal.className = 'bio-modal-overlay';
+    modal.innerHTML = `
+        <div class="bio-modal-content">
+            <span class="bio-modal-close">&times;</span>
+            <h2>${title}</h2>
+            <p class="bio-student">${student}</p>
+            <p class="bio-text">${bio}</p>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+    
+    // Close on X click
+    modal.querySelector('.bio-modal-close').addEventListener('click', () => {
+        document.body.removeChild(modal);
+        document.body.style.overflow = '';
+    });
+    
+    // Close on overlay click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            document.body.removeChild(modal);
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // Close on ESC key
+    const escHandler = (e) => {
+        if (e.key === 'Escape') {
+            document.body.removeChild(modal);
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', escHandler);
+        }
+    };
+    document.addEventListener('keydown', escHandler);
+}
+
 // Floating Side Reviews (Desktop Only)
 (function() {
     // Review data

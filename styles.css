@@ -843,6 +843,91 @@ section h2 {
     color: var(--primary-color);
 }
 
+/* Bio Modal Styles */
+.bio-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease-out;
+    padding: 2rem;
+}
+
+.bio-modal-content {
+    position: relative;
+    max-width: 600px;
+    width: 100%;
+    background: var(--white);
+    border-radius: 15px;
+    padding: 3rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.3s ease-out;
+}
+
+.bio-modal-content h2 {
+    color: var(--secondary-color);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.bio-student {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.bio-text {
+    color: var(--text-dark);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    text-align: left;
+    margin: 0;
+}
+
+.bio-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: var(--text-light);
+    font-size: 2.5rem;
+    font-weight: 300;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.3s;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.bio-modal-close:hover {
+    color: var(--primary-color);
+    background: var(--bg-light);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
