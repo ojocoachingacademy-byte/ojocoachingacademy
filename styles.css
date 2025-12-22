@@ -759,6 +759,16 @@ section h2 {
     image-rendering: crisp-edges;
 }
 
+/* Special styling for Progress Through Practice image to show face */
+.progress-practice-image {
+    height: 300px !important;
+}
+
+.progress-practice-image .progress-practice-img {
+    object-fit: contain;
+    object-position: center top;
+}
+
 .success-story-card:hover .success-story-image img {
     transform: scale(1.1);
 }
