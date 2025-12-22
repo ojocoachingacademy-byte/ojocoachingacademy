@@ -2,6 +2,20 @@
 
 This guide shows you how to set up **automated booking confirmation emails** without needing Mailchimp or any email marketing platform. We'll use **Netlify Functions** + **SendGrid** (free tier).
 
+## ⚠️ CURRENT STATUS
+
+**The email automation code is deployed, but emails will NOT work until you complete the setup below.**
+
+Right now, when someone books:
+- ❌ Customer does NOT receive confirmation email automatically
+- ❌ You do NOT receive notification email automatically
+- ✅ Booking form still submits and saves to Netlify Forms
+- ✅ Customer still sees confirmation page
+
+**Follow the setup steps below to activate automated emails.**
+
+---
+
 ## What Emails Can Be Automated This Way
 
 ✅ **Automated Emails (No Manual Work):**
