@@ -184,34 +184,13 @@ window.addEventListener('scroll', function() {
     }, 100);
 })();
 
-// Floating CTA Button - Hide on scroll down, show on scroll up
+// Floating CTA Button - Always visible
 (function() {
     const floatingCTA = document.getElementById('floating-cta');
     if (!floatingCTA) return;
     
-    let lastScrollTop = 0;
-    const scrollThreshold = 100;
-    
-    window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        // Always show if near top of page
-        if (scrollTop < scrollThreshold) {
-            floatingCTA.classList.remove('hidden');
-            return;
-        }
-        
-        // Hide when scrolling down, show when scrolling up
-        if (scrollTop > lastScrollTop) {
-            // Scrolling down
-            floatingCTA.classList.add('hidden');
-        } else {
-            // Scrolling up
-            floatingCTA.classList.remove('hidden');
-        }
-        
-        lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-    }, false);
+    // Remove hidden class if it exists
+    floatingCTA.classList.remove('hidden');
 })();
 
 // FAQ Accordion Functionality
