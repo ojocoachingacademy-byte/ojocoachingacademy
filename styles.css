@@ -51,18 +51,14 @@ body {
 .nav-brand {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--secondary-color);
     text-decoration: none;
 }
 
 .nav-brand img {
-    height: 50px;
+    height: 80px;
     width: auto;
     object-fit: contain;
-    max-width: 150px;
+    max-width: none;
 }
 
 .nav-menu {
@@ -136,41 +132,52 @@ body {
 
 .hero-left {
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-.hero-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--text-dark);
-    margin-bottom: 1rem;
-    text-align: right;
-    line-height: 1.3;
-}
-
-.hero-subtitle {
-    font-size: 1.1rem;
-    color: var(--text-dark);
-    text-align: right;
-    line-height: 1.8;
-    font-weight: 500;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
 }
 
 .hero-center {
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 0; /* Prevent unnecessary space */
 }
 
 .hero-profile-image {
-    max-width: 400px;
+    max-width: 350px;
     width: 100%;
     height: auto;
     border-radius: 15px;
     box-shadow: var(--shadow-lg);
     object-fit: contain;
 }
+
+.hero-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0 0 0.75rem 0;
+    text-align: right;
+    line-height: 1.3;
+    white-space: normal;
+    word-break: keep-all;
+    max-width: 8em; /* Approximate width for 2 words per line */
+    word-spacing: 0.2em;
+}
+
+.hero-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-dark);
+    text-align: right;
+    line-height: 1.6;
+    font-weight: 500;
+    margin: 0;
+    max-width: 8em; /* Match title width - approximately 2 words per line */
+    word-break: keep-all;
+    word-spacing: 0.2em;
+}
+
 
 .hero-right {
     display: flex;
@@ -1469,6 +1476,7 @@ section h2 {
     align-items: center;
     gap: 0.5rem;
     animation: pulse 2s infinite;
+    line-height: 1;
 }
 
 .floating-cta:hover {
@@ -1618,6 +1626,58 @@ section h2 {
     font-size: 0.9rem;
     z-index: 1001;
     transition: transform 0.3s, box-shadow 0.3s;
+    line-height: 1;
+}
+
+/* On mobile, stack review button above Book Now button */
+@media (max-width: 1399px) {
+    .mobile-review-toggle {
+        bottom: 90px; /* Position above the Book Now button */
+        right: 20px;
+    }
+    
+    /* Adjust for smaller screens */
+    @media (max-width: 768px) {
+        .mobile-review-toggle {
+            bottom: 85px;
+            right: 15px;
+            padding: 0.65rem 1rem;
+            font-size: 0.85rem;
+        }
+        
+        .floating-cta {
+            bottom: 20px;
+            right: 15px;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+        }
+    }
+}
+
+/* On desktop, stack review button above Book Now button, perfectly aligned in same column */
+@media (min-width: 1400px) {
+    /* Book Now button stays centered */
+    .floating-cta {
+        bottom: 30px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
+    
+    .floating-cta:hover {
+        transform: translateX(-50%) translateY(-3px);
+    }
+    
+    /* Review button: right edge aligns with Book Now button's right edge */
+    /* Position is set by JavaScript - these are fallback values */
+    .mobile-review-toggle {
+        bottom: 100px !important;
+        /* JavaScript will set right position to align with Book Now button */
+    }
+    
+    .mobile-review-toggle:active {
+        transform: scale(0.95) !important;
+    }
 }
 
 .mobile-review-toggle:active {
@@ -1694,14 +1754,15 @@ section h2 {
     color: var(--secondary-color);
     font-weight: 600;
     font-size: 0.9rem;
-    text-align: right;
+    text-align: left;
     margin-bottom: 1rem;
 }
 
 .mobile-review-nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    gap: 1.5rem;
     padding-top: 1rem;
     border-top: 1px solid var(--border-color);
 }
@@ -1728,9 +1789,11 @@ section h2 {
 }
 
 .mobile-review-counter {
-    color: var(--text-light);
-    font-size: 0.85rem;
+    color: var(--text-dark);
+    font-size: 0.9rem;
     font-weight: 600;
+    min-width: 60px;
+    text-align: center;
 }
 
 /* Show mobile widget only on mobile/tablet */
@@ -1740,10 +1803,41 @@ section h2 {
     }
 }
 
-/* Hide on desktop */
+/* Show mobile widget on desktop too, but position it as a modal/overlay */
 @media (min-width: 1400px) {
     .mobile-review-widget {
-        display: none !important;
+        display: block;
+        z-index: 1003;
+    }
+    
+    .mobile-review-content {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) translateY(100%);
+        max-width: 500px;
+        width: 90%;
+        max-height: 70vh;
+        border-radius: 20px;
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+        z-index: 1004;
+        transition: transform 0.3s ease-out;
+    }
+    
+    .mobile-review-widget.active .mobile-review-content {
+        transform: translate(-50%, -50%) translateY(0);
+    }
+    
+    /* Add overlay background on desktop */
+    .mobile-review-widget.active::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1003;
     }
 }
 

@@ -1,3 +1,46 @@
+// Align review button's right edge with Book Now button's right edge on desktop
+function alignReviewButton() {
+    if (window.innerWidth >= 1400) {
+        const bookNowBtn = document.querySelector('.floating-cta');
+        const reviewBtn = document.querySelector('.mobile-review-toggle');
+        
+        if (bookNowBtn && reviewBtn) {
+            // Get Book Now button's right edge position
+            const bookNowRect = bookNowBtn.getBoundingClientRect();
+            const bookNowRightEdge = bookNowRect.right;
+            
+            // Calculate right position from viewport edge
+            const rightPosition = window.innerWidth - bookNowRightEdge;
+            
+            // Set review button's right edge to match Book Now's right edge using !important
+            reviewBtn.style.setProperty('right', rightPosition + 'px', 'important');
+            reviewBtn.style.setProperty('left', 'auto', 'important');
+            reviewBtn.style.setProperty('transform', 'none', 'important');
+            reviewBtn.style.setProperty('bottom', '100px', 'important');
+        }
+    } else {
+        // Reset on mobile
+        const reviewBtn = document.querySelector('.mobile-review-toggle');
+        if (reviewBtn) {
+            reviewBtn.style.removeProperty('right');
+            reviewBtn.style.removeProperty('left');
+        }
+    }
+}
+
+// Run when DOM is ready and after a short delay to ensure buttons are positioned
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(alignReviewButton, 100);
+});
+
+// Run on load and resize
+window.addEventListener('load', function() {
+    setTimeout(alignReviewButton, 100);
+});
+window.addEventListener('resize', function() {
+    setTimeout(alignReviewButton, 50);
+});
+
 // Mobile menu toggle
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
@@ -590,7 +633,7 @@ function openBioModal(title, student, bio) {
         if (mobileText && mobileAuthor && mobileCounter) {
             const review = reviews[currentMobileIndex];
             mobileText.textContent = `"${review.text}"`;
-            mobileAuthor.textContent = `- ${review.author}`;
+            mobileAuthor.textContent = review.author;
             mobileCounter.textContent = `${currentMobileIndex + 1} / ${reviews.length}`;
         }
     }
@@ -632,6 +675,15 @@ function openBioModal(title, student, bio) {
     if (mobileContent) {
         mobileContent.addEventListener('click', (e) => {
             e.stopPropagation();
+        });
+    }
+    
+    // Close when clicking overlay background on desktop
+    if (mobileWidget) {
+        mobileWidget.addEventListener('click', (e) => {
+            if (e.target === mobileWidget && mobileWidget.classList.contains('active')) {
+                toggleMobileWidget();
+            }
         });
     }
     
