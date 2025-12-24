@@ -1488,43 +1488,23 @@ section h2 {
     color: var(--text-light);
 }
 
-/* Force contact section links to be visible and clickable */
-.contact-item p a,
-.contact-item a {
-    color: #00a859 !important; /* Direct color value, not variable */
+/* Fix contact section links */
+.contact-item a,
+.contact-item p a {
+    color: var(--primary-color) !important;
     text-decoration: underline !important;
     text-underline-offset: 2px !important;
     cursor: pointer !important;
-    pointer-events: auto !important;
-    display: inline !important;
+    pointer-events: all !important;
     position: relative !important;
-    z-index: 1001 !important;
+    z-index: 10000 !important;
+    display: inline !important;
     font-weight: 500 !important;
-    transition: color 0.2s ease !important;
 }
 
-.contact-item p a:hover,
-.contact-item a:hover {
-    color: #008045 !important; /* Darker green on hover */
-    text-decoration: underline !important;
-}
-
-.contact-item p a:visited,
-.contact-item a:visited {
-    color: #00a859 !important;
-}
-
-.contact-item p a:active,
-.contact-item a:active {
-    color: #008045 !important;
-}
-
-.contact-item p a:focus,
-.contact-item p a:focus,
-.contact-item a:focus {
-    outline: 2px solid #00a859 !important;
-    outline-offset: 2px !important;
-    border-radius: 2px !important;
+.contact-item a:hover,
+.contact-item p a:hover {
+    color: var(--primary-dark) !important;
 }
 
 
@@ -1677,14 +1657,20 @@ section h2 {
 }
 
 /* Mobile Review Widget */
+/* Fix mobile review widget blocking clicks */
 .mobile-review-widget {
-    display: none; /* Hidden on desktop */
+    display: none;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     z-index: 1000;
     font-family: 'Poppins', sans-serif;
+    pointer-events: none; /* Prevent blocking when inactive */
+}
+
+.mobile-review-widget.active {
+    pointer-events: auto; /* Allow clicks when active */
 }
 
 .mobile-review-toggle {
