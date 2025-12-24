@@ -229,6 +229,7 @@ body {
 /* Sections */
 section {
     padding: 5rem 0;
+    padding-top: 7rem; /* Extra padding at top to account for sticky navbar height */
     scroll-margin-top: 100px; /* Ensure sections are clickable when scrolled to, accounting for sticky navbar */
     position: relative;
     z-index: 1; /* Ensure sections are above background but below floating elements */
@@ -322,6 +323,9 @@ section h2 {
     text-align: center;
     box-shadow: var(--shadow);
     transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    z-index: 1001; /* Above navbar (1000) to ensure clickable */
+    pointer-events: auto;
 }
 
 .service-card:hover {
@@ -364,6 +368,8 @@ section h2 {
     text-align: center;
     position: relative;
     transition: transform 0.3s, box-shadow 0.3s;
+    z-index: 1001; /* Above navbar (1000) to ensure clickable */
+    pointer-events: auto;
 }
 
 .pricing-card:hover {
@@ -561,6 +567,7 @@ section h2 {
     margin-top: 3rem;
     padding: 0 60px;
     width: 100%;
+    z-index: 1001; /* Above navbar to ensure carousel is clickable */
 }
 
 .testimonials-track {
@@ -581,6 +588,9 @@ section h2 {
     transition: transform 0.3s, box-shadow 0.3s;
     box-sizing: border-box;
     width: calc((100% - 4rem) / 3);
+    position: relative;
+    z-index: 1001; /* Above navbar (1000) to ensure clickable */
+    pointer-events: auto;
 }
 
 .testimonial-card:hover {
@@ -681,6 +691,9 @@ section h2 {
     padding: 2rem;
     border-left: 4px solid var(--primary-color);
     transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    z-index: 1001; /* Above navbar (1000) to ensure clickable */
+    pointer-events: auto;
 }
 
 .faq-item:hover {
@@ -692,6 +705,10 @@ section h2 {
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--secondary-color);
+    cursor: pointer;
+    position: relative;
+    z-index: 1002; /* Above navbar and card */
+    pointer-events: auto;
     margin-bottom: 1rem;
     cursor: pointer;
     display: flex;
@@ -975,8 +992,9 @@ section h2 {
     display: flex;
     flex-direction: column;
     position: relative;
-    z-index: 10; /* Ensure cards are clickable above other content */
+    z-index: 1001; /* Above navbar (1000) to ensure clickable */
     cursor: pointer;
+    pointer-events: auto;
 }
 
 .blog-preview-card:hover {
@@ -1006,7 +1024,7 @@ section h2 {
 .blog-preview-card .btn-primary {
     margin-top: auto;
     position: relative;
-    z-index: 11; /* Button should be above card */
+    z-index: 1002; /* Button should be above card and navbar */
     pointer-events: auto;
 }
 
@@ -1095,7 +1113,8 @@ section h2 {
     box-shadow: var(--shadow);
     transition: transform 0.3s, box-shadow 0.3s;
     position: relative;
-    z-index: 10; /* Ensure blog posts are clickable */
+    z-index: 1001; /* Above navbar (1000) to ensure clickable */
+    pointer-events: auto;
 }
 
 .blog-post:hover {
@@ -1148,8 +1167,9 @@ section h2 {
     text-decoration: none;
     transition: color 0.3s;
     position: relative;
-    z-index: 11; /* Ensure links are clickable */
+    z-index: 1002; /* Above navbar and card */
     display: block; /* Make entire heading area clickable */
+    pointer-events: auto;
 }
 
 .blog-post h2 a:hover {
@@ -1168,8 +1188,9 @@ section h2 {
     text-decoration: none;
     transition: all 0.3s;
     position: relative;
-    z-index: 11; /* Ensure read more links are clickable */
+    z-index: 1002; /* Above navbar and card */
     display: inline-block;
+    pointer-events: auto;
 }
 
 .blog-read-more:hover {
@@ -1304,6 +1325,7 @@ section h2 {
     margin-top: 3rem;
     padding: 0 60px;
     width: 100%;
+    z-index: 1001; /* Above navbar to ensure carousel is clickable */
 }
 
 .gallery-track {
@@ -1323,6 +1345,8 @@ section h2 {
     min-width: 0;
     aspect-ratio: 1;
     transition: transform 0.3s;
+    z-index: 1001; /* Above navbar (1000) to ensure clickable */
+    pointer-events: auto;
 }
 
 .gallery-item img {
