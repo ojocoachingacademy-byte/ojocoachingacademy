@@ -1465,14 +1465,26 @@ section h2 {
 }
 
 .contact-item a {
-    color: var(--primary-color);
-    text-decoration: underline;
-    cursor: pointer;
+    color: var(--primary-color) !important;
+    text-decoration: underline !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    display: inline !important;
+    position: relative;
+    z-index: 10;
 }
 
 .contact-item a:hover {
-    color: var(--primary-dark);
-    text-decoration: underline;
+    color: var(--primary-dark) !important;
+    text-decoration: underline !important;
+}
+
+.contact-item a:visited {
+    color: var(--primary-color) !important;
+}
+
+.contact-item a:active {
+    color: var(--primary-dark) !important;
 }
 
 
