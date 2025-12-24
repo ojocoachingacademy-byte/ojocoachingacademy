@@ -1488,11 +1488,6 @@ section h2 {
     color: var(--text-light);
 }
 
-/* Ensure paragraph color doesn't override link color */
-.contact-item p a {
-    color: inherit !important; /* Will be overridden by link-specific rule */
-}
-
 /* Force contact section links to be visible and clickable */
 .contact-item p a,
 .contact-item a {
