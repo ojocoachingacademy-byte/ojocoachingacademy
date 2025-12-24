@@ -1488,6 +1488,11 @@ section h2 {
     color: var(--text-light);
 }
 
+/* Ensure paragraph color doesn't override link color */
+.contact-item p a {
+    color: inherit !important; /* Will be overridden by link-specific rule */
+}
+
 /* Force contact section links to be visible and clickable */
 .contact-item p a,
 .contact-item a {
@@ -1520,32 +1525,11 @@ section h2 {
 }
 
 .contact-item p a:focus,
+.contact-item p a:focus,
 .contact-item a:focus {
     outline: 2px solid #00a859 !important;
     outline-offset: 2px !important;
     border-radius: 2px !important;
-}
-
-.contact-item a:hover,
-.contact-item p a:hover {
-    color: var(--primary-dark) !important;
-    text-decoration: underline !important;
-}
-
-.contact-item a:visited,
-.contact-item p a:visited {
-    color: var(--primary-color) !important;
-}
-
-.contact-item a:active,
-.contact-item p a:active {
-    color: var(--primary-dark) !important;
-}
-
-.contact-item a:focus,
-.contact-item p a:focus {
-    outline: 2px solid var(--primary-color) !important;
-    outline-offset: 2px !important;
 }
 
 
