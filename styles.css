@@ -1488,24 +1488,42 @@ section h2 {
     color: var(--text-light);
 }
 
-.contact-item p a {
-    color: var(--primary-color) !important;
+/* Force contact section links to be visible and clickable */
+.contact-item p a,
+.contact-item a {
+    color: #00a859 !important; /* Direct color value, not variable */
     text-decoration: underline !important;
+    text-underline-offset: 2px !important;
     cursor: pointer !important;
     pointer-events: auto !important;
     display: inline !important;
-    position: relative;
-    z-index: 1001 !important; /* Above navbar */
+    position: relative !important;
+    z-index: 1001 !important;
+    font-weight: 500 !important;
+    transition: color 0.2s ease !important;
 }
 
-.contact-item a {
-    color: var(--primary-color) !important;
+.contact-item p a:hover,
+.contact-item a:hover {
+    color: #008045 !important; /* Darker green on hover */
     text-decoration: underline !important;
-    cursor: pointer !important;
-    pointer-events: auto !important;
-    display: inline !important;
-    position: relative;
-    z-index: 1001 !important; /* Above navbar */
+}
+
+.contact-item p a:visited,
+.contact-item a:visited {
+    color: #00a859 !important;
+}
+
+.contact-item p a:active,
+.contact-item a:active {
+    color: #008045 !important;
+}
+
+.contact-item p a:focus,
+.contact-item a:focus {
+    outline: 2px solid #00a859 !important;
+    outline-offset: 2px !important;
+    border-radius: 2px !important;
 }
 
 .contact-item a:hover,
