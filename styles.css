@@ -210,6 +210,9 @@ body {
     border: none;
     cursor: pointer;
     font-size: 1rem;
+    position: relative;
+    z-index: 1001; /* Ensure buttons are clickable above navbar and content */
+    pointer-events: auto;
 }
 
 .btn-primary:hover {
@@ -226,6 +229,9 @@ body {
 /* Sections */
 section {
     padding: 5rem 0;
+    scroll-margin-top: 100px; /* Ensure sections are clickable when scrolled to, accounting for sticky navbar */
+    position: relative;
+    z-index: 1; /* Ensure sections are above background but below floating elements */
 }
 
 section h2 {
@@ -621,7 +627,7 @@ section h2 {
     justify-content: space-between;
     pointer-events: none;
     padding: 0 10px;
-    z-index: 10;
+    z-index: 1001; /* Above navbar and content, but below floating buttons */
 }
 
 .carousel-btn {
@@ -639,6 +645,8 @@ section h2 {
     pointer-events: all;
     transition: all 0.3s;
     box-shadow: var(--shadow);
+    position: relative;
+    z-index: 1002; /* Ensure buttons are clickable above everything except floating buttons */
 }
 
 .carousel-btn:hover {
@@ -966,6 +974,9 @@ section h2 {
     transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 10; /* Ensure cards are clickable above other content */
+    cursor: pointer;
 }
 
 .blog-preview-card:hover {
@@ -994,6 +1005,9 @@ section h2 {
 
 .blog-preview-card .btn-primary {
     margin-top: auto;
+    position: relative;
+    z-index: 11; /* Button should be above card */
+    pointer-events: auto;
 }
 
 /* Video Testimonials Section */
@@ -1080,6 +1094,8 @@ section h2 {
     overflow: hidden;
     box-shadow: var(--shadow);
     transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    z-index: 10; /* Ensure blog posts are clickable */
 }
 
 .blog-post:hover {
@@ -1131,6 +1147,9 @@ section h2 {
     color: var(--text-dark);
     text-decoration: none;
     transition: color 0.3s;
+    position: relative;
+    z-index: 11; /* Ensure links are clickable */
+    display: block; /* Make entire heading area clickable */
 }
 
 .blog-post h2 a:hover {
@@ -1148,6 +1167,9 @@ section h2 {
     font-weight: 600;
     text-decoration: none;
     transition: all 0.3s;
+    position: relative;
+    z-index: 11; /* Ensure read more links are clickable */
+    display: inline-block;
 }
 
 .blog-read-more:hover {
@@ -1335,10 +1357,13 @@ section h2 {
     pointer-events: none;
     left: 0;
     right: 0;
+    z-index: 1001; /* Above navbar and content */
 }
 
 .gallery-carousel .carousel-btn {
     pointer-events: all;
+    position: relative;
+    z-index: 1002; /* Ensure gallery buttons are clickable */
 }
 
 /* Legal Pages */
@@ -1441,10 +1466,12 @@ section h2 {
 
 .contact-item a {
     color: var(--primary-color);
-    text-decoration: none;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .contact-item a:hover {
+    color: var(--primary-dark);
     text-decoration: underline;
 }
 
@@ -1780,6 +1807,9 @@ section h2 {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    z-index: 1005; /* Ensure mobile review buttons are clickable above everything */
+    pointer-events: auto;
     transition: background 0.3s;
 }
 
