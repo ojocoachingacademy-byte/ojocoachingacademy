@@ -417,6 +417,10 @@ function openBioModal(title, student, bio) {
         {
             author: "Lea G.",
             text: "I have worked with several tennis coaches over the years, but Toby is by far the best. He takes the time to understand his students' goals and tailor his lessons to their needs."
+        },
+        {
+            author: "Douglas",
+            text: "I've been taking lessons with Tobi for over three years, and it's been an amazing experience! Tobi has helped me improve my tennis skills tremendously and given me the confidence I needed to play better. The lessons focus on solid fundamentals, and I can truly see the difference in my game quickly. I highly recommend Tobi to anyone looking to boost their skills and confidence—both on and off the court! He is a great coach."
         }
     ];
     
@@ -612,6 +616,10 @@ function openBioModal(title, student, bio) {
         {
             author: "Lea G.",
             text: "I have worked with several tennis coaches over the years, but Toby is by far the best. He takes the time to understand his students' goals and tailor his lessons to their needs."
+        },
+        {
+            author: "Douglas",
+            text: "I've been taking lessons with Tobi for over three years, and it's been an amazing experience! Tobi has helped me improve my tennis skills tremendously and given me the confidence I needed to play better. The lessons focus on solid fundamentals, and I can truly see the difference in my game quickly. I highly recommend Tobi to anyone looking to boost their skills and confidence—both on and off the court! He is a great coach."
         }
     ];
     
