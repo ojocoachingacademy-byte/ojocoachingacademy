@@ -1776,10 +1776,12 @@ section h2 {
         }
         
         .floating-cta {
+            display: flex !important;
             bottom: 20px;
             right: 15px;
             padding: 1rem 1.5rem;
             font-size: 1rem;
+            z-index: 1002;
         }
     }
 }
@@ -2766,7 +2768,7 @@ section h2 {
     }
     
     .gallery-carousel {
-        padding: 0 50px;
+        padding: 0 20px; /* Reduced from 50px to prevent horizontal scrolling on small screens */
     }
 
     .testimonials-carousel {
