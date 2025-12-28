@@ -49,52 +49,6 @@
 
     <section class="referral-section" style="padding: 4rem 0; background: var(--bg-light);">
         <div class="container">
-            <!-- Message if no code provided -->
-            <div id="no-code-message" class="referral-card" style="margin-bottom: 3rem; display: none;">
-                <div class="info-card" style="background: var(--white); padding: 3rem; border-radius: 12px; box-shadow: var(--shadow); border: 3px solid var(--primary-color); text-align: center;">
-                    <h2 style="font-size: 1.75rem; margin-bottom: 1rem; color: var(--text-dark);">Personalized Referral Link Required</h2>
-                    <p style="font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem;">This page requires a personalized referral code. Please use the link provided in your email from Coach Tobi.</p>
-                    <p style="font-size: 1rem; color: var(--text-dark);">If you need your referral link, please contact <a href="mailto:tobi@ojocoachingacademy.com" style="color: var(--primary-color); text-decoration: underline;">tobi@ojocoachingacademy.com</a></p>
-                </div>
-            </div>
-
-            <!-- Your Unique Referral Code -->
-            <div id="referral-code-section" class="referral-card" style="margin-bottom: 3rem;">
-                <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-dark); text-align: center;">Your Unique Referral Code</h2>
-                <div class="referral-code-display" id="referral-code-display">
-                    <span id="referral-code-text" style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color); letter-spacing: 0.1em; font-family: 'Courier New', monospace;"></span>
-                </div>
-                <button onclick="copyCode()" class="btn-primary" style="margin: 1.5rem auto 0; display: block; padding: 0.75rem 2rem;">
-                    📋 Copy Code
-                </button>
-                <p id="copy-code-feedback" style="text-align: center; margin-top: 1rem; color: var(--primary-color); font-weight: 600; display: none;">✓ Code copied to clipboard!</p>
-            </div>
-
-            <!-- Your Referral Link -->
-            <div id="referral-link-section" class="referral-card" style="margin-bottom: 3rem;">
-                <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-dark); text-align: center;">Your Referral Link</h2>
-                <div class="referral-link-display" style="background: var(--white); padding: 1.5rem; border-radius: 8px; border: 2px solid var(--border-color); margin-bottom: 1.5rem;">
-                    <p id="referral-link-text" style="font-size: 1rem; color: var(--text-dark); word-break: break-all; margin: 0; font-family: 'Courier New', monospace;"></p>
-                </div>
-                <button onclick="copyLink()" class="btn-primary" style="margin: 0 auto; display: block; padding: 0.75rem 2rem;">
-                    🔗 Copy Link
-                </button>
-                <p id="copy-link-feedback" style="text-align: center; margin-top: 1rem; color: var(--primary-color); font-weight: 600; display: none;">✓ Link copied to clipboard!</p>
-            </div>
-
-            <!-- Share Buttons -->
-            <div id="share-buttons-section" class="referral-card" style="margin-bottom: 3rem;">
-                <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-dark); text-align: center;">Share with Friends</h2>
-                <div class="share-buttons" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <button onclick="shareSMS()" class="btn-primary" style="padding: 1rem 2rem; font-size: 1rem;">
-                        📱 Share via SMS
-                    </button>
-                    <button onclick="shareEmail()" class="btn-primary" style="padding: 1rem 2rem; font-size: 1rem;">
-                        ✉️ Share via Email
-                    </button>
-                </div>
-            </div>
-
             <!-- How It Works -->
             <div class="referral-card" style="margin-bottom: 3rem;">
                 <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-dark); text-align: center;">How It Works</h2>
@@ -107,12 +61,66 @@
                     </ol>
                     <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--border-color);">
                         <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--primary-color);">🎁 You Earn: 1 FREE Lesson</h3>
-                        <p style="font-size: 1rem; color: var(--text-light); margin-bottom: 0;">For every friend who books and completes a package lesson</p>
+                        <p style="font-size: 1rem; color: var(--text-light); margin-bottom: 0;">For every friend who books a package of lessons</p>
                     </div>
                 </div>
-                <p style="text-align: center; margin-top: 2rem; color: var(--text-light); font-size: 0.95rem;">
-                    <strong>Note:</strong> Rewards are earned when your referred friend completes their first package lesson. Referral codes are manually verified.
-                </p>
+            </div>
+
+            <!-- Generate Referral Code Form -->
+            <div class="referral-card" style="margin-bottom: 3rem;">
+                <div class="info-card" style="background: var(--white); padding: 2rem; border-radius: 12px; box-shadow: var(--shadow); border: 3px solid var(--primary-color);">
+                    <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-dark); text-align: center;">Generate Your Referral Code</h2>
+                    <form id="referral-form" style="max-width: 500px; margin: 0 auto;">
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="firstName" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-dark);">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px; font-size: 1rem; font-family: 'Poppins', sans-serif;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="lastName" style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-dark);">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required style="width: 100%; padding: 0.75rem; border: 2px solid var(--border-color); border-radius: 8px; font-size: 1rem; font-family: 'Poppins', sans-serif;">
+                        </div>
+                        <button type="submit" class="btn-primary" style="width: 100%; padding: 1rem; font-size: 1rem; margin-top: 1rem;">
+                            Generate My Referral Code
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Generated Referral Code Display -->
+            <div id="referral-code-section" class="referral-card" style="margin-bottom: 3rem; display: none;">
+                <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-dark); text-align: center;">Your Unique Referral Code</h2>
+                <div class="referral-code-display" id="referral-code-display">
+                    <span id="referral-code-text" style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color); letter-spacing: 0.1em; font-family: 'Courier New', monospace;"></span>
+                </div>
+                <button onclick="copyCode()" class="btn-primary" style="margin: 1.5rem auto 0; display: block; padding: 0.75rem 2rem;">
+                    📋 Copy Code
+                </button>
+                <p id="copy-code-feedback" style="text-align: center; margin-top: 1rem; color: var(--primary-color); font-weight: 600; display: none;">✓ Code copied to clipboard!</p>
+            </div>
+
+            <!-- Generated Referral Link Display -->
+            <div id="referral-link-section" class="referral-card" style="margin-bottom: 3rem; display: none;">
+                <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-dark); text-align: center;">Your Referral Link</h2>
+                <div class="referral-link-display" style="background: var(--white); padding: 1.5rem; border-radius: 8px; border: 2px solid var(--border-color); margin-bottom: 1.5rem;">
+                    <p id="referral-link-text" style="font-size: 1rem; color: var(--text-dark); word-break: break-all; margin: 0; font-family: 'Courier New', monospace;"></p>
+                </div>
+                <button onclick="copyLink()" class="btn-primary" style="margin: 0 auto; display: block; padding: 0.75rem 2rem;">
+                    🔗 Copy Link
+                </button>
+                <p id="copy-link-feedback" style="text-align: center; margin-top: 1rem; color: var(--primary-color); font-weight: 600; display: none;">✓ Link copied to clipboard!</p>
+            </div>
+
+            <!-- Share Buttons -->
+            <div id="share-buttons-section" class="referral-card" style="margin-bottom: 3rem; display: none;">
+                <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-dark); text-align: center;">Share with Friends</h2>
+                <div class="share-buttons" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="shareSMS()" class="btn-primary" style="padding: 1rem 2rem; font-size: 1rem;">
+                        📱 Share via SMS
+                    </button>
+                    <button onclick="shareEmail()" class="btn-primary" style="padding: 1rem 2rem; font-size: 1rem;">
+                        ✉️ Share via Email
+                    </button>
+                </div>
             </div>
         </div>
     </section>
@@ -129,11 +137,22 @@
 
     <script src="script.js"></script>
     <script>
-        // Get referral code from URL parameter
+        // Store generated referral code
+        let currentReferralCode = null;
+
+        // Generate referral code from first name and last name
+        function generateReferralCode(firstName, lastName) {
+            // Remove spaces and convert to uppercase
+            const first = firstName.trim().toUpperCase().replace(/\s+/g, '');
+            // Get first letter of last name, uppercase
+            const lastInitial = lastName.trim().toUpperCase().charAt(0);
+            // Combine: FIRSTNAME + LASTINITIAL + 2026
+            return first + lastInitial + '2026';
+        }
+
+        // Get referral code (from stored variable)
         function getReferralCode() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const code = urlParams.get('code');
-            return code; // Returns null if no code provided
+            return currentReferralCode;
         }
 
         // Get referral link
@@ -143,26 +162,37 @@
             return `https://ojocoachingacademy.com/booking?ref=${code}`;
         }
 
-        // Update page with referral code
+        // Handle form submission
         document.addEventListener('DOMContentLoaded', function() {
-            const code = getReferralCode();
-            const link = getReferralLink();
+            const form = document.getElementById('referral-form');
             
-            if (!code) {
-                // No code provided - show message and hide referral sections
-                document.getElementById('no-code-message').style.display = 'block';
-                document.getElementById('referral-code-section').style.display = 'none';
-                document.getElementById('referral-link-section').style.display = 'none';
-                document.getElementById('share-buttons-section').style.display = 'none';
-            } else {
-                // Code provided - show referral sections and hide message
-                document.getElementById('no-code-message').style.display = 'none';
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const firstName = document.getElementById('firstName').value.trim();
+                const lastName = document.getElementById('lastName').value.trim();
+                
+                if (!firstName || !lastName) {
+                    alert('Please enter both first name and last name.');
+                    return;
+                }
+                
+                // Generate referral code
+                currentReferralCode = generateReferralCode(firstName, lastName);
+                const link = getReferralLink();
+                
+                // Display the code and link
+                document.getElementById('referral-code-text').textContent = currentReferralCode;
+                document.getElementById('referral-link-text').textContent = link;
+                
+                // Show the referral sections
                 document.getElementById('referral-code-section').style.display = 'block';
                 document.getElementById('referral-link-section').style.display = 'block';
                 document.getElementById('share-buttons-section').style.display = 'block';
-                document.getElementById('referral-code-text').textContent = code;
-                document.getElementById('referral-link-text').textContent = link;
-            }
+                
+                // Scroll to the generated code
+                document.getElementById('referral-code-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
         });
 
         // Copy code to clipboard
