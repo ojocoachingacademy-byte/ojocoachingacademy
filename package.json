@@ -1,7 +1,7 @@
 {
   "name": "ojocoachingacademy",
   "version": "1.0.0",
-  "description": "Ojo Coaching Academy website with automated email functionality",
+  "description": "Tennis coaching website with Stripe payment processing",
   "dependencies": {
     "@sendgrid/mail": "^8.1.0",
     "stripe": "^14.0.0"
