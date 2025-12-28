@@ -2582,6 +2582,19 @@ section h2 {
     .nav-dropdown.active .dropdown-arrow {
         transform: rotate(180deg);
     }
+    
+    /* Hide dropdown arrows when nav menu is closed */
+    .nav-menu:not(.active) .dropdown-arrow {
+        display: none;
+    }
+    
+    .nav-menu:not(.active) {
+        pointer-events: none;
+    }
+    
+    .nav-menu.active {
+        pointer-events: auto;
+    }
 
     .hero-layout {
         grid-template-columns: 1fr;
