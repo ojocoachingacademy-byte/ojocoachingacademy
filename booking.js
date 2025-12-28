@@ -1,5 +1,6 @@
 // Wait for DOM to be ready before initializing Stripe
 let cardElement; // Make cardElement accessible globally
+let stripe; // Make stripe accessible globally
 
 // Auto-fill referral code from URL parameter
 document.addEventListener('DOMContentLoaded', function() {
@@ -28,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Stripe
-    const stripe = Stripe('pk_live_51SgcB8QjxWCW85VVPpXWHwiObtV0uCADnDPfEGP6hK6brSwXDDb37cAlTmKP0B4tqkJDW84mjgMv8eMFszIbnHF300zd6T7NCK');
+    stripe = Stripe('pk_live_51SgcB8QjxWCW85VVPpXWHwiObtV0uCADnDPfEGP6hK6brSwXDDb37cAlTmKP0B4tqkJDW84mjgMv8eMFszIbnHF300zd6T7NCK');
     const elements = stripe.elements({
         appearance: {
             theme: 'stripe',
@@ -146,6 +147,101 @@ packageInputs.forEach(input => {
 // Initialize summary on page load
 updateSummary();
 
+// Process payment function
+async function processPayment(amount, customerInfo, cardElement) {
+  const submitButton = document.querySelector('button[type="submit"]');
+  const originalButtonText = submitButton ? submitButton.textContent : 'Complete Booking & Pay';
+  
+  try {
+    // Show loading state
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Processing...';
+    }
+    
+    // Hide any previous error messages
+    const existingError = document.getElementById('payment-error');
+    if (existingError) {
+      existingError.style.display = 'none';
+    }
+
+    // Step 1: Create payment intent via Netlify Function
+    const response = await fetch('/.netlify/functions/create-payment-intent', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        amount: amount,
+        customerInfo: customerInfo
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Payment failed');
+    }
+
+    const { clientSecret, paymentIntentId } = await response.json();
+
+    // Step 2: Confirm payment with Stripe
+    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: cardElement,
+        billing_details: {
+          name: customerInfo.name,
+          email: customerInfo.email,
+          phone: customerInfo.phone || ''
+        }
+      }
+    });
+
+    if (error) {
+      // Payment failed
+      throw new Error(error.message);
+    }
+
+    if (paymentIntent.status === 'succeeded') {
+      // Payment successful - redirect to confirmation
+      window.location.href = `/confirmation.html?payment_intent=${paymentIntent.id}&amount=${amount}&package=${encodeURIComponent(customerInfo.package)}`;
+    } else {
+      throw new Error('Payment was not completed');
+    }
+
+  } catch (error) {
+    // Show error to user
+    console.error('Payment error:', error);
+    
+    // Re-enable button
+    if (submitButton) {
+      submitButton.disabled = false;
+      submitButton.textContent = originalButtonText;
+    }
+    
+    // Display error message
+    const errorDiv = document.getElementById('payment-error') || createErrorDiv();
+    errorDiv.textContent = error.message || 'Payment failed. Please try again.';
+    errorDiv.style.display = 'block';
+    
+    // Re-throw to allow caller to handle if needed
+    throw error;
+  }
+}
+
+function createErrorDiv() {
+  const errorDiv = document.createElement('div');
+  errorDiv.id = 'payment-error';
+  errorDiv.style.color = '#dc3545';
+  errorDiv.style.padding = '1rem';
+  errorDiv.style.marginTop = '1rem';
+  errorDiv.style.borderRadius = '8px';
+  errorDiv.style.backgroundColor = '#ffe8e8';
+  errorDiv.style.border = '1px solid #dc3545';
+  const form = document.querySelector('form');
+  form.appendChild(errorDiv);
+  return errorDiv;
+}
+
 // Handle form submission
 const form = document.getElementById('booking-form');
 const submitButton = document.getElementById('submit-button');
@@ -153,159 +249,52 @@ const submitButton = document.getElementById('submit-button');
 form.addEventListener('submit', async function(event) {
     event.preventDefault();
     
-    // Disable submit button to prevent double submission
-    submitButton.disabled = true;
-    submitButton.textContent = 'Processing...';
-    
     // Get form data
     const formData = new FormData(form);
     const selectedPackage = document.querySelector('input[name="package"]:checked');
     
     if (!selectedPackage) {
         alert('Please select a package');
-        submitButton.disabled = false;
-        submitButton.textContent = 'Complete Booking & Pay';
         return;
     }
     
-    const packagePrice = selectedPackage.dataset.price;
+    // Validate card element is mounted
+    if (!cardElement) {
+        alert('Payment form is not ready. Please refresh the page and try again.');
+        return;
+    }
+    
+    const packagePrice = parseFloat(selectedPackage.dataset.price);
     const packageName = selectedPackage.dataset.name;
     
-    // In a real implementation, you would:
-    // 1. Create a payment intent on your server
-    // 2. Confirm the payment with Stripe
-    // 3. Process the booking on your server
-    // 4. Redirect to confirmation page
+    // Prepare customer info for payment
+    const firstName = formData.get('firstName');
+    const lastName = formData.get('lastName');
+    const customerName = `${firstName} ${lastName}`;
+    const customerEmail = formData.get('email');
+    const customerPhone = formData.get('phone');
+    const referralCode = document.getElementById('referral-code')?.value || '';
     
-    // For demonstration purposes, we'll simulate the payment process
-    // In production, you need to set up a backend server to handle Stripe payments securely
+    const customerInfo = {
+        name: customerName,
+        email: customerEmail,
+        phone: customerPhone,
+        package: packageName,
+        referralCode: referralCode
+    };
     
     try {
-        // Simulate API call (replace with actual Stripe payment intent creation)
-        // const { clientSecret } = await fetch('/api/create-payment-intent', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({
-        //         amount: parseFloat(packagePrice) * 100, // Convert to cents
-        //         currency: 'usd',
-        //         metadata: {
-        //             firstName: formData.get('firstName'),
-        //             lastName: formData.get('lastName'),
-        //             email: formData.get('email'),
-        //             phone: formData.get('phone'),
-        //             package: packageName,
-        //         }
-        //     })
-        // }).then(r => r.json());
+        // Process payment via Netlify Function
+        // processPayment handles button state and error display
+        await processPayment(packagePrice, customerInfo, cardElement);
         
-        // const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-        //     payment_method: {
-        //         card: cardElement,
-        //         billing_details: {
-        //             name: `${formData.get('firstName')} ${formData.get('lastName')}`,
-        //             email: formData.get('email'),
-        //             phone: formData.get('phone'),
-        //         },
-        //     },
-        // });
-        
-        // For demo purposes, simulate successful payment
-        // In production, remove this and use the actual Stripe code above
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        // Generate booking reference
-        const bookingRef = 'TEN-' + Date.now().toString().slice(-6);
-        
-        // Track booking conversion in Google Analytics
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'begin_checkout', {
-                'currency': 'USD',
-                'value': parseFloat(packagePrice),
-                'items': [{
-                    'item_name': packageName,
-                    'item_category': document.querySelector('input[name="packageType"]:checked')?.value || 'Private',
-                    'price': parseFloat(packagePrice),
-                    'quantity': 1
-                }]
-            });
-        }
-        
-        // Prepare booking info
-        const bookingInfo = {
-            reference: bookingRef,
-            firstName: formData.get('firstName'),
-            lastName: formData.get('lastName'),
-            email: formData.get('email'),
-            phone: formData.get('phone'),
-            package: packageName,
-            price: packagePrice,
-            experience: formData.get('experience'),
-            goals: formData.get('goals'),
-            timestamp: new Date().toISOString(),
-        };
-        
-        // Store booking info for confirmation page and analytics
-        sessionStorage.setItem('bookingPrice', packagePrice);
-        sessionStorage.setItem('bookingPackage', packageName);
-        sessionStorage.setItem('bookingPackageType', document.querySelector('input[name="packageType"]:checked')?.value || 'Private');
-        
-        // Submit to Netlify Forms
-        const netlifyFormData = new FormData();
-        netlifyFormData.append('form-name', 'booking');
-        netlifyFormData.append('firstName', bookingInfo.firstName);
-        netlifyFormData.append('lastName', bookingInfo.lastName);
-        netlifyFormData.append('email', bookingInfo.email);
-        netlifyFormData.append('phone', bookingInfo.phone);
-        netlifyFormData.append('package', bookingInfo.package);
-        netlifyFormData.append('packageType', document.querySelector('input[name="packageType"]:checked')?.value || '');
-        netlifyFormData.append('price', bookingInfo.price);
-        netlifyFormData.append('experience', bookingInfo.experience);
-        netlifyFormData.append('goals', bookingInfo.goals || '');
-        const referralCode = document.getElementById('referral-code')?.value || '';
-        netlifyFormData.append('referral-code', referralCode);
-        netlifyFormData.append('bookingReference', bookingRef);
-        netlifyFormData.append('timestamp', bookingInfo.timestamp);
-        
-        // Submit to Netlify Forms (non-blocking - don't wait for response)
-        fetch('/', {
-            method: 'POST',
-            body: netlifyFormData
-        }).catch(err => console.log('Form submission error:', err));
-        
-        // Send booking confirmation email via Netlify Function
-        // This automatically sends confirmation email to customer and notification to coach
-        fetch('/.netlify/functions/send-booking-confirmation', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                firstName: bookingInfo.firstName,
-                lastName: bookingInfo.lastName,
-                email: bookingInfo.email,
-                phone: bookingInfo.phone,
-                package: bookingInfo.package,
-                packageType: document.querySelector('input[name="packageType"]:checked')?.value || 'Private',
-                price: bookingInfo.price,
-                bookingReference: bookingRef,
-                experience: bookingInfo.experience,
-                goals: bookingInfo.goals || '',
-                referralCode: document.getElementById('referral-code')?.value || ''
-            })
-        }).catch(err => console.log('Email sending error:', err));
-        
-        // Store booking info in sessionStorage
-        sessionStorage.setItem('bookingInfo', JSON.stringify(bookingInfo));
-        
-        // Redirect to confirmation page
-        window.location.href = `confirmation.html?ref=${bookingRef}`;
+        // If payment succeeds, processPayment will redirect to confirmation page
+        // This code will not execute on success due to redirect
         
     } catch (error) {
-        // Handle errors
-        const displayError = document.getElementById('card-errors');
-        displayError.textContent = error.message || 'An error occurred. Please try again.';
-        submitButton.disabled = false;
-        submitButton.textContent = 'Complete Booking & Pay';
+        // Error is already handled in processPayment function
+        // This catch is here for any unexpected errors
+        console.error('Booking submission error:', error);
     }
 });
 
