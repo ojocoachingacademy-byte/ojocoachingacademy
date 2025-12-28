@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Refer a friend to Ojo Coaching Academy and earn free tennis lessons! Share your unique referral code and help others discover great tennis coaching in San Diego.">
+    <meta name="keywords" content="tennis referral, refer a friend, earn free lessons, tennis coaching San Diego">
+    <link rel="canonical" href="https://ojocoachingacademy.com/referral.html">
+    <link rel="icon" type="image/png" href="Photos and videos/Ojo Coaching Academy Logo.png">
+    <title>Refer a Friend - Earn Free Lessons | Ojo Coaching Academy</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-brand">
+                <img src="Photos and videos/Ojo Coaching Academy Logo.png" alt="Ojo Coaching Academy Logo">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#pricing">Pricing</a></li>
+                <li><a href="index.html#testimonials">Testimonials</a></li>
+                <li><a href="review.html">Leave Review</a></li>
+                <li><a href="referral.html">Refer a Friend</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="booking.html" class="btn-primary-nav">Book Now</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" style="padding: 6rem 0 4rem;">
+        <div class="container">
+            <div class="hero-content" style="text-align: center;">
+                <h1 style="font-size: 3rem; margin-bottom: 1rem; color: var(--primary-color);">Refer a Friend, Earn Free Lessons! 🎾</h1>
+                <p style="font-size: 1.25rem; color: var(--text-light); max-width: 600px; margin: 0 auto;">Share the love of tennis and earn rewards</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="referral-section" style="padding: 4rem 0; background: var(--bg-light);">
+        <div class="container">
+            <!-- Your Unique Referral Code -->
+            <div class="referral-card" style="margin-bottom: 3rem;">
+                <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-dark); text-align: center;">Your Unique Referral Code</h2>
+                <div class="referral-code-display" id="referral-code-display">
+                    <span id="referral-code-text" style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color); letter-spacing: 0.1em; font-family: 'Courier New', monospace;">KAREND2026</span>
+                </div>
+                <button onclick="copyCode()" class="btn-primary" style="margin: 1.5rem auto 0; display: block; padding: 0.75rem 2rem;">
+                    📋 Copy Code
+                </button>
+                <p id="copy-code-feedback" style="text-align: center; margin-top: 1rem; color: var(--primary-color); font-weight: 600; display: none;">✓ Code copied to clipboard!</p>
+            </div>
+
+            <!-- Your Referral Link -->
+            <div class="referral-card" style="margin-bottom: 3rem;">
+                <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-dark); text-align: center;">Your Referral Link</h2>
+                <div class="referral-link-display" style="background: var(--white); padding: 1.5rem; border-radius: 8px; border: 2px solid var(--border-color); margin-bottom: 1.5rem;">
+                    <p id="referral-link-text" style="font-size: 1rem; color: var(--text-dark); word-break: break-all; margin: 0; font-family: 'Courier New', monospace;">https://ojocoachingacademy.com/booking?ref=KAREND2026</p>
+                </div>
+                <button onclick="copyLink()" class="btn-primary" style="margin: 0 auto; display: block; padding: 0.75rem 2rem;">
+                    🔗 Copy Link
+                </button>
+                <p id="copy-link-feedback" style="text-align: center; margin-top: 1rem; color: var(--primary-color); font-weight: 600; display: none;">✓ Link copied to clipboard!</p>
+            </div>
+
+            <!-- Share Buttons -->
+            <div class="referral-card" style="margin-bottom: 3rem;">
+                <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-dark); text-align: center;">Share with Friends</h2>
+                <div class="share-buttons" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="shareSMS()" class="btn-primary" style="padding: 1rem 2rem; font-size: 1rem;">
+                        📱 Share via SMS
+                    </button>
+                    <button onclick="shareEmail()" class="btn-primary" style="padding: 1rem 2rem; font-size: 1rem;">
+                        ✉️ Share via Email
+                    </button>
+                </div>
+            </div>
+
+            <!-- How It Works -->
+            <div class="referral-card" style="margin-bottom: 3rem;">
+                <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-dark); text-align: center;">How It Works</h2>
+                <div class="info-card" style="background: var(--white); padding: 2rem; border-radius: 12px; box-shadow: var(--shadow);">
+                    <ol style="list-style-position: inside; padding: 0; line-height: 2;">
+                        <li style="margin-bottom: 1rem;">Share your referral code or link with friends, family, or colleagues</li>
+                        <li style="margin-bottom: 1rem;">They book any lesson package using your code (5-hour, 20-hour, semi-private packages, or gift packages)</li>
+                        <li style="margin-bottom: 1rem;">After they complete their first package lesson, you earn <strong style="color: var(--primary-color);">1 FREE lesson</strong>!</li>
+                        <li style="margin-bottom: 0;">No limit on referrals - the more you share, the more free lessons you can earn!</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Reward Details -->
+            <div class="referral-card">
+                <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-dark); text-align: center;">Reward Details</h2>
+                <div class="info-card" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%); color: var(--white); padding: 2rem; border-radius: 12px; box-shadow: var(--shadow-lg);">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; text-align: center;">🎁 You Earn: 1 FREE Lesson</h3>
+                    <p style="text-align: center; font-size: 1.1rem; margin-bottom: 1.5rem;">For every friend who books and completes a package lesson</p>
+                    <div style="background: rgba(255, 255, 255, 0.2); padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem;">
+                        <p style="margin-bottom: 0.5rem;"><strong>✓ Qualifying Packages:</strong></p>
+                        <ul style="list-style: none; padding: 0; margin: 0;">
+                            <li style="margin-bottom: 0.5rem;">• 5-Hour Package</li>
+                            <li style="margin-bottom: 0.5rem;">• 20-Hour Package</li>
+                            <li style="margin-bottom: 0.5rem;">• Semi-Private Packages (5-hour or 20-hour)</li>
+                            <li style="margin-bottom: 0;">• Gift Packages</li>
+                        </ul>
+                        <p style="margin-top: 1rem; margin-bottom: 0; font-size: 0.9rem; opacity: 0.9;"><em>Note: Single lessons do not qualify for referral rewards.</em></p>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 2rem; color: var(--text-light); font-size: 0.95rem;">
+                    <strong>Note:</strong> Rewards are earned when your referred friend completes their first package lesson. Referral codes are manually verified.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Ojo Coaching Academy. All rights reserved.</p>
+            <p style="margin-top: 1rem;">
+                <a href="privacy-policy.html" style="color: var(--white); text-decoration: underline;">Privacy Policy</a> | 
+                <a href="terms.html" style="color: var(--white); text-decoration: underline;">Terms of Service</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Get referral code from URL parameter or use default template
+        function getReferralCode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            return code || 'KAREND2026'; // Default template code
+        }
+
+        // Get referral link
+        function getReferralLink() {
+            const code = getReferralCode();
+            return `https://ojocoachingacademy.com/booking?ref=${code}`;
+        }
+
+        // Update page with referral code
+        document.addEventListener('DOMContentLoaded', function() {
+            const code = getReferralCode();
+            const link = getReferralLink();
+            
+            document.getElementById('referral-code-text').textContent = code;
+            document.getElementById('referral-link-text').textContent = link;
+        });
+
+        // Copy code to clipboard
+        function copyCode() {
+            const code = getReferralCode();
+            navigator.clipboard.writeText(code).then(function() {
+                const feedback = document.getElementById('copy-code-feedback');
+                feedback.style.display = 'block';
+                setTimeout(() => {
+                    feedback.style.display = 'none';
+                }, 3000);
+            }).catch(function(err) {
+                console.error('Failed to copy code:', err);
+                alert('Failed to copy code. Please copy manually: ' + code);
+            });
+        }
+
+        // Copy link to clipboard
+        function copyLink() {
+            const link = getReferralLink();
+            navigator.clipboard.writeText(link).then(function() {
+                const feedback = document.getElementById('copy-link-feedback');
+                feedback.style.display = 'block';
+                setTimeout(() => {
+                    feedback.style.display = 'none';
+                }, 3000);
+            }).catch(function(err) {
+                console.error('Failed to copy link:', err);
+                alert('Failed to copy link. Please copy manually: ' + link);
+            });
+        }
+
+        // Share via SMS
+        function shareSMS() {
+            const code = getReferralCode();
+            const link = getReferralLink();
+            const message = `I've been taking tennis lessons with Coach Tobi at Ojo Coaching Academy and it's amazing! Check it out and use my code ${code}: ${link}`;
+            const smsUrl = `sms:?body=${encodeURIComponent(message)}`;
+            window.location.href = smsUrl;
+        }
+
+        // Share via Email
+        function shareEmail() {
+            const code = getReferralCode();
+            const link = getReferralLink();
+            const subject = 'Tennis Lessons Recommendation';
+            const body = `Hi! I've been taking tennis lessons with Coach Tobi at Ojo Coaching Academy in San Diego and my game has improved so much! I think you'd love it too. Use my referral code ${code} when you book to help me earn a free lesson: ${link}`;
+            const emailUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = emailUrl;
+        }
+    </script>
+</body>
+</html>
+

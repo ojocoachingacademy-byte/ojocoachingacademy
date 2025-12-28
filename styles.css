@@ -2582,3 +2582,87 @@ section h2 {
     }
 }
 
+/* Referral Page Styles */
+.referral-section {
+    padding: 4rem 0;
+    background: var(--bg-light);
+}
+
+.referral-card {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+}
+
+.referral-code-display {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    border: 3px solid var(--primary-color);
+}
+
+.referral-link-display {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+    word-break: break-all;
+}
+
+.info-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.share-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.share-buttons .btn-primary {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.share-buttons .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Mobile Responsive for Referral Page */
+@media (max-width: 768px) {
+    .referral-code-display {
+        padding: 1.5rem;
+    }
+    
+    #referral-code-text {
+        font-size: 1.75rem !important;
+    }
+    
+    .referral-link-display {
+        padding: 1rem;
+    }
+    
+    #referral-link-text {
+        font-size: 0.9rem !important;
+    }
+    
+    .share-buttons {
+        flex-direction: column;
+    }
+    
+    .share-buttons .btn-primary {
+        width: 100%;
+    }
+    
+    .info-card {
+        padding: 1.5rem;
+    }
+}
+

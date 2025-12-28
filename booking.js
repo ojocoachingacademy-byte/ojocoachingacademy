@@ -1,6 +1,31 @@
 // Wait for DOM to be ready before initializing Stripe
 let cardElement; // Make cardElement accessible globally
 
+// Auto-fill referral code from URL parameter
+document.addEventListener('DOMContentLoaded', function() {
+    // Check for referral code in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const refCode = urlParams.get('ref');
+    
+    if (refCode) {
+        const referralInput = document.getElementById('referral-code');
+        if (referralInput) {
+            referralInput.value = refCode.toUpperCase();
+            // Add visual feedback (green background/border)
+            referralInput.style.backgroundColor = '#e6f7e6';
+            referralInput.style.borderColor = 'var(--primary-color)';
+            referralInput.style.borderWidth = '2px';
+            
+            // Remove visual feedback after 3 seconds
+            setTimeout(() => {
+                referralInput.style.backgroundColor = '';
+                referralInput.style.borderColor = '';
+                referralInput.style.borderWidth = '';
+            }, 3000);
+        }
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Stripe
     const stripe = Stripe('pk_live_51SgcB8QjxWCW85VVPpXWHwiObtV0uCADnDPfEGP6hK6brSwXDDb37cAlTmKP0B4tqkJDW84mjgMv8eMFszIbnHF300zd6T7NCK');
@@ -236,6 +261,8 @@ form.addEventListener('submit', async function(event) {
         netlifyFormData.append('price', bookingInfo.price);
         netlifyFormData.append('experience', bookingInfo.experience);
         netlifyFormData.append('goals', bookingInfo.goals || '');
+        const referralCode = document.getElementById('referral-code')?.value || '';
+        netlifyFormData.append('referral-code', referralCode);
         netlifyFormData.append('bookingReference', bookingRef);
         netlifyFormData.append('timestamp', bookingInfo.timestamp);
         
@@ -262,7 +289,8 @@ form.addEventListener('submit', async function(event) {
                 price: bookingInfo.price,
                 bookingReference: bookingRef,
                 experience: bookingInfo.experience,
-                goals: bookingInfo.goals || ''
+                goals: bookingInfo.goals || '',
+                referralCode: document.getElementById('referral-code')?.value || ''
             })
         }).catch(err => console.log('Email sending error:', err));
         
