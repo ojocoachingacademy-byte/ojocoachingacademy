@@ -176,10 +176,6 @@
                                 <option value="advanced">Advanced - Competitive player</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="goals">What are your goals? (Optional)</label>
-                            <textarea id="goals" name="goals" rows="3" placeholder="Tell us what you'd like to improve or work on..."></textarea>
-                        </div>
                     </div>
 
                     <div class="form-section">
@@ -187,12 +183,16 @@
                         <div class="form-group">
                             <label for="referral-code">Were you referred by an existing student? Enter their code:</label>
                             <input type="text" id="referral-code" name="referral-code" placeholder="e.g., KAREND2026" style="font-size: 1.1rem; padding: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;">
-                            <small style="display: block; margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem;">If a current student referred you, enter their referral code here to help them earn a free lesson!</small>
+                            <small style="display: block; margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem;">If a current student referred you, enter their referral code here when booking a package to help them earn a free lesson!</small>
                         </div>
                     </div>
 
                     <div class="form-section">
                         <h2>Payment</h2>
+                        <div class="form-group">
+                            <label for="goals">What are your goals? (Optional)</label>
+                            <textarea id="goals" name="goals" rows="3" placeholder="Tell us what you'd like to improve or work on..."></textarea>
+                        </div>
                         <div class="payment-summary">
                             <div class="summary-row">
                                 <span>Selected Package:</span>
@@ -215,6 +215,7 @@
                         <div class="payment-info">
                             <p>🔒 Secure payment powered by Stripe</p>
                             <p class="small-text">After payment, we'll contact you to schedule your first lesson time.</p>
+                            <p class="small-text" style="margin-top: 0.5rem;">If you have any issues with the payment portal, contact <a href="mailto:tobi@ojocoachingacademy.com" style="color: var(--primary-color); text-decoration: underline;">tobi@ojocoachingacademy.com</a></p>
                         </div>
                     </div>
 
