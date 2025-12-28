@@ -51,13 +51,72 @@ if (hamburger) {
     });
 }
 
-// Close mobile menu when clicking on a link
-const navLinks = document.querySelectorAll('.nav-menu a');
-navLinks.forEach(link => {
-    link.addEventListener('click', function() {
-        navMenu.classList.remove('active');
-    });
+// Close mobile menu when clicking on a regular link (not dropdown toggles)
+document.addEventListener('click', function(e) {
+    const target = e.target;
+    
+    // If clicking a regular nav link (not dropdown toggle or dropdown item)
+    if (target.tagName === 'A' && target.closest('.nav-menu')) {
+        const isDropdownToggle = target.closest('.nav-dropdown > a') && !target.closest('.dropdown-menu');
+        const isDropdownItem = target.closest('.dropdown-menu');
+        
+        // Close menu if it's a regular link or a dropdown menu item
+        if (!isDropdownToggle || isDropdownItem) {
+            navMenu.classList.remove('active');
+            // Close all dropdowns
+            document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    }
 });
+
+// Dropdown Menu Functionality
+(function() {
+    const dropdowns = document.querySelectorAll('.nav-dropdown');
+
+    function isMobileView() {
+        return window.innerWidth <= 768;
+    }
+
+    dropdowns.forEach(dropdown => {
+        const dropdownToggle = dropdown.querySelector('a');
+        const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+
+        if (!dropdownToggle || !dropdownMenu) return;
+
+        // Desktop: hover behavior (handled by CSS)
+        dropdown.addEventListener('mouseenter', function() {
+            if (!isMobileView()) {
+                dropdown.classList.add('active');
+            }
+        });
+        
+        dropdown.addEventListener('mouseleave', function() {
+            if (!isMobileView()) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // Mobile: click behavior
+        dropdownToggle.addEventListener('click', function(e) {
+            if (isMobileView()) {
+                e.preventDefault();
+                
+                // Close other dropdowns
+                dropdowns.forEach(otherDropdown => {
+                    if (otherDropdown !== dropdown) {
+                        otherDropdown.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current dropdown
+                dropdown.classList.toggle('active');
+            }
+            // On desktop, let the link work normally (hover handles dropdown)
+        });
+    });
+})();
 
 // Pricing Tabs Functionality
 (function() {
