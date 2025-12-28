@@ -49,11 +49,20 @@
 
     <section class="referral-section" style="padding: 4rem 0; background: var(--bg-light);">
         <div class="container">
+            <!-- Message if no code provided -->
+            <div id="no-code-message" class="referral-card" style="margin-bottom: 3rem; display: none;">
+                <div class="info-card" style="background: var(--white); padding: 3rem; border-radius: 12px; box-shadow: var(--shadow); border: 3px solid var(--primary-color); text-align: center;">
+                    <h2 style="font-size: 1.75rem; margin-bottom: 1rem; color: var(--text-dark);">Personalized Referral Link Required</h2>
+                    <p style="font-size: 1.1rem; color: var(--text-light); margin-bottom: 1.5rem;">This page requires a personalized referral code. Please use the link provided in your email from Coach Tobi.</p>
+                    <p style="font-size: 1rem; color: var(--text-dark);">If you need your referral link, please contact <a href="mailto:tobi@ojocoachingacademy.com" style="color: var(--primary-color); text-decoration: underline;">tobi@ojocoachingacademy.com</a></p>
+                </div>
+            </div>
+
             <!-- Your Unique Referral Code -->
-            <div class="referral-card" style="margin-bottom: 3rem;">
+            <div id="referral-code-section" class="referral-card" style="margin-bottom: 3rem;">
                 <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-dark); text-align: center;">Your Unique Referral Code</h2>
                 <div class="referral-code-display" id="referral-code-display">
-                    <span id="referral-code-text" style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color); letter-spacing: 0.1em; font-family: 'Courier New', monospace;">KAREND2026</span>
+                    <span id="referral-code-text" style="font-size: 2.5rem; font-weight: 700; color: var(--primary-color); letter-spacing: 0.1em; font-family: 'Courier New', monospace;"></span>
                 </div>
                 <button onclick="copyCode()" class="btn-primary" style="margin: 1.5rem auto 0; display: block; padding: 0.75rem 2rem;">
                     📋 Copy Code
@@ -62,10 +71,10 @@
             </div>
 
             <!-- Your Referral Link -->
-            <div class="referral-card" style="margin-bottom: 3rem;">
+            <div id="referral-link-section" class="referral-card" style="margin-bottom: 3rem;">
                 <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-dark); text-align: center;">Your Referral Link</h2>
                 <div class="referral-link-display" style="background: var(--white); padding: 1.5rem; border-radius: 8px; border: 2px solid var(--border-color); margin-bottom: 1.5rem;">
-                    <p id="referral-link-text" style="font-size: 1rem; color: var(--text-dark); word-break: break-all; margin: 0; font-family: 'Courier New', monospace;">https://ojocoachingacademy.com/booking?ref=KAREND2026</p>
+                    <p id="referral-link-text" style="font-size: 1rem; color: var(--text-dark); word-break: break-all; margin: 0; font-family: 'Courier New', monospace;"></p>
                 </div>
                 <button onclick="copyLink()" class="btn-primary" style="margin: 0 auto; display: block; padding: 0.75rem 2rem;">
                     🔗 Copy Link
@@ -74,7 +83,7 @@
             </div>
 
             <!-- Share Buttons -->
-            <div class="referral-card" style="margin-bottom: 3rem;">
+            <div id="share-buttons-section" class="referral-card" style="margin-bottom: 3rem;">
                 <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: var(--text-dark); text-align: center;">Share with Friends</h2>
                 <div class="share-buttons" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                     <button onclick="shareSMS()" class="btn-primary" style="padding: 1rem 2rem; font-size: 1rem;">
@@ -120,16 +129,17 @@
 
     <script src="script.js"></script>
     <script>
-        // Get referral code from URL parameter or use default template
+        // Get referral code from URL parameter
         function getReferralCode() {
             const urlParams = new URLSearchParams(window.location.search);
             const code = urlParams.get('code');
-            return code || 'KAREND2026'; // Default template code
+            return code; // Returns null if no code provided
         }
 
         // Get referral link
         function getReferralLink() {
             const code = getReferralCode();
+            if (!code) return null;
             return `https://ojocoachingacademy.com/booking?ref=${code}`;
         }
 
@@ -138,13 +148,27 @@
             const code = getReferralCode();
             const link = getReferralLink();
             
-            document.getElementById('referral-code-text').textContent = code;
-            document.getElementById('referral-link-text').textContent = link;
+            if (!code) {
+                // No code provided - show message and hide referral sections
+                document.getElementById('no-code-message').style.display = 'block';
+                document.getElementById('referral-code-section').style.display = 'none';
+                document.getElementById('referral-link-section').style.display = 'none';
+                document.getElementById('share-buttons-section').style.display = 'none';
+            } else {
+                // Code provided - show referral sections and hide message
+                document.getElementById('no-code-message').style.display = 'none';
+                document.getElementById('referral-code-section').style.display = 'block';
+                document.getElementById('referral-link-section').style.display = 'block';
+                document.getElementById('share-buttons-section').style.display = 'block';
+                document.getElementById('referral-code-text').textContent = code;
+                document.getElementById('referral-link-text').textContent = link;
+            }
         });
 
         // Copy code to clipboard
         function copyCode() {
             const code = getReferralCode();
+            if (!code) return;
             navigator.clipboard.writeText(code).then(function() {
                 const feedback = document.getElementById('copy-code-feedback');
                 feedback.style.display = 'block';
@@ -160,6 +184,7 @@
         // Copy link to clipboard
         function copyLink() {
             const link = getReferralLink();
+            if (!link) return;
             navigator.clipboard.writeText(link).then(function() {
                 const feedback = document.getElementById('copy-link-feedback');
                 feedback.style.display = 'block';
@@ -176,6 +201,7 @@
         function shareSMS() {
             const code = getReferralCode();
             const link = getReferralLink();
+            if (!code || !link) return;
             const message = `I've been taking tennis lessons with Coach Tobi at Ojo Coaching Academy and it's amazing! Check it out and use my code ${code}: ${link}`;
             const smsUrl = `sms:?body=${encodeURIComponent(message)}`;
             window.location.href = smsUrl;
@@ -185,6 +211,7 @@
         function shareEmail() {
             const code = getReferralCode();
             const link = getReferralLink();
+            if (!code || !link) return;
             const subject = 'Tennis Lessons Recommendation';
             const body = `Hi! I've been taking tennis lessons with Coach Tobi at Ojo Coaching Academy in San Diego and my game has improved so much! I think you'd love it too. Use my referral code ${code} when you book to help me earn a free lesson: ${link}`;
             const emailUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
