@@ -2522,19 +2522,58 @@ section h2 {
         flex-direction: column;
         background: var(--white);
         width: 100%;
-        text-align: center;
+        text-align: left;
         transition: 0.3s;
-        box-shadow: var(--shadow);
-        padding: 2rem 0;
+        box-shadow: var(--shadow-lg);
+        padding: 0;
         opacity: 0;
         visibility: hidden;
         z-index: 999;
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
     }
 
     .nav-menu.active {
         left: 0;
         opacity: 1;
         visibility: visible;
+    }
+
+    /* Mobile Nav Items */
+    .nav-menu > li {
+        width: 100%;
+        border-bottom: 1px solid var(--border-color);
+        margin: 0;
+    }
+
+    .nav-menu > li > a {
+        display: block;
+        padding: 1rem 1.5rem;
+        color: var(--text-dark);
+        font-weight: 500;
+        text-decoration: none;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    .nav-menu > li > a:hover,
+    .nav-menu > li > a:active {
+        background-color: var(--bg-light);
+        color: var(--primary-color);
+    }
+
+    /* Mobile Book Now Button */
+    .nav-menu > li > a.btn-primary-nav {
+        background: var(--primary-color);
+        color: var(--white) !important;
+        text-align: center;
+        margin: 1rem;
+        border-radius: 8px;
+        padding: 0.75rem 1.5rem;
+        width: calc(100% - 2rem);
+    }
+
+    .nav-menu > li > a.btn-primary-nav:hover {
+        background: var(--primary-dark);
     }
 
     /* Mobile Dropdown Styles */
@@ -2544,9 +2583,20 @@ section h2 {
 
     .nav-dropdown > a {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
         width: 100%;
+        padding: 1rem 1.5rem;
+        color: var(--text-dark);
+        font-weight: 500;
+        text-decoration: none;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    .nav-dropdown > a:hover,
+    .nav-dropdown > a:active {
+        background-color: var(--bg-light);
+        color: var(--primary-color);
     }
 
     .dropdown-menu {
@@ -2562,6 +2612,8 @@ section h2 {
         overflow: hidden;
         transition: max-height 0.3s ease;
         border-radius: 0;
+        list-style: none;
+        border-top: 1px solid var(--border-color);
     }
 
     .nav-dropdown.active .dropdown-menu {
@@ -2569,14 +2621,36 @@ section h2 {
         padding: 0.5rem 0;
     }
 
+    .dropdown-menu li {
+        margin: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .dropdown-menu li:last-child {
+        border-bottom: none;
+    }
+
     .dropdown-menu a {
-        padding: 0.75rem 1rem;
+        display: block;
+        padding: 0.875rem 1.5rem;
+        padding-left: 2.5rem;
         text-align: left;
-        padding-left: 2rem;
+        color: var(--text-dark);
+        font-weight: 400;
+        text-decoration: none;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    .dropdown-menu a:hover,
+    .dropdown-menu a:active {
+        background-color: rgba(0, 168, 89, 0.1);
+        color: var(--primary-color);
     }
 
     .dropdown-arrow {
         margin-left: auto;
+        font-size: 0.8em;
+        transition: transform 0.3s;
     }
 
     .nav-dropdown.active .dropdown-arrow {
