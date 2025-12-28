@@ -127,6 +127,21 @@
 
     <script src="script.js"></script>
     <script>
+        // CRITICAL SECURITY: Prevent direct access to confirmation page without payment
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get('session_id'); // Stripe session ID
+            const hasStripeReferrer = document.referrer.includes('stripe.com') || document.referrer.includes('checkout.stripe.com');
+            const hasBookingData = sessionStorage.getItem('bookingPrice') && sessionStorage.getItem('bookingPackage');
+            
+            // If no session_id, no Stripe referrer, and no booking data in sessionStorage, redirect
+            if (!sessionId && !hasStripeReferrer && !hasBookingData) {
+                // Redirect to booking page immediately
+                window.location.href = 'booking.html';
+                return; // Stop execution
+            }
+        })();
+        
         // Get booking reference from URL parameters
         const urlParams = new URLSearchParams(window.location.search);
         const bookingRef = urlParams.get('ref') || 'TEN-' + Date.now().toString().slice(-6);
