@@ -1,0 +1,39 @@
+Before you make ANY code changes, follow this debugging process:
+
+STEP 1 - GATHER INFORMATION:
+- What is the exact symptom? (What's broken, when does it happen, what's the expected behavior?)
+- What clues do I have? (What DOES work? What patterns exist?)
+- Can you reproduce it reliably? Under what conditions?
+
+STEP 2 - ANALYZE THE SYSTEM:
+- List all relevant files and their interactions
+- Identify all components involved (HTML structure, CSS rules, JS functions, event listeners)
+- Map out the data flow or rendering pipeline
+- Check for: z-index conflicts, pointer-events, overlays, event bubbling, CSS specificity, stacking contexts
+
+STEP 3 - FORM HYPOTHESES:
+List 3-5 potential root causes, ranked by likelihood:
+1. [Most likely cause] - because [reasoning]
+2. [Second likely] - because [reasoning]
+3. [etc.]
+
+STEP 4 - ASK CLARIFYING QUESTIONS:
+Before proposing solutions, ask me:
+- [Any missing information you need]
+- [Specific behaviors to test]
+- [Which hypothesis seems most likely based on my experience]
+
+STEP 5 - PROPOSE SOLUTION:
+Only after completing steps 1-4, propose:
+- The ROOT CAUSE (not just the symptom)
+- WHY this causes the observed behavior
+- The minimal fix that addresses the root cause
+- How to verify the fix worked
+
+Do NOT:
+- Jump straight to code changes
+- Make incremental "try this" suggestions without explaining why
+- Fix symptoms without identifying root causes
+- Assume you know the answer without analysis
+
+Start your response with: "🔍 DEBUGGING ANALYSIS:" and work through each step.
