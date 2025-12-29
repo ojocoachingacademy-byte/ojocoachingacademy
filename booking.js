@@ -202,8 +202,70 @@ async function processPayment(amount, customerInfo, cardElement) {
     }
 
     if (paymentIntent.status === 'succeeded') {
-      // Payment successful - redirect to confirmation
-      window.location.href = `/confirmation.html?payment_intent=${paymentIntent.id}&amount=${amount}&package=${encodeURIComponent(customerInfo.package)}`;
+      // Payment successful - store booking data for confirmation page
+      sessionStorage.setItem('bookingPrice', amount.toString());
+      sessionStorage.setItem('bookingPackage', customerInfo.package);
+      sessionStorage.setItem('bookingPackageType', 'Private'); // Default, can be enhanced
+      
+      // Generate booking reference
+      const bookingRef = 'TEN-' + Date.now().toString().slice(-6);
+      sessionStorage.setItem('bookingReference', bookingRef);
+      
+      // Get form data for submission (need to access form from here)
+      const form = document.getElementById('booking-form');
+      const formData = new FormData(form);
+      const packageType = document.querySelector('input[name="packageType"]:checked')?.value || 'Private';
+      
+      // Parse name (handle cases where name might be split or combined)
+      const nameParts = customerInfo.name.trim().split(/\s+/);
+      const firstName = nameParts[0] || '';
+      const lastName = nameParts.slice(1).join(' ') || '';
+      
+      // Submit to Netlify Forms (non-blocking - don't wait)
+      const netlifyFormData = new FormData();
+      netlifyFormData.append('form-name', 'booking');
+      netlifyFormData.append('firstName', firstName);
+      netlifyFormData.append('lastName', lastName);
+      netlifyFormData.append('email', customerInfo.email);
+      netlifyFormData.append('phone', customerInfo.phone || '');
+      netlifyFormData.append('package', customerInfo.package);
+      netlifyFormData.append('packageType', packageType);
+      netlifyFormData.append('price', amount.toString());
+      netlifyFormData.append('experience', formData.get('experience') || '');
+      netlifyFormData.append('goals', formData.get('goals') || '');
+      netlifyFormData.append('referral-code', customerInfo.referralCode || '');
+      netlifyFormData.append('bookingReference', bookingRef);
+      netlifyFormData.append('timestamp', new Date().toISOString());
+      
+      // Submit to Netlify Forms (fire and forget)
+      fetch('/', {
+          method: 'POST',
+          body: netlifyFormData
+      }).catch(err => console.log('Form submission error:', err));
+      
+      // Send booking confirmation email via Netlify Function (fire and forget)
+      fetch('/.netlify/functions/send-booking-confirmation', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              firstName: firstName,
+              lastName: lastName,
+              email: customerInfo.email,
+              phone: customerInfo.phone || '',
+              package: customerInfo.package,
+              packageType: packageType,
+              price: amount.toString(),
+              bookingReference: bookingRef,
+              experience: formData.get('experience') || '',
+              goals: formData.get('goals') || '',
+              referralCode: customerInfo.referralCode || ''
+          })
+      }).catch(err => console.log('Email sending error:', err));
+      
+      // Redirect to confirmation page (use relative path)
+      window.location.href = `confirmation.html?payment_intent=${paymentIntent.id}&amount=${amount}&package=${encodeURIComponent(customerInfo.package)}&ref=${bookingRef}`;
     } else {
       throw new Error('Payment was not completed');
     }
@@ -285,7 +347,7 @@ form.addEventListener('submit', async function(event) {
     
     try {
         // Process payment via Netlify Function
-        // processPayment handles button state and error display
+        // processPayment handles button state, form submission, email, and redirect
         await processPayment(packagePrice, customerInfo, cardElement);
         
         // If payment succeeds, processPayment will redirect to confirmation page

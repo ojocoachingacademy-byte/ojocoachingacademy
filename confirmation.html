@@ -130,12 +130,13 @@
         // CRITICAL SECURITY: Prevent direct access to confirmation page without payment
         (function() {
             const urlParams = new URLSearchParams(window.location.search);
-            const sessionId = urlParams.get('session_id'); // Stripe session ID
+            const paymentIntent = urlParams.get('payment_intent'); // Stripe payment intent ID
+            const sessionId = urlParams.get('session_id'); // Stripe session ID (legacy)
             const hasStripeReferrer = document.referrer.includes('stripe.com') || document.referrer.includes('checkout.stripe.com');
             const hasBookingData = sessionStorage.getItem('bookingPrice') && sessionStorage.getItem('bookingPackage');
             
-            // If no session_id, no Stripe referrer, and no booking data in sessionStorage, redirect
-            if (!sessionId && !hasStripeReferrer && !hasBookingData) {
+            // If no payment_intent, no session_id, no Stripe referrer, and no booking data in sessionStorage, redirect
+            if (!paymentIntent && !sessionId && !hasStripeReferrer && !hasBookingData) {
                 // Redirect to booking page immediately
                 window.location.href = 'booking.html';
                 return; // Stop execution
