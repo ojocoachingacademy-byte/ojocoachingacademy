@@ -1098,11 +1098,69 @@ section h2 {
     margin-top: 4rem;
 }
 
+.video-testimonials-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 .video-testimonials-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: flex;
+    justify-content: center;
     gap: 2rem;
-    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.video-testimonial-item {
+    flex: 0 0 400px;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    background: var(--white);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    z-index: 1001;
+    pointer-events: auto;
+}
+
+.video-testimonial-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.video-testimonial-embed {
+    width: 100%;
+    position: relative;
+    padding-bottom: 177.78%; /* 9:16 aspect ratio for YouTube Shorts (vertical videos) */
+    height: 0;
+    overflow: hidden;
+    background: #000;
+}
+
+.video-testimonial-embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 15px 15px 0 0;
+}
+
+.video-testimonial-info {
+    padding: 1.5rem;
+    text-align: center;
+    background: var(--white);
+}
+
+.video-testimonial-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin: 0;
 }
 
 .video-testimonial-placeholder {
@@ -2778,6 +2836,23 @@ section h2 {
     .testimonial-card {
         flex: 0 0 100%;
         width: 100%;
+    }
+    
+    /* Video Testimonials Mobile */
+    .video-testimonials-grid {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+    
+    .video-testimonial-item {
+        flex: 0 0 100%;
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .video-testimonial-embed {
+        padding-bottom: 177.78%; /* Maintain 9:16 aspect ratio for YouTube Shorts */
     }
 
     .carousel-btn {
