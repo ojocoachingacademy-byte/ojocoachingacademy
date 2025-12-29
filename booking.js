@@ -237,14 +237,23 @@ async function processPayment(amount, customerInfo, cardElement) {
       netlifyFormData.append('bookingReference', bookingRef);
       netlifyFormData.append('timestamp', new Date().toISOString());
       
-      // Submit to Netlify Forms (fire and forget)
-      fetch('/', {
+      // Submit to Netlify Forms and email (wait for both to complete or timeout)
+      const formSubmission = fetch('/', {
           method: 'POST',
           body: netlifyFormData
-      }).catch(err => console.log('Form submission error:', err));
+      }).then(response => {
+          if (!response.ok) {
+              console.error('Form submission failed:', response.status, response.statusText);
+          } else {
+              console.log('Form submitted successfully to Netlify');
+          }
+          return response;
+      }).catch(err => {
+          console.error('Form submission error:', err);
+      });
       
-      // Send booking confirmation email via Netlify Function (fire and forget)
-      fetch('/.netlify/functions/send-booking-confirmation', {
+      // Send booking confirmation email via Netlify Function
+      const emailSubmission = fetch('/.netlify/functions/send-booking-confirmation', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -262,7 +271,22 @@ async function processPayment(amount, customerInfo, cardElement) {
               goals: formData.get('goals') || '',
               referralCode: customerInfo.referralCode || ''
           })
-      }).catch(err => console.log('Email sending error:', err));
+      }).then(response => {
+          if (!response.ok) {
+              console.error('Email sending failed:', response.status, response.statusText);
+          } else {
+              console.log('Email sent successfully');
+          }
+          return response;
+      }).catch(err => {
+          console.error('Email sending error:', err);
+      });
+      
+      // Wait for both submissions to complete (with 3 second timeout)
+      await Promise.race([
+          Promise.all([formSubmission, emailSubmission]),
+          new Promise(resolve => setTimeout(resolve, 3000)) // Max 3 second wait
+      ]);
       
       // Redirect to confirmation page (use relative path)
       window.location.href = `confirmation.html?payment_intent=${paymentIntent.id}&amount=${amount}&package=${encodeURIComponent(customerInfo.package)}&ref=${bookingRef}`;
