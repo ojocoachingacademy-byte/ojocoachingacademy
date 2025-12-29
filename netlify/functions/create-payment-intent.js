@@ -1,4 +1,4 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY_LIVE);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY_TEST);
 
 exports.handler = async (event) => {
   // Set CORS headers
