@@ -29,9 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Stripe with TEST key (must match backend test key)
-    // TODO: Replace with your actual Stripe TEST publishable key from https://dashboard.stripe.com/test/apikeys
     // When ready for production, change to live key: pk_live_...
-    stripe = Stripe('pk_test_REPLACE_WITH_YOUR_TEST_PUBLISHABLE_KEY');
+    stripe = Stripe('pk_test_51SgcB8QjxWCW85VVblilPyi9VHforilJdHO8DChqJ7DfYBeHVuJYNXGqaOPMHLcVC22XHeXMQ9JNHF1lnE5AgtdC0085IsPRy6');
     const elements = stripe.elements({
         appearance: {
             theme: 'stripe',
