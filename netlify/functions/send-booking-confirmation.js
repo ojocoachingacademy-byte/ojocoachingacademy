@@ -13,8 +13,35 @@ exports.handler = async (event, context) => {
     }
 
     try {
-        // Parse the form submission data
-        const formData = JSON.parse(event.body);
+        // Validate request body
+        if (!event.body) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ message: 'Request body is required' })
+            };
+        }
+
+        let formData;
+        try {
+            formData = JSON.parse(event.body);
+        } catch (e) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ message: 'Invalid JSON in request body' })
+            };
+        }
+        
+        // Check for SendGrid API key
+        if (!process.env.SENDGRID_API_KEY) {
+            console.error('SENDGRID_API_KEY environment variable is not set');
+            return {
+                statusCode: 500,
+                body: JSON.stringify({ 
+                    message: 'Email service is not configured. Please contact support.',
+                    error: 'SENDGRID_API_KEY not set'
+                })
+            };
+        }
         
         // Set SendGrid API key from environment variable
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);

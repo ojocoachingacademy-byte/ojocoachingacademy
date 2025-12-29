@@ -149,6 +149,19 @@ updateSummary();
 
 // Process payment function
 async function processPayment(amount, customerInfo, cardElement) {
+  // Validate inputs
+  if (!stripe) {
+    throw new Error('Stripe is not initialized. Please refresh the page.');
+  }
+  
+  if (!cardElement) {
+    throw new Error('Payment form is not ready. Please refresh the page.');
+  }
+  
+  if (!amount || amount <= 0) {
+    throw new Error('Invalid payment amount');
+  }
+  
   const submitButton = document.querySelector('button[type="submit"]');
   const originalButtonText = submitButton ? submitButton.textContent : 'Complete Booking & Pay';
   
@@ -178,11 +191,27 @@ async function processPayment(amount, customerInfo, cardElement) {
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
+      let errorData;
+      try {
+        errorData = await response.json();
+      } catch (e) {
+        throw new Error(`Payment failed: ${response.status} ${response.statusText}`);
+      }
       throw new Error(errorData.error || 'Payment failed');
     }
 
-    const { clientSecret, paymentIntentId } = await response.json();
+    let responseData;
+    try {
+      responseData = await response.json();
+    } catch (e) {
+      throw new Error('Invalid response from payment server');
+    }
+    
+    const { clientSecret, paymentIntentId } = responseData;
+    
+    if (!clientSecret) {
+      throw new Error('Payment server did not return a valid client secret');
+    }
 
     // Step 2: Confirm payment with Stripe
     const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
@@ -202,19 +231,19 @@ async function processPayment(amount, customerInfo, cardElement) {
     }
 
     if (paymentIntent.status === 'succeeded') {
-      // Payment successful - store booking data for confirmation page
-      sessionStorage.setItem('bookingPrice', amount.toString());
-      sessionStorage.setItem('bookingPackage', customerInfo.package);
-      sessionStorage.setItem('bookingPackageType', 'Private'); // Default, can be enhanced
-      
-      // Generate booking reference
-      const bookingRef = 'TEN-' + Date.now().toString().slice(-6);
-      sessionStorage.setItem('bookingReference', bookingRef);
-      
       // Get form data for submission (need to access form from here)
       const form = document.getElementById('booking-form');
       const formData = new FormData(form);
       const packageType = document.querySelector('input[name="packageType"]:checked')?.value || 'Private';
+      
+      // Payment successful - store booking data for confirmation page
+      sessionStorage.setItem('bookingPrice', amount.toString());
+      sessionStorage.setItem('bookingPackage', customerInfo.package);
+      sessionStorage.setItem('bookingPackageType', packageType); // Use actual package type from form
+      
+      // Generate booking reference
+      const bookingRef = 'TEN-' + Date.now().toString().slice(-6);
+      sessionStorage.setItem('bookingReference', bookingRef);
       
       // Parse name (handle cases where name might be split or combined)
       const nameParts = customerInfo.name.trim().split(/\s+/);
@@ -347,9 +376,16 @@ form.addEventListener('submit', async function(event) {
         return;
     }
     
-    // Validate card element is mounted
+    // Validate Stripe and card element are ready
+    if (!stripe) {
+        alert('Payment system is not initialized. Please refresh the page and try again.');
+        console.error('Stripe not initialized');
+        return;
+    }
+    
     if (!cardElement) {
         alert('Payment form is not ready. Please refresh the page and try again.');
+        console.error('Card element not mounted');
         return;
     }
     
