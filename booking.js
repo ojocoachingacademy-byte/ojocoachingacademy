@@ -237,6 +237,9 @@ async function processPayment(amount, customerInfo, cardElement) {
       netlifyFormData.append('bookingReference', bookingRef);
       netlifyFormData.append('timestamp', new Date().toISOString());
       
+      // Add bot-field (honeypot) - must be empty for Netlify
+      netlifyFormData.append('bot-field', '');
+      
       // Submit to Netlify Forms and email (wait for both to complete or timeout)
       const formSubmission = fetch('/', {
           method: 'POST',
