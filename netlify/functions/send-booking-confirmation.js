@@ -4,10 +4,28 @@
 const sgMail = require('@sendgrid/mail');
 
 exports.handler = async (event, context) => {
+    // Set CORS headers
+    const headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Content-Type': 'application/json'
+    };
+
+    // Handle preflight OPTIONS request
+    if (event.httpMethod === 'OPTIONS') {
+        return {
+            statusCode: 200,
+            headers,
+            body: ''
+        };
+    }
+
     // Only allow POST requests
     if (event.httpMethod !== 'POST') {
         return {
             statusCode: 405,
+            headers,
             body: JSON.stringify({ message: 'Method not allowed' })
         };
     }
@@ -17,6 +35,7 @@ exports.handler = async (event, context) => {
         if (!event.body) {
             return {
                 statusCode: 400,
+                headers,
                 body: JSON.stringify({ message: 'Request body is required' })
             };
         }
@@ -27,6 +46,7 @@ exports.handler = async (event, context) => {
         } catch (e) {
             return {
                 statusCode: 400,
+                headers,
                 body: JSON.stringify({ message: 'Invalid JSON in request body' })
             };
         }
@@ -36,6 +56,7 @@ exports.handler = async (event, context) => {
             console.error('SENDGRID_API_KEY environment variable is not set');
             return {
                 statusCode: 500,
+                headers,
                 body: JSON.stringify({ 
                     message: 'Email service is not configured. Please contact support.',
                     error: 'SENDGRID_API_KEY not set'
@@ -51,6 +72,15 @@ exports.handler = async (event, context) => {
         const lastName = formData.lastName || '';
         const email = formData.email;
         const phone = formData.phone || '';
+        
+        // Validate email is provided
+        if (!email || !email.includes('@')) {
+            return {
+                statusCode: 400,
+                headers,
+                body: JSON.stringify({ message: 'Valid email address is required' })
+            };
+        }
         const packageName = formData.package || 'Tennis Lesson';
         const packageType = formData.packageType || 'Private';
         const price = formData.price || '0.00';
@@ -272,6 +302,7 @@ PTR Certified Tennis Coach | 17+ Years Playing | 14+ Years Teaching
 
         return {
             statusCode: 200,
+            headers,
             body: JSON.stringify({ 
                 message: 'Booking confirmation emails sent successfully',
                 bookingReference: bookingRef
@@ -280,11 +311,18 @@ PTR Certified Tennis Coach | 17+ Years Playing | 14+ Years Teaching
 
     } catch (error) {
         console.error('Error sending email:', error);
+        
+        // Log detailed error for debugging
+        if (error.response) {
+            console.error('SendGrid API Error:', error.response.body);
+        }
+        
         return {
             statusCode: 500,
+            headers,
             body: JSON.stringify({ 
                 message: 'Error sending email',
-                error: error.message 
+                error: error.message || 'Unknown error occurred'
             })
         };
     }
