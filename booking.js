@@ -28,9 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Stripe with TEST key (must match backend test key)
-    // When ready for production, change to live key: pk_live_...
-    stripe = Stripe('pk_test_51SgcB8QjxWCW85VVblilPyi9VHforilJdHO8DChqJ7DfYBeHVuJYNXGqaOPMHLcVC22XHeXMQ9JNHF1lnE5AgtdC0085IsPRy6');
+    // Initialize Stripe with LIVE key (production mode)
+    stripe = Stripe('pk_live_51SgcB8QjxWCW85VVPpXWHwiObtV0uCADnDPfEGP6hK6brSwXDDb37cAlTmKP0B4tqkJDW84mjgMv8eMFszIbnHF300zd6T7NCK');
     const elements = stripe.elements({
         appearance: {
             theme: 'stripe',
