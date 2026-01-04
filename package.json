@@ -4,7 +4,7 @@
   "description": "Tennis coaching website with Stripe payment processing",
   "dependencies": {
     "@sendgrid/mail": "^8.1.0",
+    "@supabase/supabase-js": "^2.89.0",
     "stripe": "^14.0.0"
   }
 }
-
