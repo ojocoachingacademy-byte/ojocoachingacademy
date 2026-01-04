@@ -179,7 +179,7 @@ exports.handler = async (event, context) => {
                             
                             <div class="footer">
                                 <p>📍 Colina Del Sol Park, 5319 Orange Avenue, San Diego, CA 92115</p>
-                                <p>PTR Certified Tennis Coach | 17+ Years Playing | 14+ Years Teaching</p>
+                                <p>Professional Tennis Registry Certified Tennis Coach | 17+ Years Playing | 14+ Years Teaching</p>
                             </div>
                         </div>
                     </div>
@@ -220,7 +220,7 @@ tobi@ojocoachingacademy.com
 (619) 981-5772
 
 Location: Colina Del Sol Park, 5319 Orange Avenue, San Diego, CA 92115
-PTR Certified Tennis Coach | 17+ Years Playing | 14+ Years Teaching
+Professional Tennis Registry Certified Tennis Coach | 17+ Years Playing | 14+ Years Teaching
             `
         };
 
