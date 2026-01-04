@@ -314,9 +314,40 @@ async function processPayment(amount, customerInfo, cardElement) {
           console.error('Email sending error:', err);
       });
       
-      // Wait for both submissions to complete (with 3 second timeout)
+      // Sync booking to Supabase (for app access)
+      const supabaseSync = fetch('/.netlify/functions/sync-booking-to-supabase', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              bookingReference: bookingRef,
+              firstName: firstName,
+              lastName: lastName,
+              email: customerInfo.email,
+              phone: customerInfo.phone || '',
+              package: customerInfo.package,
+              packageType: packageType,
+              price: amount.toString(),
+              referralCode: customerInfo.referralCode || '',
+              paymentIntentId: paymentIntent.id,
+              experience: formData.get('experience') || '',
+              goals: formData.get('goals') || ''
+          })
+      }).then(response => {
+          if (!response.ok) {
+              console.error('Supabase sync failed:', response.status, response.statusText);
+          } else {
+              console.log('Booking synced to Supabase successfully');
+          }
+          return response;
+      }).catch(err => {
+          console.error('Supabase sync error:', err);
+      });
+      
+      // Wait for all submissions to complete (with 3 second timeout)
       await Promise.race([
-          Promise.all([formSubmission, emailSubmission]),
+          Promise.all([formSubmission, emailSubmission, supabaseSync]),
           new Promise(resolve => setTimeout(resolve, 3000)) // Max 3 second wait
       ]);
       
