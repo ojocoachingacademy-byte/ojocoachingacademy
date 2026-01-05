@@ -2,9 +2,9 @@
 // This function is called after a successful booking payment to store data in Supabase
 // so the app can access referral and booking information
 
+const { createClient } = require('@supabase/supabase-js');
+
 exports.handler = async (event, context) => {
-  // Use dynamic import for Supabase (more compatible with Netlify Functions)
-  const { createClient } = await import('@supabase/supabase-js');
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
