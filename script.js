@@ -175,8 +175,144 @@ window.addEventListener('scroll', function() {
     }
 });
 
+// Load Testimonials from Supabase
+async function loadTestimonials() {
+    const track = document.querySelector('#testimonials-track');
+    if (!track) return;
+    
+    // Fallback testimonials (used if Supabase fetch fails)
+    const fallbackTestimonials = [
+        {
+            name: "Daniela S.",
+            text: "Tobi is very insightful in identifying issues and provides helpful cues to improve. He's very patient and knows a lot about body mechanics. I come out of every lesson knowing more about the sport and myself, and his ability to clarify complex movements is quite helpful. He really breaks things down for you, step by step. He thoroughly explains movements and how they translate to the sport. He's a wonderful coach that will help you be your best self. If you're looking for a dedicated coach with a natural understanding of tennis, Tobi's the best choice.",
+            date: "2 weeks ago",
+            rating: 5
+        },
+        {
+            name: "Srinath T.",
+            text: "Good first session with great feedback on my play. Looking forward to my follow-up lessons with him😃",
+            date: "1 month ago",
+            rating: 5
+        },
+        {
+            name: "Toni G.",
+            text: "If you want to improve your game, Tobi is your guy. He is kind, patient and prompt. Thank you for taking the time to share your expertise with me. I look forward to more in the future. Toni",
+            date: "2 months ago",
+            rating: 5
+        },
+        {
+            name: "Sonya",
+            text: "My boyfriend and I have had the pleasure of taking lessons from Tobi for the past month. We have both played tennis before but came into lessons after a long hiatus from the game and were extremely rusty. Tobi is patient, fun and engaging. He makes our lessons interactive, challenging and interesting. The results of his coaching have been dramatic and our play has improved significantly. Our rallies are now crisp and energetic, and our enjoyment of the game has increased accordingly! Additionally Tobi's rates are affordable and great value.",
+            date: "3 months ago",
+            rating: 5
+        },
+        {
+            name: "Rafael",
+            text: "Tobi is a very detail-oriented tennis coach. His main focus and concern is to identify and improve the mechanical and psychological foundations of your game. With his insight and your dedication, you are guaranteed to improve your game.",
+            date: "4 months ago",
+            rating: 5
+        },
+        {
+            name: "Luke B.",
+            text: "Tobi has helped my swing so much in just two lessons",
+            date: "5 months ago",
+            rating: 5
+        },
+        {
+            name: "Willie",
+            text: "Tobi is a great tennis instructor. He took time to assess my strengths and weaknesses and gain an understanding of where I'd like to improve. In 5 minutes of court time, he identified the problems with my forehand and customized drills to make the fix. On top of his ability to develop your tennis strokes, Tobi does a great job of working strategy and shot selection into every lesson. If you're looking to improve and build confidence in your game, Tobi is the perfect coach.",
+            date: "6 months ago",
+            rating: 5
+        },
+        {
+            name: "Rockwell",
+            text: "Tobi has a really deep understanding of the game. And equally important he knows how to communicate that to his students to actually get them to improve, quickly.",
+            date: "8 months ago",
+            rating: 5
+        },
+        {
+            name: "Michael K.",
+            text: "I was initially hesitant to take tennis lessons, but Toby's friendly demeanor and expertise quickly put me at ease. He is a great teacher who knows how to explain complex techniques in a way that is easy to understand.",
+            date: "10 months ago",
+            rating: 5
+        },
+        {
+            name: "Millie",
+            text: "Over the past 6 months with Tobi's coaching I have developed from being able to hold a rally for 2-3 shots and not knowing how to serve, to serving well and consistently, improving my footwork and strategy on court during games and I'm very proud of the strong ground strokes and volleys I can now do! I'm not the easiest person to coach (stubborn and under confident) but Tobi has been patient, calm and learned my style to successfully keep coaching me up.",
+            date: "1 year ago",
+            rating: 5
+        }
+    ];
+    
+    try {
+        // Try to fetch from Supabase
+        const response = await fetch('/.netlify/functions/get-testimonials?limit=20');
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch testimonials');
+        }
+        
+        const data = await response.json();
+        
+        if (data.success && data.testimonials && data.testimonials.length > 0) {
+            // Use Supabase testimonials
+            renderTestimonials(data.testimonials, track);
+            return;
+        } else {
+            throw new Error('No testimonials returned');
+        }
+    } catch (error) {
+        console.warn('Could not load testimonials from Supabase, using fallback:', error);
+        // Use fallback testimonials
+        renderTestimonials(fallbackTestimonials, track);
+    }
+}
+
+// Render testimonials to the DOM
+function renderTestimonials(testimonials, track) {
+    // Clear loading message
+    track.innerHTML = '';
+    
+    // Format date helper
+    function formatDate(dateString) {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        const now = new Date();
+        const diffTime = Math.abs(now - date);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+        if (diffDays < 30) return `${Math.floor(diffDays / 7)} week${Math.floor(diffDays / 7) > 1 ? 's' : ''} ago`;
+        if (diffDays < 365) return `${Math.floor(diffDays / 30)} month${Math.floor(diffDays / 30) > 1 ? 's' : ''} ago`;
+        return `${Math.floor(diffDays / 365)} year${Math.floor(diffDays / 365) > 1 ? 's' : ''} ago`;
+    }
+    
+    // Create testimonial cards
+    testimonials.forEach(testimonial => {
+        const card = document.createElement('div');
+        card.className = 'testimonial-card';
+        
+        const dateText = testimonial.date || formatDate(testimonial.submitted_at || testimonial.date);
+        
+        card.innerHTML = `
+            <div class="testimonial-header">
+                <div class="testimonial-author">${testimonial.name || 'Anonymous'}</div>
+                <div class="testimonial-date">${dateText}</div>
+            </div>
+            <div class="testimonial-text">"${testimonial.text || testimonial.testimonial_text || ''}"</div>
+        `;
+        
+        track.appendChild(card);
+    });
+    
+    // Re-initialize carousel after testimonials are loaded
+    setTimeout(() => {
+        initTestimonialsCarousel();
+    }, 100);
+}
+
 // Testimonials Carousel Auto-Rotation
-(function() {
+function initTestimonialsCarousel() {
     const track = document.querySelector('.testimonials-track');
     const cards = document.querySelectorAll('.testimonial-card');
     const prevBtn = document.querySelector('.carousel-btn.prev');
@@ -284,7 +420,12 @@ window.addEventListener('scroll', function() {
         updateCarousel();
         startAutoRotate();
     }, 100);
-})();
+}
+
+// Load testimonials when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    loadTestimonials();
+});
 
 // Floating CTA Button - Always visible
 (function() {
