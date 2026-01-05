@@ -494,6 +494,245 @@ function initTestimonialsCarousel() {
 // Load testimonials when page loads
 document.addEventListener('DOMContentLoaded', () => {
     loadTestimonials();
+    
+    // Set up real-time subscription for new testimonials
+    if (supabase) {
+        setupTestimonialsSubscription();
+    }
+});
+
+// Real-time subscription for new testimonials
+let testimonialsSubscription = null;
+
+function setupTestimonialsSubscription() {
+    if (!supabase) {
+        console.warn('Supabase client not initialized, skipping real-time subscription');
+        return;
+    }
+    
+    try {
+        // Subscribe to new testimonials
+        testimonialsSubscription = supabase
+            .channel('public-testimonials')
+            .on('postgres_changes', {
+                event: 'INSERT',
+                schema: 'public',
+                table: 'testimonials', // Note: Adjust table name if your table is named differently
+                filter: 'status=eq.published' // Listen for published testimonials
+            }, (payload) => {
+                console.log('New testimonial received:', payload);
+                // Transform and add new testimonial to DOM
+                const newTestimonial = transformTestimonialData(payload.new);
+                if (newTestimonial) {
+                    addTestimonialToDOM(newTestimonial);
+                }
+            })
+            .on('postgres_changes', {
+                event: 'UPDATE',
+                schema: 'public',
+                table: 'testimonials',
+                filter: 'status=eq.published' // Listen for status changes to published
+            }, (payload) => {
+                console.log('Testimonial updated:', payload);
+                // If a testimonial was just published, add it
+                if (payload.new.status === 'published' && payload.old.status !== 'published') {
+                    const newTestimonial = transformTestimonialData(payload.new);
+                    if (newTestimonial) {
+                        addTestimonialToDOM(newTestimonial);
+                    }
+                }
+            })
+            .subscribe((status) => {
+                if (status === 'SUBSCRIBED') {
+                    console.log('Subscribed to testimonials real-time updates');
+                } else if (status === 'CHANNEL_ERROR') {
+                    console.error('Error subscribing to testimonials channel');
+                }
+            });
+    } catch (error) {
+        console.error('Error setting up testimonials subscription:', error);
+    }
+}
+
+// Transform testimonial data from Supabase format to our format
+async function transformTestimonialData(testimonial) {
+    if (!testimonial) return null;
+    
+    // If the testimonial already has student data, use it
+    if (testimonial.students?.profiles?.full_name) {
+        return {
+            id: testimonial.id,
+            name: testimonial.students.profiles.full_name,
+            text: testimonial.testimonial_text,
+            rating: testimonial.rating,
+            videoUrl: testimonial.video_url,
+            featured: testimonial.featured,
+            date: testimonial.submitted_at,
+            submitted_at: testimonial.submitted_at
+        };
+    }
+    
+    // Otherwise, fetch the student data
+    if (supabase && testimonial.student_id) {
+        try {
+            const { data: studentData, error } = await supabase
+                .from('students')
+                .select(`
+                    profiles!inner(full_name)
+                `)
+                .eq('id', testimonial.student_id)
+                .single();
+            
+            if (!error && studentData) {
+                return {
+                    id: testimonial.id,
+                    name: studentData.profiles?.full_name || 'Anonymous',
+                    text: testimonial.testimonial_text,
+                    rating: testimonial.rating,
+                    videoUrl: testimonial.video_url,
+                    featured: testimonial.featured,
+                    date: testimonial.submitted_at,
+                    submitted_at: testimonial.submitted_at
+                };
+            }
+        } catch (error) {
+            console.error('Error fetching student data for testimonial:', error);
+        }
+    }
+    
+    // Fallback with minimal data
+    return {
+        id: testimonial.id,
+        name: 'Anonymous',
+        text: testimonial.testimonial_text || '',
+        rating: testimonial.rating || 5,
+        videoUrl: testimonial.video_url,
+        featured: testimonial.featured || false,
+        date: testimonial.submitted_at,
+        submitted_at: testimonial.submitted_at
+    };
+}
+
+// Add a new testimonial to the DOM without refreshing
+function addTestimonialToDOM(testimonial) {
+    const track = document.querySelector('#testimonials-track');
+    if (!track) {
+        console.warn('Testimonials track not found');
+        return;
+    }
+    
+    // Check if testimonial already exists (avoid duplicates)
+    const existingCard = track.querySelector(`[data-testimonial-id="${testimonial.id}"]`);
+    if (existingCard) {
+        console.log('Testimonial already exists in DOM');
+        return;
+    }
+    
+    // Format date
+    function formatDate(dateString) {
+        if (!dateString) return 'Recently';
+        const date = new Date(dateString);
+        const now = new Date();
+        const diffTime = Math.abs(now - date);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+        if (diffDays < 30) return `${Math.floor(diffDays / 7)} week${Math.floor(diffDays / 7) > 1 ? 's' : ''} ago`;
+        if (diffDays < 365) return `${Math.floor(diffDays / 30)} month${Math.floor(diffDays / 30) > 1 ? 's' : ''} ago`;
+        return `${Math.floor(diffDays / 365)} year${Math.floor(diffDays / 365) > 1 ? 's' : ''} ago`;
+    }
+    
+    const dateText = formatDate(testimonial.submitted_at || testimonial.date);
+    
+    // Create testimonial card
+    const card = document.createElement('div');
+    card.className = 'testimonial-card';
+    card.setAttribute('data-testimonial-id', testimonial.id);
+    
+    // If featured, add to the beginning; otherwise add to the end
+    const isFeatured = testimonial.featured;
+    
+    card.innerHTML = `
+        <div class="testimonial-header">
+            <div class="testimonial-author">${testimonial.name || 'Anonymous'}</div>
+            <div class="testimonial-date">${dateText}</div>
+        </div>
+        <div class="testimonial-text">"${testimonial.text || testimonial.testimonial_text || ''}"</div>
+    `;
+    
+    // Add animation class for smooth appearance
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(20px)';
+    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    
+    // Insert at the beginning if featured, otherwise at the end
+    if (isFeatured && track.firstChild) {
+        track.insertBefore(card, track.firstChild);
+    } else {
+        track.appendChild(card);
+    }
+    
+    // Animate in
+    setTimeout(() => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+    }, 10);
+    
+    // Re-initialize carousel to include new card
+    setTimeout(() => {
+        initTestimonialsCarousel();
+    }, 100);
+    
+    // Show a subtle notification (optional)
+    showTestimonialNotification(testimonial.name);
+}
+
+// Show a subtle notification when a new testimonial is added
+function showTestimonialNotification(studentName) {
+    // Create a small notification element
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        bottom: 100px;
+        right: 20px;
+        background: #4B2C6C;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        font-size: 14px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    `;
+    notification.textContent = `✨ New testimonial from ${studentName}!`;
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.opacity = '1';
+        notification.style.transform = 'translateY(0)';
+    }, 10);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Cleanup subscription on page unload
+window.addEventListener('beforeunload', () => {
+    if (testimonialsSubscription) {
+        supabase.removeChannel(testimonialsSubscription);
+        testimonialsSubscription = null;
+    }
 });
 
 // ============================================
