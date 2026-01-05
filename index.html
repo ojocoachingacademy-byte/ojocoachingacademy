@@ -26,6 +26,19 @@
     <link rel="canonical" href="https://ojocoachingacademy.com/">
     <link rel="stylesheet" href="styles.css">
     
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Supabase Configuration -->
+    <!-- Replace these with your actual Supabase credentials -->
+    <!-- The anon key is safe to expose publicly if Row Level Security (RLS) is properly configured -->
+    <script>
+        // Set your Supabase credentials here
+        // These will be used to initialize the Supabase client
+        window.SUPABASE_URL = 'YOUR_SUPABASE_URL'; // e.g., 'https://xxxxx.supabase.co'
+        window.SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // Your Supabase anon/public key
+    </script>
+    
     <!-- Google Analytics & Google Ads -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DQZCB4S87F"></script>
     <script>

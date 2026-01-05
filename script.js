@@ -1,3 +1,31 @@
+// Initialize Supabase Client
+// NOTE: Replace these with your actual Supabase credentials
+// The anon key is safe to expose publicly if Row Level Security (RLS) is properly configured
+let supabase = null;
+
+function initSupabase() {
+    // Get Supabase credentials from environment or config
+    // For now, we'll try to get them from a config object or use Netlify Function as fallback
+    const supabaseUrl = window.SUPABASE_URL || null;
+    const supabaseAnonKey = window.SUPABASE_ANON_KEY || null;
+    
+    if (supabaseUrl && supabaseAnonKey && window.supabase) {
+        try {
+            supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+            console.log('Supabase client initialized');
+        } catch (error) {
+            console.warn('Failed to initialize Supabase client:', error);
+        }
+    }
+}
+
+// Initialize on page load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSupabase);
+} else {
+    initSupabase();
+}
+
 // Align review button's right edge with Book Now button's right edge on desktop
 function alignReviewButton() {
     if (window.innerWidth >= 1400) {
@@ -245,7 +273,48 @@ async function loadTestimonials() {
     ];
     
     try {
-        // Try to fetch from Supabase
+        // Try direct Supabase client first (faster, if available)
+        if (supabase) {
+            try {
+                const { data, error } = await supabase
+                    .from('testimonials')
+                    .select(`
+                        id,
+                        testimonial_text,
+                        rating,
+                        video_url,
+                        featured,
+                        submitted_at,
+                        students!inner(
+                            profiles!inner(full_name)
+                        )
+                    `)
+                    .eq('status', 'published')
+                    .order('featured', { ascending: false })
+                    .order('submitted_at', { ascending: false })
+                    .limit(20);
+                
+                if (!error && data && data.length > 0) {
+                    // Transform data to match expected format
+                    const formatted = data.map(t => ({
+                        name: t.students?.profiles?.full_name || 'Anonymous',
+                        text: t.testimonial_text,
+                        rating: t.rating,
+                        videoUrl: t.video_url,
+                        featured: t.featured,
+                        date: t.submitted_at,
+                        submitted_at: t.submitted_at
+                    }));
+                    
+                    renderTestimonials(formatted, track);
+                    return;
+                }
+            } catch (directError) {
+                console.warn('Direct Supabase fetch failed, trying Netlify Function:', directError);
+            }
+        }
+        
+        // Fallback to Netlify Function
         const response = await fetch('/.netlify/functions/get-testimonials?limit=20');
         
         if (!response.ok) {
@@ -255,7 +324,7 @@ async function loadTestimonials() {
         const data = await response.json();
         
         if (data.success && data.testimonials && data.testimonials.length > 0) {
-            // Use Supabase testimonials
+            // Use Supabase testimonials from Netlify Function
             renderTestimonials(data.testimonials, track);
             return;
         } else {
@@ -426,6 +495,135 @@ function initTestimonialsCarousel() {
 document.addEventListener('DOMContentLoaded', () => {
     loadTestimonials();
 });
+
+// ============================================
+// Supabase Helper Functions
+// ============================================
+
+/**
+ * Submit contact form to Supabase
+ * @param {Object} formData - { name, email, phone, message }
+ */
+async function submitContactForm(formData) {
+    if (!supabase) {
+        console.error('Supabase client not initialized');
+        return { success: false, error: 'Database connection not available' };
+    }
+    
+    try {
+        const { data, error } = await supabase
+            .from('leads')
+            .insert([{
+                name: formData.name,
+                email: formData.email,
+                phone: formData.phone || null,
+                message: formData.message,
+                source: 'website',
+                created_at: new Date().toISOString()
+            }])
+            .select();
+        
+        if (error) {
+            console.error('Error submitting contact form:', error);
+            return { success: false, error: error.message };
+        }
+        
+        return { success: true, data };
+    } catch (error) {
+        console.error('Exception submitting contact form:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+/**
+ * Load pricing from Supabase
+ * @returns {Promise<Array>} Array of pricing packages
+ */
+async function loadPricing() {
+    if (!supabase) {
+        console.warn('Supabase client not initialized, using default pricing');
+        return null;
+    }
+    
+    try {
+        const { data, error } = await supabase
+            .from('public_pricing')
+            .select('*')
+            .eq('is_active', true)
+            .order('lessons', { ascending: true });
+        
+        if (error) {
+            console.error('Error loading pricing:', error);
+            return null;
+        }
+        
+        return data;
+    } catch (error) {
+        console.error('Exception loading pricing:', error);
+        return null;
+    }
+}
+
+/**
+ * Get published testimonials directly from Supabase
+ * @param {Object} options - { featured: boolean, limit: number }
+ * @returns {Promise<Array>} Array of testimonials
+ */
+async function getTestimonialsFromSupabase(options = {}) {
+    if (!supabase) {
+        return null;
+    }
+    
+    try {
+        let query = supabase
+            .from('testimonials')
+            .select(`
+                id,
+                testimonial_text,
+                rating,
+                video_url,
+                featured,
+                submitted_at,
+                students!inner(
+                    profiles!inner(full_name)
+                )
+            `)
+            .eq('status', 'published');
+        
+        if (options.featured) {
+            query = query.eq('featured', true);
+        }
+        
+        query = query
+            .order('featured', { ascending: false })
+            .order('submitted_at', { ascending: false });
+        
+        if (options.limit) {
+            query = query.limit(options.limit);
+        }
+        
+        const { data, error } = await query;
+        
+        if (error) {
+            console.error('Error fetching testimonials:', error);
+            return null;
+        }
+        
+        return data.map(t => ({
+            id: t.id,
+            name: t.students?.profiles?.full_name || 'Anonymous',
+            text: t.testimonial_text,
+            rating: t.rating,
+            videoUrl: t.video_url,
+            featured: t.featured,
+            date: t.submitted_at,
+            submitted_at: t.submitted_at
+        }));
+    } catch (error) {
+        console.error('Exception fetching testimonials:', error);
+        return null;
+    }
+}
 
 // Floating CTA Button - Always visible
 (function() {
