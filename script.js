@@ -277,7 +277,7 @@ async function loadTestimonials() {
         if (supabase) {
             try {
                 const { data, error } = await supabase
-                    .from('testimonials')
+                    .from('public_testimonials')
                     .select(`
                         id,
                         testimonial_text,
@@ -517,7 +517,7 @@ function setupTestimonialsSubscription() {
             .on('postgres_changes', {
                 event: 'INSERT',
                 schema: 'public',
-                table: 'testimonials', // Note: Adjust table name if your table is named differently
+                table: 'public_testimonials',
                 filter: 'status=eq.published' // Listen for published testimonials
             }, (payload) => {
                 console.log('New testimonial received:', payload);
@@ -530,7 +530,7 @@ function setupTestimonialsSubscription() {
             .on('postgres_changes', {
                 event: 'UPDATE',
                 schema: 'public',
-                table: 'testimonials',
+                table: 'public_testimonials',
                 filter: 'status=eq.published' // Listen for status changes to published
             }, (payload) => {
                 console.log('Testimonial updated:', payload);
@@ -815,7 +815,7 @@ async function getTestimonialsFromSupabase(options = {}) {
     
     try {
         let query = supabase
-            .from('testimonials')
+            .from('public_testimonials')
             .select(`
                 id,
                 testimonial_text,

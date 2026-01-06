@@ -50,7 +50,7 @@ exports.handler = async (event, context) => {
 
     // Build query
     let query = supabase
-      .from('testimonials')
+      .from('public_testimonials')
       .select(`
         id,
         testimonial_text,
