@@ -1,30 +1,58 @@
 // Initialize Supabase Client
 // NOTE: Replace these with your actual Supabase credentials
 // The anon key is safe to expose publicly if Row Level Security (RLS) is properly configured
-let supabase = null;
-
-function initSupabase() {
-    // Get Supabase credentials from environment or config
-    // For now, we'll try to get them from a config object or use Netlify Function as fallback
-    const supabaseUrl = window.SUPABASE_URL || null;
-    const supabaseAnonKey = window.SUPABASE_ANON_KEY || null;
+// Use window object to avoid conflicts if script is loaded multiple times
+(function() {
+    'use strict';
     
-    if (supabaseUrl && supabaseAnonKey && window.supabase) {
-        try {
-            supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
-            console.log('Supabase client initialized');
-        } catch (error) {
-            console.warn('Failed to initialize Supabase client:', error);
+    // Prevent duplicate initialization
+    if (window._supabaseInitialized) {
+        return;
+    }
+    window._supabaseInitialized = true;
+    
+    // Store client in window object only - no local variable declarations
+    if (typeof window.supabaseClient === 'undefined') {
+        window.supabaseClient = null;
+    }
+    
+    function initSupabase() {
+        // Skip if already initialized
+        if (window.supabaseClient) {
+            return;
+        }
+        
+        // Get Supabase credentials from environment or config
+        const supabaseUrl = window.SUPABASE_URL || null;
+        const supabaseAnonKey = window.SUPABASE_ANON_KEY || null;
+        
+        // Check if Supabase library is loaded
+        if (supabaseUrl && supabaseAnonKey && typeof window.supabase !== 'undefined' && window.supabase && window.supabase.createClient) {
+            try {
+                const client = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+                window.supabaseClient = client; // Store in window for global access
+                console.log('Supabase client initialized');
+            } catch (error) {
+                console.warn('Failed to initialize Supabase client:', error);
+            }
         }
     }
-}
-
-// Initialize on page load
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSupabase);
-} else {
-    initSupabase();
-}
+    
+    // Initialize on page load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initSupabase);
+    } else {
+        initSupabase();
+    }
+    
+    // Export getter function to access the Supabase client
+    // This is the ONLY way other code should access Supabase
+    if (typeof window.getSupabaseClient === 'undefined') {
+        window.getSupabaseClient = function() {
+            return window.supabaseClient || null;
+        };
+    }
+})();
 
 // Align review button's right edge with Book Now button's right edge on desktop
 function alignReviewButton() {
@@ -90,7 +118,7 @@ document.addEventListener('click', function(e) {
         
         // Close menu if it's a regular link or a dropdown menu item
         if (!isDropdownToggle || isDropdownItem) {
-            navMenu.classList.remove('active');
+        navMenu.classList.remove('active');
             // Close all dropdowns
             document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
                 dropdown.classList.remove('active');
@@ -274,6 +302,7 @@ async function loadTestimonials() {
     
     try {
         // Try direct Supabase client first (faster, if available)
+        const supabase = getSupabase();
         if (supabase) {
             try {
                 const { data, error } = await supabase
@@ -491,11 +520,22 @@ function initTestimonialsCarousel() {
     }, 100);
 }
 
+// Helper function to get Supabase client
+// Helper function to get Supabase client
+// This is the safe way to access Supabase - prevents duplicate declaration errors
+function getSupabase() {
+    if (typeof window.getSupabaseClient === 'function') {
+        return window.getSupabaseClient();
+    }
+    return window.supabaseClient || null;
+}
+
 // Load testimonials when page loads
 document.addEventListener('DOMContentLoaded', () => {
     loadTestimonials();
     
     // Set up real-time subscription for new testimonials
+    const supabase = getSupabase();
     if (supabase) {
         setupTestimonialsSubscription();
     }
@@ -505,6 +545,7 @@ document.addEventListener('DOMContentLoaded', () => {
 let testimonialsSubscription = null;
 
 function setupTestimonialsSubscription() {
+    const supabase = getSupabase();
     if (!supabase) {
         console.warn('Supabase client not initialized, skipping real-time subscription');
         return;
@@ -573,6 +614,7 @@ async function transformTestimonialData(testimonial) {
     }
     
     // Otherwise, fetch the student data
+    const supabase = getSupabase();
     if (supabase && testimonial.student_id) {
         try {
             const { data: studentData, error } = await supabase
@@ -744,6 +786,7 @@ window.addEventListener('beforeunload', () => {
  * @param {Object} formData - { name, email, phone, message }
  */
 async function submitContactForm(formData) {
+    const supabase = getSupabase();
     if (!supabase) {
         console.error('Supabase client not initialized');
         return { success: false, error: 'Database connection not available' };
@@ -779,6 +822,7 @@ async function submitContactForm(formData) {
  * @returns {Promise<Array>} Array of pricing packages
  */
 async function loadPricing() {
+    const supabase = getSupabase();
     if (!supabase) {
         console.warn('Supabase client not initialized, using default pricing');
         return null;
@@ -809,6 +853,7 @@ async function loadPricing() {
  * @returns {Promise<Array>} Array of testimonials
  */
 async function getTestimonialsFromSupabase(options = {}) {
+    const supabase = getSupabase();
     if (!supabase) {
         return null;
     }
@@ -975,391 +1020,7 @@ function openBioModal(title, student, bio) {
     document.addEventListener('keydown', escHandler);
 }
 
-// Floating Side Reviews (Desktop Only)
-(function() {
-    // Review data
-    const reviews = [
-        {
-            author: "Daniela S.",
-            text: "Tobi is very insightful in identifying issues and provides helpful cues to improve. He's very patient and knows a lot about body mechanics."
-        },
-        {
-            author: "Srinath T.",
-            text: "Good first session with great feedback on my play. Looking forward to my follow-up lessons with him😃"
-        },
-        {
-            author: "Toni G.",
-            text: "If you want to improve your game, Tobi is your guy. He is kind, patient and prompt. Thank you for taking the time to share your expertise with me."
-        },
-        {
-            author: "Sonya",
-            text: "Tobi is patient, fun and engaging. He makes our lessons interactive, challenging and interesting. The results of his coaching have been dramatic!"
-        },
-        {
-            author: "Rafael",
-            text: "Tobi is a very detail-oriented tennis coach. His main focus is to identify and improve the mechanical and psychological foundations of your game."
-        },
-        {
-            author: "Luke B.",
-            text: "Tobi has helped my swing so much in just two lessons"
-        },
-        {
-            author: "Willie",
-            text: "Tobi is a great tennis instructor. In 5 minutes of court time, he identified the problems with my forehand and customized drills to make the fix."
-        },
-        {
-            author: "Rockwell",
-            text: "Tobi has a really deep understanding of the game. And equally important he knows how to communicate that to his students to actually get them to improve, quickly."
-        },
-        {
-            author: "Michael K.",
-            text: "I was initially hesitant to take tennis lessons, but Toby's friendly demeanor and expertise quickly put me at ease. He is a great teacher."
-        },
-        {
-            author: "Millie",
-            text: "Over the past 6 months with Tobi's coaching I have developed from being able to hold a rally for 2-3 shots to serving well and consistently!"
-        },
-        {
-            author: "Rajesh",
-            text: "Been practicing Tennis on my own for couple of years. Getting coaching from Tobi has been wonderful. I could see my game is getting better."
-        },
-        {
-            author: "Rachel C.",
-            text: "Toby is an amazing tennis coach! He is patient, knowledgeable, and always willing to go the extra mile to help his students succeed."
-        },
-        {
-            author: "Jeff",
-            text: "Tobi was able to quickly identify and help correct a couple of fundamentals that have really helped improve my game."
-        },
-        {
-            author: "David M.",
-            text: "As an experienced player, I was looking for a coach who could help me take my game to the next level. Toby's insights and guidance have been invaluable in helping me refine my technique and strategy."
-        },
-        {
-            author: "Julian S.",
-            text: "Toby is an excellent tennis coach who truly cares about his students' progress. He is patient, kind, and always willing to answer any questions. I would highly recommend him to players of all levels."
-        },
-        {
-            author: "Julia S.",
-            text: "Toby is a fantastic tennis instructor! He really knows how to connect with his students and help them improve their game. As a beginner, I felt very comfortable learning from him. Highly recommend!"
-        },
-        {
-            author: "Lisa T.",
-            text: "Toby's passion for tennis is infectious! His enthusiasm for the sport has inspired me to take my game more seriously and has helped me develop a love for the game. Highly recommend him as a coach."
-        },
-        {
-            author: "Marcus H.",
-            text: "I have been playing tennis for years but had never worked with a coach before. Toby's expertise and attention to detail have helped me improve my game in ways I never thought possible."
-        },
-        {
-            author: "Lea G.",
-            text: "I have worked with several tennis coaches over the years, but Toby is by far the best. He takes the time to understand his students' goals and tailor his lessons to their needs."
-        },
-        {
-            author: "Douglas",
-            text: "I've been taking lessons with Tobi for over three years, and it's been an amazing experience! Tobi has helped me improve my tennis skills tremendously and given me the confidence I needed to play better. The lessons focus on solid fundamentals, and I can truly see the difference in my game quickly. I highly recommend Tobi to anyone looking to boost their skills and confidence—both on and off the court! He is a great coach."
-        }
-    ];
-    
-    let leftReviewIndex = 0;
-    let rightReviewIndex = Math.floor(reviews.length / 2); // Start right side at different point
-    
-    const leftReviewText = document.getElementById('floating-review-text-left');
-    const leftReviewAuthor = document.getElementById('floating-review-author-left');
-    const rightReviewText = document.getElementById('floating-review-text-right');
-    const rightReviewAuthor = document.getElementById('floating-review-author-right');
-    const leftReview = document.getElementById('floating-review-left');
-    const rightReview = document.getElementById('floating-review-right');
-    
-    function updateFloatingReviews() {
-        // Only show on desktop when there's enough space (screen width >= 1600px)
-        // This ensures reviews don't overlap with the 1200px container
-        if (window.innerWidth < 1600) {
-            if (leftReview) leftReview.style.display = 'none';
-            if (rightReview) rightReview.style.display = 'none';
-            return;
-        }
-        
-        // Show on desktop - position outside the container
-        if (leftReview) {
-            leftReview.style.display = 'block';
-            const containerWidth = 1200;
-            const reviewWidth = 280;
-            const margin = 40;
-            const leftPosition = (window.innerWidth - containerWidth) / 2 - reviewWidth - margin;
-            leftReview.style.left = `${Math.max(20, leftPosition)}px`;
-        }
-        if (rightReview) {
-            rightReview.style.display = 'block';
-            const containerWidth = 1200;
-            const reviewWidth = 280;
-            const margin = 40;
-            const rightPosition = (window.innerWidth - containerWidth) / 2 - reviewWidth - margin;
-            rightReview.style.right = `${Math.max(20, rightPosition)}px`;
-        }
-        
-        // Update left review
-        if (leftReviewText && leftReviewAuthor) {
-            const review = reviews[leftReviewIndex];
-            leftReviewText.textContent = `"${review.text}"`;
-            leftReviewAuthor.textContent = `- ${review.author}`;
-        }
-        
-        // Update right review
-        if (rightReviewText && rightReviewAuthor) {
-            const review = reviews[rightReviewIndex];
-            rightReviewText.textContent = `"${review.text}"`;
-            rightReviewAuthor.textContent = `- ${review.author}`;
-        }
-    }
-    
-    function rotateReviews() {
-        // Rotate left review
-        leftReviewIndex = (leftReviewIndex + 1) % reviews.length;
-        
-        // Rotate right review (different timing)
-        rightReviewIndex = (rightReviewIndex + 1) % reviews.length;
-        
-        // Ensure they're different
-        if (leftReviewIndex === rightReviewIndex) {
-            rightReviewIndex = (rightReviewIndex + 1) % reviews.length;
-        }
-        
-        // Fade out
-        if (leftReview) leftReview.style.opacity = '0';
-        if (rightReview) rightReview.style.opacity = '0';
-        
-        // Update and fade in
-        setTimeout(() => {
-            updateFloatingReviews();
-            if (leftReview) leftReview.style.opacity = '1';
-            if (rightReview) rightReview.style.opacity = '1';
-        }, 300);
-    }
-    
-    // Initialize
-    updateFloatingReviews();
-    
-    // Rotate every 8 seconds
-    setInterval(rotateReviews, 8000);
-    
-    // Handle window resize
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            updateFloatingReviews();
-        }, 250);
-    });
-    
-    // Update position on scroll (keep them centered vertically)
-    window.addEventListener('scroll', () => {
-        if (window.innerWidth >= 1600) {
-            if (leftReview) {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                const windowHeight = window.innerHeight;
-                const scrollPercent = scrollTop / (document.documentElement.scrollHeight - windowHeight);
-                const maxOffset = 200; // Maximum offset from center
-                const offset = scrollPercent * maxOffset - maxOffset / 2;
-                leftReview.style.transform = `translateY(calc(-50% + ${offset}px))`;
-            }
-            if (rightReview) {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                const windowHeight = window.innerHeight;
-                const scrollPercent = scrollTop / (document.documentElement.scrollHeight - windowHeight);
-                const maxOffset = 200;
-                const offset = scrollPercent * maxOffset - maxOffset / 2;
-                rightReview.style.transform = `translateY(calc(-50% + ${offset}px))`;
-            }
-        }
-    });
-})();
-
-// Mobile Review Widget
-(function() {
-    const reviews = [
-        {
-            author: "Daniela S.",
-            text: "Tobi is very insightful in identifying issues and provides helpful cues to improve. He's very patient and knows a lot about body mechanics."
-        },
-        {
-            author: "Srinath T.",
-            text: "Good first session with great feedback on my play. Looking forward to my follow-up lessons with him😃"
-        },
-        {
-            author: "Toni G.",
-            text: "If you want to improve your game, Tobi is your guy. He is kind, patient and prompt. Thank you for taking the time to share your expertise with me."
-        },
-        {
-            author: "Sonya",
-            text: "Tobi is patient, fun and engaging. He makes our lessons interactive, challenging and interesting. The results of his coaching have been dramatic!"
-        },
-        {
-            author: "Rafael",
-            text: "Tobi is a very detail-oriented tennis coach. His main focus is to identify and improve the mechanical and psychological foundations of your game."
-        },
-        {
-            author: "Luke B.",
-            text: "Tobi has helped my swing so much in just two lessons"
-        },
-        {
-            author: "Willie",
-            text: "Tobi is a great tennis instructor. In 5 minutes of court time, he identified the problems with my forehand and customized drills to make the fix."
-        },
-        {
-            author: "Rockwell",
-            text: "Tobi has a really deep understanding of the game. And equally important he knows how to communicate that to his students to actually get them to improve, quickly."
-        },
-        {
-            author: "Michael K.",
-            text: "I was initially hesitant to take tennis lessons, but Toby's friendly demeanor and expertise quickly put me at ease. He is a great teacher."
-        },
-        {
-            author: "Millie",
-            text: "Over the past 6 months with Tobi's coaching I have developed from being able to hold a rally for 2-3 shots to serving well and consistently!"
-        },
-        {
-            author: "Rajesh",
-            text: "Been practicing Tennis on my own for couple of years. Getting coaching from Tobi has been wonderful. I could see my game is getting better."
-        },
-        {
-            author: "Rachel C.",
-            text: "Toby is an amazing tennis coach! He is patient, knowledgeable, and always willing to go the extra mile to help his students succeed."
-        },
-        {
-            author: "Jeff",
-            text: "Tobi was able to quickly identify and help correct a couple of fundamentals that have really helped improve my game."
-        },
-        {
-            author: "David M.",
-            text: "As an experienced player, I was looking for a coach who could help me take my game to the next level. Toby's insights and guidance have been invaluable in helping me refine my technique and strategy."
-        },
-        {
-            author: "Julian S.",
-            text: "Toby is an excellent tennis coach who truly cares about his students' progress. He is patient, kind, and always willing to answer any questions. I would highly recommend him to players of all levels."
-        },
-        {
-            author: "Julia S.",
-            text: "Toby is a fantastic tennis instructor! He really knows how to connect with his students and help them improve their game. As a beginner, I felt very comfortable learning from him. Highly recommend!"
-        },
-        {
-            author: "Lisa T.",
-            text: "Toby's passion for tennis is infectious! His enthusiasm for the sport has inspired me to take my game more seriously and has helped me develop a love for the game. Highly recommend him as a coach."
-        },
-        {
-            author: "Marcus H.",
-            text: "I have been playing tennis for years but had never worked with a coach before. Toby's expertise and attention to detail have helped me improve my game in ways I never thought possible."
-        },
-        {
-            author: "Lea G.",
-            text: "I have worked with several tennis coaches over the years, but Toby is by far the best. He takes the time to understand his students' goals and tailor his lessons to their needs."
-        },
-        {
-            author: "Douglas",
-            text: "I've been taking lessons with Tobi for over three years, and it's been an amazing experience! Tobi has helped me improve my tennis skills tremendously and given me the confidence I needed to play better. The lessons focus on solid fundamentals, and I can truly see the difference in my game quickly. I highly recommend Tobi to anyone looking to boost their skills and confidence—both on and off the court! He is a great coach."
-        }
-    ];
-    
-    const mobileWidget = document.getElementById('mobile-review-widget');
-    const mobileToggle = document.getElementById('mobile-review-toggle');
-    const mobileContent = document.getElementById('mobile-review-content');
-    const mobileClose = document.getElementById('mobile-review-close');
-    const mobileText = document.getElementById('mobile-review-text-mobile');
-    const mobileAuthor = document.getElementById('mobile-review-author-mobile');
-    const mobileCounter = document.getElementById('mobile-review-counter');
-    const mobilePrev = document.getElementById('mobile-review-prev');
-    const mobileNext = document.getElementById('mobile-review-next');
-    
-    if (!mobileWidget || !mobileToggle) return;
-    
-    let currentMobileIndex = 0;
-    
-    function updateMobileReview() {
-        if (mobileText && mobileAuthor && mobileCounter) {
-            const review = reviews[currentMobileIndex];
-            mobileText.textContent = `"${review.text}"`;
-            mobileAuthor.textContent = review.author;
-            mobileCounter.textContent = `${currentMobileIndex + 1} / ${reviews.length}`;
-        }
-    }
-    
-    function toggleMobileWidget() {
-        if (mobileWidget) {
-            mobileWidget.classList.toggle('active');
-        }
-    }
-    
-    function nextMobileReview() {
-        currentMobileIndex = (currentMobileIndex + 1) % reviews.length;
-        updateMobileReview();
-    }
-    
-    function prevMobileReview() {
-        currentMobileIndex = (currentMobileIndex - 1 + reviews.length) % reviews.length;
-        updateMobileReview();
-    }
-    
-    // Event listeners
-    if (mobileToggle) {
-        mobileToggle.addEventListener('click', toggleMobileWidget);
-    }
-    
-    if (mobileClose) {
-        mobileClose.addEventListener('click', toggleMobileWidget);
-    }
-    
-    if (mobileNext) {
-        mobileNext.addEventListener('click', nextMobileReview);
-    }
-    
-    if (mobilePrev) {
-        mobilePrev.addEventListener('click', prevMobileReview);
-    }
-    
-    // Close when clicking outside (on the overlay)
-    if (mobileContent) {
-        mobileContent.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
-    }
-    
-    // Close when clicking overlay background on desktop
-    if (mobileWidget) {
-        mobileWidget.addEventListener('click', (e) => {
-            if (e.target === mobileWidget && mobileWidget.classList.contains('active')) {
-                toggleMobileWidget();
-            }
-        });
-    }
-    
-    // Initialize
-    updateMobileReview();
-    
-    // Auto-rotate reviews when widget is open
-    let mobileRotateInterval;
-    function startMobileRotation() {
-        if (mobileRotateInterval) clearInterval(mobileRotateInterval);
-        if (mobileWidget && mobileWidget.classList.contains('active')) {
-            mobileRotateInterval = setInterval(() => {
-                nextMobileReview();
-            }, 6000);
-        }
-    }
-    
-    // Start rotation when widget opens
-    if (mobileToggle) {
-        mobileToggle.addEventListener('click', () => {
-            setTimeout(startMobileRotation, 300);
-        });
-    }
-    
-    // Stop rotation when widget closes
-    if (mobileClose) {
-        mobileClose.addEventListener('click', () => {
-            if (mobileRotateInterval) clearInterval(mobileRotateInterval);
-        });
-    }
-})();
+// Floating reviews widget removed - testimonials are now prominently featured on the page
 
 // Gallery Carousel Functionality
 (function() {

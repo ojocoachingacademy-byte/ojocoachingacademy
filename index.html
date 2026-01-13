@@ -3,28 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Professional tennis coaching in San Diego with Professional Tennis Registry certified coach Tobi. Private lessons, semi-private lessons, and gift packages available. 17+ years playing, 14+ years teaching experience.">
-    <meta name="keywords" content="tennis coaching, San Diego tennis, private tennis lessons, tennis instructor, Professional Tennis Registry certified, tennis coach San Diego, Colina Del Sol Park">
+    <!-- Primary Meta Tags -->
+    <title>OJO Coaching Academy | San Diego Tennis Lessons | USTA National Champion Coach</title>
+    <meta name="title" content="OJO Coaching Academy | San Diego Tennis Lessons | USTA National Champion Coach">
+    <meta name="description" content="Premium tennis coaching in San Diego with 2024 USTA National Champion Tobi. Data-driven progress tracking, personalized AI lesson plans, Professional Tennis Registry certified. Book your lesson today.">
+    <meta name="keywords" content="tennis lessons san diego, tennis coach san diego, private tennis lessons, tennis training, usta coach, colina del sol park tennis, tennis academy, data-driven coaching">
     <meta name="author" content="Ojo Coaching Academy">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ojocoachingacademy.com/">
-    <meta property="og:title" content="Ojo Coaching Academy - Professional Tennis Coaching in San Diego">
-    <meta property="og:description" content="Professional Tennis Registry Certified Tennis Coach | 17+ Years Playing | 14+ Years Teaching | Private & Semi-Private Lessons">
+    <meta property="og:url" content="https://ojocoachingacademy.com">
+    <meta property="og:title" content="OJO Coaching Academy - Elite Tennis Coaching in San Diego">
+    <meta property="og:description" content="Train with 2024 USTA National Champion. Data-driven coaching with custom progress tracking app included.">
     <meta property="og:image" content="https://ojocoachingacademy.com/tennis profile pic.png">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://ojocoachingacademy.com/">
-    <meta property="twitter:title" content="Ojo Coaching Academy - Professional Tennis Coaching in San Diego">
-    <meta property="twitter:description" content="Professional Tennis Registry Certified Tennis Coach | 17+ Years Playing | 14+ Years Teaching | Private & Semi-Private Lessons">
+    <meta property="twitter:url" content="https://ojocoachingacademy.com">
+    <meta property="twitter:title" content="OJO Coaching Academy - Elite Tennis Coaching in San Diego">
+    <meta property="twitter:description" content="Train with 2024 USTA National Champion. Data-driven coaching with custom progress tracking app included.">
     <meta property="twitter:image" content="https://ojocoachingacademy.com/tennis profile pic.png">
     
     <link rel="icon" type="image/png" href="Photos-and-videos/Ojo Coaching Academy Logo.png">
-    <title>Ojo Coaching Academy - Professional Tennis Coaching in San Diego</title>
     <link rel="canonical" href="https://ojocoachingacademy.com/">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://ojocoachingacademyapp.netlify.app">
     
     <!-- Supabase Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -35,8 +40,8 @@
     <script>
         // Set your Supabase credentials here
         // These will be used to initialize the Supabase client
-        window.SUPABASE_URL = 'YOUR_SUPABASE_URL'; // e.g., 'https://xxxxx.supabase.co'
-        window.SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // Your Supabase anon/public key
+        window.SUPABASE_URL = 'https://ajjqhksdufotifsyejjg.supabase.co'; // e.g., 'https://xxxxx.supabase.co'
+        window.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFqanFoa3NkdWZvdGlmc3llampnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY5NzcxMjEsImV4cCI6MjA4MjU1MzEyMX0.2o4zrbSSBqOVH3-ZbDDvivT6aSRU-YxxzdSt46b2hBg'; // Your Supabase anon/public key
     </script>
     
     <!-- Google Analytics & Google Ads -->
@@ -164,45 +169,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Floating Side Reviews (Desktop Only) -->
-    <div class="floating-side-reviews">
-        <div class="floating-review floating-review-left" id="floating-review-left">
-            <div class="floating-review-content">
-                <div class="floating-review-stars">⭐⭐⭐⭐⭐</div>
-                <div class="floating-review-text" id="floating-review-text-left"></div>
-                <div class="floating-review-author" id="floating-review-author-left"></div>
-            </div>
-        </div>
-        <div class="floating-review floating-review-right" id="floating-review-right">
-            <div class="floating-review-content">
-                <div class="floating-review-stars">⭐⭐⭐⭐⭐</div>
-                <div class="floating-review-text" id="floating-review-text-right"></div>
-                <div class="floating-review-author" id="floating-review-author-right"></div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Mobile Review Widget (Mobile Only) -->
-    <div class="mobile-review-widget" id="mobile-review-widget">
-        <button class="mobile-review-toggle" id="mobile-review-toggle" aria-label="Toggle reviews">
-            <span class="mobile-review-icon">⭐</span>
-            <span class="mobile-review-label">Reviews</span>
-        </button>
-        <div class="mobile-review-content" id="mobile-review-content">
-            <div class="mobile-review-header">
-                <h3>What Students Say</h3>
-                <button class="mobile-review-close" id="mobile-review-close" aria-label="Close reviews">×</button>
-            </div>
-            <div class="mobile-review-text" id="mobile-review-text-mobile"></div>
-            <div class="mobile-review-author" id="mobile-review-author-mobile"></div>
-            <div class="mobile-review-nav">
-                <button class="mobile-review-prev" id="mobile-review-prev" aria-label="Previous review">‹</button>
-                <span class="mobile-review-counter" id="mobile-review-counter">1 / 13</span>
-                <button class="mobile-review-next" id="mobile-review-next" aria-label="Next review">›</button>
-            </div>
-        </div>
-    </div>
-    
     <nav class="navbar">
         <div class="container">
             <a href="#home" class="nav-brand">
@@ -210,23 +176,16 @@
             </a>
             <ul class="nav-menu">
                 <li><a href="#home">Home</a></li>
-                <li class="nav-dropdown">
-                    <a href="#about">About <span class="dropdown-arrow">▾</span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#about">About Coach</a></li>
-                        <li><a href="#services">Services</a></li>
-                    </ul>
-                </li>
+                <li><a href="about.html">About</a></li>
                 <li><a href="#pricing">Pricing</a></li>
                 <li><a href="#testimonials">Testimonials</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li class="nav-dropdown">
                     <a href="#faq">More <span class="dropdown-arrow">▾</span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#faq">FAQ</a></li>
-                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
                         <li><a href="blog.html">Blog</a></li>
-                        <li><a href="review.html">Leave Review</a></li>
+                <li><a href="review.html">Leave Review</a></li>
                         <li><a href="referral.html">Refer a Friend</a></li>
                     </ul>
                 </li>
@@ -243,71 +202,212 @@
     <section id="home" class="hero">
         <div class="container hero-content">
             <div class="hero-layout">
-                <div class="hero-left">
-                    <h1 class="hero-title">Professional Tennis Coaching in San Diego</h1>
-                    <p class="hero-subtitle">Professional Tennis Registry Certified Tennis Coach | 17+ Years Playing | 14+ Years Teaching | San Diego, California</p>
-                </div>
-                <div class="hero-center">
+                <!-- Images at the top -->
+                <div class="hero-images">
+                    <div class="hero-image-container">
                         <img src="tennis profile pic.png" alt="Coach Tobi Ojo - Professional Tennis Registry Certified Tennis Coach at Ojo Coaching Academy" class="hero-profile-image" loading="eager" width="400" height="400">
                 </div>
-                <div class="hero-right">
+                    <div class="hero-logo-container">
                         <img src="Photos-and-videos/Ojo Coaching Academy Logo.png" alt="Ojo Coaching Academy Logo - Professional Tennis Coaching" class="hero-logo" loading="eager">
                 </div>
+                </div>
+                
+                <!-- Text content below images -->
+                <div class="hero-text">
+                    <h1 class="hero-title">San Diego's Most Complete Tennis Development</h1>
+                    <p class="hero-subtitle">From your first rally to tournament play - personalized training, tracked progress, proven results</p>
+                    
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <strong>2024 USTA National Champion</strong>
+                            <span>Mixed Doubles</span>
+                        </div>
+                        <div class="stat">
+                            <strong>PTR Certified</strong>
+                            <span>Professional Coach</span>
+                </div>
+                        <div class="stat">
+                            <strong>22+ Years</strong>
+                            <span>Playing Experience</span>
+                </div>
+                        <div class="stat">
+                            <strong>200+ Five-Star Reviews</strong>
+                            <span>Verified Students</span>
+                </div>
             </div>
-            <div class="hero-button-container">
+                    
+                    <div class="hero-cta">
                 <a href="booking.html" class="btn-primary btn-large">Book Your First Lesson</a>
+                        <a href="#testimonials" class="btn-secondary btn-large">See Student Results</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="about" class="about">
+    <section class="who-this-is-for">
         <div class="container">
-            <h2>About Coach Tobi</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>Hi! I'm Coach Tobi, a Professional Tennis Registry Certified tennis coach based in San Diego.</p>
-                    <p>Born and raised in London, I've played tennis for over 17 years across the UK and USA. I competed at Wellington College and Loughborough University, and recently won a USTA Mixed Doubles National Championship (2024).</p>
-                    <p>Since earning my Professional Tennis Registry certification in 2006, I've coached over 1,000 students—from 3-year-olds taking their first swing to seniors perfecting their game at 75+. Whether you're a complete beginner or a competitive player, I'll help you build a deeper understanding of the game while improving your technique.</p>
-                    <p>My coaching style? Fun, friendly, and analytical. Tennis is a sport you can play for life, and I'm here to help you fall in love with it.</p>
+            <h2>Whether You Want to Play with Family or Compete in Tournaments</h2>
+            <p class="section-subtitle">Personalized coaching for every level and goal</p>
+            
+            <div class="audience-grid">
+                <div class="audience-card">
+                    <div class="audience-icon">🎾</div>
+                    <h3>Beginners</h3>
+                    <p class="audience-goal">Learn proper technique from day one</p>
+                    <blockquote class="audience-quote">
+                        "I was a complete beginner when I started. In just 5 lessons, I went from not knowing how to hold a racquet to playing actual rallies!"
+                        <cite>- Julia S.</cite>
+                    </blockquote>
                 </div>
-                <div class="video-container">
+                
+                <div class="audience-card">
+                    <div class="audience-icon">↺</div>
+                    <h3>Returning Players</h3>
+                    <p class="audience-goal">Rebuild confidence and consistency</p>
+                    <blockquote class="audience-quote">
+                        "I'd been playing recreationally for years but hit a plateau. Coach Tobi identified specific weaknesses and through targeted drills, I've improved my consistency dramatically."
+                        <cite>- Marcus H.</cite>
+                    </blockquote>
+                </div>
+                
+                <div class="audience-card">
+                    <div class="audience-icon">🏆</div>
+                    <h3>Competitive Players</h3>
+                    <p class="audience-goal">Take your game to the next level</p>
+                    <blockquote class="audience-quote">
+                        "As an experienced player, I needed someone to refine my technique. Coach Tobi's attention to detail helped me perfect my serve and volley game - my tournament results have improved significantly."
+                        <cite>- David M.</cite>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="app-features" class="differentiator">
+        <div class="container">
+            <h2>The Only Complete Development System in San Diego</h2>
+            <p class="section-subtitle">Every lesson is part of a personalized roadmap - not just hitting balls</p>
+            
+            <div class="differentiator-grid">
+                <div class="differentiator-card">
+                    <div class="differentiator-icon">📋</div>
+                    <h3>Personalized Development Plans</h3>
+                    <p>Know exactly what to work on and why. Clear roadmap from your current level to your goals with measurable milestones.</p>
+                </div>
+                
+                <div class="differentiator-card featured-diff">
+                    <div class="differentiator-icon">📊</div>
+                    <h3>Progress Tracking App</h3>
+                    <p>See your improvement measured and documented. Track every lesson, view your progress ladder, and access your complete training history.</p>
+                </div>
+                
+                <div class="differentiator-card">
+                    <div class="differentiator-icon">🤝</div>
+                    <h3>Hitting Partner Network</h3>
+                    <p>Access to a network of 200+ players for practice between lessons. Find partners at your level anytime.</p>
+                </div>
+            </div>
+            
+            <div class="differentiator-clincher">
+                <p class="highlight-text">Included free with all lesson packages - no other coach in San Diego offers this</p>
+                <a href="booking.html" class="btn-primary btn-large">Start Your Development</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works-simple">
+        <div class="container">
+            <h2>How It Works</h2>
+            <p class="section-subtitle">Simple process, powerful results</p>
+            
+            <div class="steps-simple">
+                <div class="step-simple">
+                    <div class="step-icon-container">
+                        <div class="step-icon">📋</div>
+                        <div class="step-number">1</div>
+                    </div>
+                    <h3>Book & Assess</h3>
+                    <p>We'll discuss your goals, current level, and create your personalized development plan</p>
+                </div>
+                
+                <div class="step-connector-simple">→</div>
+                
+                <div class="step-simple">
+                    <div class="step-icon-container">
+                        <div class="step-icon">📊</div>
+                        <div class="step-number">2</div>
+                    </div>
+                    <h3>Train & Track</h3>
+                    <p>Follow your custom roadmap with tracked milestones, homework, and measurable progress</p>
+                </div>
+                
+                <div class="step-connector-simple">→</div>
+                
+                <div class="step-simple">
+                    <div class="step-icon-container">
+                        <div class="step-icon">🏆</div>
+                        <div class="step-number">3</div>
+                    </div>
+                    <h3>Achieve Your Goals</h3>
+                    <p>From first rally to tournament play - watch your game transform</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2>What 200+ Students Say</h2>
+            <p class="section-subtitle">5.0 ⭐ Rating - SuperCoach ranked in top 3%</p>
+            
+            <!-- Video Testimonials -->
+            <div class="video-testimonials-container" style="margin: 3rem 0 4rem 0;">
+                <div class="video-testimonials-grid">
+                    <div class="video-testimonial-item">
+                        <div class="video-testimonial-embed">
+                            <iframe 
+                                src="https://www.youtube.com/embed/-jbpBLxYq34" 
+                                title="Cici Hendricks - Tennis Coaching Testimonial"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen
+                                loading="lazy">
+                            </iframe>
+                        </div>
+                        <div class="video-testimonial-info">
+                            <h3 class="video-testimonial-name">Cici Hendricks</h3>
+                        </div>
+                </div>
+                    <div class="video-testimonial-item">
+                        <div class="video-testimonial-embed">
                     <iframe 
-                        class="video-player" 
-                        src="https://www.youtube.com/embed/fRwc40nFDlY" 
-                        title="Coach Tobi Tennis Training - Ojo Coaching Academy"
-                        frameborder="0" 
+                                src="https://www.youtube.com/embed/PhhL89ETBss" 
+                                title="Kelly Reyes - Tennis Coaching Testimonial"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                         allowfullscreen
                         loading="lazy">
                     </iframe>
+                        </div>
+                        <div class="video-testimonial-info">
+                            <h3 class="video-testimonial-name">Kelly Reyes</h3>
+                        </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <section id="services" class="services">
-        <div class="container">
-            <h2>What You'll Learn</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">🎯</div>
-                    <h3>Technique & Form</h3>
-                    <p>Master proper technique for all strokes including forehand, backhand, serve, volley, and overhead. I focus on identifying and improving the mechanical foundations of your game.</p>
+            
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <a href="review.html" class="btn-primary" style="display: inline-block;">✍️ Leave a Review</a>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">🧠</div>
-                    <h3>Strategy & Tactics</h3>
-                    <p>Learn how to read your opponent, develop winning strategies, and make smart decisions on court. I work strategy and shot selection into every lesson.</p>
+            <div class="testimonials-carousel">
+                <div class="testimonials-track" id="testimonials-track">
+                    <!-- Testimonials will be loaded dynamically from Supabase -->
+                    <div class="testimonials-loading" style="text-align: center; padding: 2rem; color: #666;">
+                        Loading testimonials...
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">💪</div>
-                    <h3>Footwork & Movement</h3>
-                    <p>Improve your agility, speed, and court positioning. Strong footwork is the foundation of great tennis.</p>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">🏆</div>
-                    <h3>Mental Game</h3>
-                    <p>Develop mental toughness, confidence, and learn how to handle pressure situations. I focus on both the mechanical and psychological foundations of your game.</p>
+                <div class="carousel-nav">
+                    <button class="carousel-btn prev" aria-label="Previous testimonials">‹</button>
+                    <button class="carousel-btn next" aria-label="Next testimonials">›</button>
                 </div>
             </div>
         </div>
@@ -315,8 +415,8 @@
 
     <section id="pricing" class="pricing">
         <div class="container">
-            <h2>Lesson Packages</h2>
-            <p class="section-subtitle">Choose the package that works best for you</p>
+            <h2>Choose Your Development Path</h2>
+            <p class="section-subtitle">Investment in your tennis future</p>
             
             <!-- Package Type Tabs -->
             <div class="pricing-tabs">
@@ -336,45 +436,61 @@
                 <p class="pricing-content-subtitle">One-on-one personalized tennis instruction</p>
                 <div class="pricing-grid">
                     <div class="pricing-card">
-                        <h3>Single Lesson</h3>
-                        <div class="price">$100</div>
-                        <p class="price-duration">per hour</p>
+                        <h3>Try It Out</h3>
+                        <div class="price-display">
+                            <span class="base-price">$100</span>
+                        </div>
+                        <p class="price-subtitle">Single Lesson</p>
                         <ul class="pricing-features">
                             <li>1-hour private lesson</li>
-                            <li>Personalized instruction</li>
-                            <li>Assessment of strengths & weaknesses</li>
+                            <li>Personalized assessment</li>
+                            <li>See if we're a good fit</li>
                             <li>Customized drills</li>
                         </ul>
+                        <a href="booking.html?package=1" class="btn-primary">Book Single Lesson</a>
                     </div>
                     <div class="pricing-card featured">
                         <div class="popular-badge">Most Popular</div>
-                        <h3>5-Hour Package</h3>
-                        <div class="price">$450</div>
+                        <h3>See Real Results</h3>
+                        <div class="price-display">
+                            <span class="base-price">$450</span>
+                        </div>
+                        <p class="price-subtitle">5-Lesson Package</p>
                         <p class="price-duration">$90 per hour</p>
                         <ul class="pricing-features">
                             <li>5 one-hour private lessons</li>
                             <li>Save $50 vs. single lessons</li>
-                            <li>Progress tracking</li>
+                            <li><strong>Experience my teaching style</strong></li>
+                            <li><strong>See measurable progress</strong></li>
+                            <li>Progress tracking included</li>
                             <li>Video analysis included</li>
                             <li>Custom training program</li>
                         </ul>
+                        <p class="conversion-note">*Most students see measurable progress in 5 lessons</p>
+                        <a href="booking.html?package=5" class="btn-primary">Book 5-Lesson Package</a>
                     </div>
                     <div class="pricing-card">
-                        <h3>20-Hour Package</h3>
-                        <div class="price">$1400</div>
+                        <h3>Complete Transformation</h3>
+                        <div class="price-display">
+                            <span class="base-price">$1400</span>
+                        </div>
+                        <p class="price-subtitle">20-Lesson Package</p>
                         <p class="price-duration">$70 per hour</p>
                         <ul class="pricing-features">
                             <li>20 one-hour private lessons</li>
                             <li>Save $600 vs. single lessons</li>
+                            <li><strong>Serious about long-term development</strong></li>
                             <li>Comprehensive progress tracking</li>
                             <li>Weekly video analysis</li>
                             <li>Long-term training plan</li>
                             <li>Priority scheduling</li>
                         </ul>
+                        <p class="conversion-note">*95% of students who reach 5 lessons continue to 20+</p>
+                        <a href="booking.html?package=20" class="btn-primary">Book 20-Lesson Package</a>
                     </div>
                 </div>
                 <div class="pricing-note">
-                    <p>* All private lesson packages can be used over a flexible time period.</p>
+                    <p>All lesson packages can be used over a flexible time period. Processing fees apply at checkout.</p>
                 </div>
             </div>
 
@@ -384,7 +500,9 @@
                 <div class="pricing-grid">
                     <div class="pricing-card">
                         <h3>Single Session</h3>
-                        <div class="price">$120</div>
+                        <div class="price-display">
+                            <span class="base-price">$120</span>
+                        </div>
                         <p class="price-duration">per hour for 2 people</p>
                         <ul class="pricing-features">
                             <li>1-hour semi-private lesson</li>
@@ -396,7 +514,9 @@
                     <div class="pricing-card featured">
                         <div class="popular-badge">Popular</div>
                         <h3>5-Hour Package</h3>
-                        <div class="price">$500</div>
+                        <div class="price-display">
+                            <span class="base-price">$500</span>
+                        </div>
                         <p class="price-duration">$100 per hour for 2</p>
                         <ul class="pricing-features">
                             <li>5 one-hour semi-private lessons</li>
@@ -407,7 +527,9 @@
                     </div>
                     <div class="pricing-card">
                         <h3>20-Hour Package</h3>
-                        <div class="price">$1600</div>
+                        <div class="price-display">
+                            <span class="base-price">$1600</span>
+                        </div>
                         <p class="price-duration">$80 per hour for 2</p>
                         <ul class="pricing-features">
                             <li>20 one-hour semi-private lessons</li>
@@ -426,7 +548,9 @@
                 <div class="pricing-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); max-width: 800px; margin: 0 auto;">
                     <div class="pricing-card">
                         <h3>1-Hour Gift Lesson</h3>
-                        <div class="price">$100</div>
+                        <div class="price-display">
+                            <span class="base-price">$100</span>
+                        </div>
                         <p class="price-duration">perfect gift for beginners</p>
                         <ul class="pricing-features">
                             <li>1-hour private lesson</li>
@@ -438,7 +562,9 @@
                     <div class="pricing-card featured">
                         <div class="popular-badge">Best Value</div>
                         <h3>3-Hour Gift Package</h3>
-                        <div class="price">$250</div>
+                        <div class="price-display">
+                            <span class="base-price">$250</span>
+                        </div>
                         <p class="price-duration">$83.33 per hour</p>
                         <ul class="pricing-features">
                             <li>3 one-hour private lessons</li>
@@ -453,322 +579,97 @@
         </div>
     </section>
 
-    <section id="testimonials" class="testimonials">
+    <section id="faq" class="faq-reduced">
         <div class="container">
-            <h2>What My Students Say</h2>
-            <p class="section-subtitle">5.0 ⭐ Rating with 40+ Reviews - SuperCoach ranked in top 3%</p>
+            <h2>Common Questions</h2>
+            <p class="section-subtitle">Everything you need to know before booking</p>
             
-            <!-- Video Testimonials -->
-            <div class="video-testimonials-container" style="margin: 3rem 0 4rem 0;">
-                <div class="video-testimonials-grid">
-                    <div class="video-testimonial-item">
-                        <div class="video-testimonial-embed">
-                            <iframe 
-                                src="https://www.youtube.com/embed/-jbpBLxYq34" 
-                                title="Cici Hendricks - Tennis Coaching Testimonial"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen
-                                loading="lazy">
-                            </iframe>
-                        </div>
-                        <div class="video-testimonial-info">
-                            <h3 class="video-testimonial-name">Cici Hendricks</h3>
-                        </div>
-                    </div>
-                    <div class="video-testimonial-item">
-                        <div class="video-testimonial-embed">
-                            <iframe 
-                                src="https://www.youtube.com/embed/PhhL89ETBss" 
-                                title="Kelly Reyes - Tennis Coaching Testimonial"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen
-                                loading="lazy">
-                            </iframe>
-                        </div>
-                        <div class="video-testimonial-info">
-                            <h3 class="video-testimonial-name">Kelly Reyes</h3>
-                        </div>
-                    </div>
+            <div class="faq-grid-reduced">
+                <div class="faq-item">
+                    <h3 class="faq-question">What if I'm a complete beginner? 🎾</h3>
+                    <div class="faq-answer">
+                        <p>Perfect! I specialize in teaching proper technique from day one. Many of my students started as complete beginners and now play confidently in leagues and tournaments. I'll meet you exactly where you are.</p>
                 </div>
-            </div>
-            
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <a href="review.html" class="btn-primary" style="display: inline-block;">✍️ Leave a Review</a>
-            </div>
-            <div class="testimonials-carousel">
-                <div class="testimonials-track" id="testimonials-track">
-                    <!-- Testimonials will be loaded dynamically from Supabase -->
-                    <div class="testimonials-loading" style="text-align: center; padding: 2rem; color: #666;">
-                        Loading testimonials...
-                    </div>
                 </div>
-                <div class="carousel-nav">
-                    <button class="carousel-btn prev" aria-label="Previous testimonials">‹</button>
-                    <button class="carousel-btn next" aria-label="Next testimonials">›</button>
-                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">How long until I see results?</h3>
+                    <div class="faq-answer">
+                        <p>Most students see measurable improvement within 5 lessons. You'll notice better consistency, technique, and understanding of the game. The progress tracking app lets you see your improvement documented over time.</p>
             </div>
         </div>
-    </section>
 
-    <section id="faq" class="faq">
-        <div class="container">
-            <h2>Frequently Asked Questions</h2>
-            <p class="section-subtitle">Everything you need to know about lessons with Ojo Coaching Academy</p>
-            <div class="faq-grid">
                 <div class="faq-item">
-                    <h3 class="faq-question">What should I bring to lessons? 🎾</h3>
+                    <h3 class="faq-question">What makes you different from other coaches?</h3>
                     <div class="faq-answer">
-                        <p>You'll need to bring your own tennis racquet. I provide tennis balls for all lessons. Wear comfortable athletic clothing and proper tennis shoes. I also recommend bringing water to stay hydrated during your lesson.</p>
+                        <p>I'm the only coach in San Diego offering a complete development system with progress tracking app, personalized development plans, and access to a 200+ player hitting partner network. Plus, I'm an active competitive player (2024 USTA National Champion) - I practice what I preach.</p>
                     </div>
                 </div>
+                
                 <div class="faq-item">
-                    <h3 class="faq-question">Do you provide racquets or balls?</h3>
+                    <h3 class="faq-question">What's included with the progress tracking app?</h3>
                     <div class="faq-answer">
-                        <p>I bring tennis balls to every lesson. However, you'll need to bring your own racquet. If you're just starting out and don't have a racquet yet, I can provide recommendations on what type of racquet would work best for you.</p>
+                        <p>Every lesson package includes: personalized development plans, milestone tracking, lesson history, homework assignments with reminders, direct messaging with me between lessons, and access to the hitting partner network. All completely free.</p>
                     </div>
                 </div>
+                
                 <div class="faq-item">
                     <h3 class="faq-question">What's your cancellation policy?</h3>
                     <div class="faq-answer">
-                        <p>Life happens! I understand plans can change. If you need to cancel or reschedule, please contact me at least 24 hours before your scheduled lesson. Cancellations with less than 24 hours notice may be subject to a cancellation fee. For package deals, lessons can be rescheduled to fit your schedule.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <h3 class="faq-question">Are lessons indoor or outdoor?</h3>
-                    <div class="faq-answer">
-                        <p>I teach at Colina Del Sol Park in San Diego, which has outdoor tennis courts. San Diego's great weather means we can play year-round! In the rare case of rain or extreme weather, we'll reschedule your lesson.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <h3 class="faq-question">How do I schedule lessons?</h3>
-                    <div class="faq-answer">
-                        <p>After booking a lesson package through the website and completing payment, I'll contact you via email to schedule your first lesson time. You can also reach out directly via email at <a href="mailto:tobi@ojocoachingacademy.com">tobi@ojocoachingacademy.com</a> to schedule.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <h3 class="faq-question">What ages and skill levels do you teach?</h3>
-                    <div class="faq-answer">
-                        <p>I work with high school students and adults of all skill levels - beginners just starting out, intermediate players looking to improve, and advanced/competitive players. Whether you're picking up a racquet for the first time or fine-tuning your tournament game, I can help you reach your goals.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <h3 class="faq-question">How long are the lessons?</h3>
-                    <div class="faq-answer">
-                        <p>All lessons are one hour long. This gives us enough time to warm up, work on technique, practice, and cool down. For beginners, we might take short breaks as needed.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <h3 class="faq-question">Can I take lessons with a friend or partner?</h3>
-                    <div class="faq-answer">
-                        <p>Yes! I offer semi-private lessons for 2 people. This is perfect for couples, friends, or family members who want to learn together. Semi-private lessons are $120/hour for 2 people, with package discounts available.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <h3 class="faq-question">What makes your coaching approach different?</h3>
-                    <div class="faq-answer">
-                        <p>I focus on both the mechanical and psychological foundations of your game. With 17+ years of playing experience and 14+ years of teaching, I identify issues quickly and provide clear, actionable feedback. I break down complex movements step-by-step and tailor each lesson to your specific needs and goals. Many students see improvement in just a few lessons!</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <h3 class="faq-question">Do you offer gift certificates?</h3>
-                    <div class="faq-answer">
-                        <p>Absolutely! Gift packages make perfect presents for tennis enthusiasts. You can purchase a 1-hour gift lesson ($100) or a 3-hour gift package ($250). The recipient can then schedule their lessons at their convenience. Gift certificates are a great way to introduce someone to tennis or help them improve their game!</p>
-                    </div>
+                        <p>Life happens! Please contact me at least 24 hours before your scheduled lesson to cancel or reschedule. Cancellations with less than 24 hours notice may be subject to a cancellation fee. Package lessons can be rescheduled to fit your schedule.</p>
                 </div>
             </div>
         </div>
-    </section>
-
-    <section id="success-stories" class="success-stories">
-        <div class="container">
-            <h2>Student Success Stories</h2>
-            <p class="section-subtitle">Real results from real students - See how our coaching has transformed their game</p>
-            <div class="success-stories-grid">
-                <div class="success-story-card" onclick="openBioModal('Student Progress', 'Sarah M., High School Senior', 'When I started with Coach Tobi, I could barely hold a rally for 3 shots. After 3 months of lessons, I made my high school varsity team! His patient approach and focus on fundamentals helped me develop consistent groundstrokes and a reliable serve. Now I\'m competing in matches with confidence I never had before.')">
-                    <div class="success-story-image">
-                        <img src="Photos-and-videos/IMG_0963.jpeg" alt="Student success story - Tennis improvement" loading="lazy">
-                    </div>
-                    <div class="success-story-content">
-                        <h3>Student Progress</h3>
-                        <p>From beginner to confident player - see the transformation</p>
-                    </div>
-                </div>
-                <div class="success-story-card" onclick="openBioModal('Skill Development', 'Marcus H., Adult Player', 'I\'d been playing recreationally for years but hit a plateau. Coach Tobi identified specific weaknesses in my footwork and backhand technique. Through targeted drills and strategic coaching, I\'ve improved my consistency dramatically. My friends can\'t believe how much better I\'ve gotten in just 2 months!')">
-                    <div class="success-story-image">
-                        <img src="Photos-and-videos/IMG_1041.jpeg" alt="Tennis lesson success - Skill development" loading="lazy">
-                    </div>
-                    <div class="success-story-content">
-                        <h3>Skill Development</h3>
-                        <p>Consistent practice leads to measurable improvement</p>
-                    </div>
-                </div>
-                <div class="success-story-card" onclick="openBioModal('Technique Mastery', 'David M., Competitive Player', 'As an experienced player, I needed someone to help refine my technique. Coach Tobi\'s attention to detail and ability to break down complex movements made all the difference. He helped me perfect my serve and volley game, and I\'ve seen my tournament results improve significantly.')">
-                    <div class="success-story-image">
-                        <img src="Photos-and-videos/IMG_1619.jpeg" alt="Tennis coaching results - Technique improvement" loading="lazy">
-                    </div>
-                    <div class="success-story-content">
-                        <h3>Technique Mastery</h3>
-                        <p>Perfecting form through personalized instruction</p>
-                    </div>
-                </div>
-                <div class="success-story-card" onclick="openBioModal('Game Improvement', 'Julia S., Beginner Adult', 'I was a complete beginner when I started with Coach Tobi. His step-by-step teaching style made tennis approachable and fun. In just 5 lessons, I went from not knowing how to hold a racquet to playing actual rallies! His encouragement and clear instruction gave me the confidence to keep improving.')">
-                    <div class="success-story-image">
-                        <img src="Photos-and-videos/IMG_1888.jpeg" alt="Tennis student achievement - Game improvement" loading="lazy">
-                    </div>
-                    <div class="success-story-content">
-                        <h3>Game Improvement</h3>
-                        <p>Strategic coaching leads to winning results</p>
-                    </div>
-                </div>
-                <div class="success-story-card" onclick="openBioModal('Progress Through Practice', 'Willie, Adult Player', 'Coach Tobi\'s coaching philosophy of focusing on both mechanics and strategy transformed my game. He identified issues with my forehand in minutes and customized drills that actually worked. My shot selection and court positioning have improved dramatically. I\'m playing the best tennis of my life!')">
-                    <div class="success-story-image progress-practice-image">
-                        <img src="Photos-and-videos/IMG_3457.jpeg" alt="Tennis lesson progress - Student achievement" loading="lazy" class="progress-practice-img">
-                    </div>
-                    <div class="success-story-content">
-                        <h3>Progress Through Practice</h3>
-                        <p>Dedication and expert coaching create champions</p>
-                    </div>
-                </div>
-                <div class="success-story-card" onclick="openBioModal('Advanced Skills', 'Rockwell, High School Player', 'Coach Tobi has a deep understanding of the game and knows how to communicate it effectively. His ability to explain complex strategies in simple terms helped me take my game to the next level. I\'ve improved faster than I ever thought possible, and I\'m now competing at a much higher level.')">
-                    <div class="success-story-image">
-                        <img src="Photos-and-videos/IMG_5752.jpeg" alt="Tennis coaching success - Skill advancement" loading="lazy">
-                    </div>
-                    <div class="success-story-content">
-                        <h3>Advanced Skills</h3>
-                        <p>Taking your game to the next level</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="blog" class="blog-preview">
-        <div class="container">
-            <h2>Tennis Tips & Insights</h2>
-            <p class="section-subtitle">Expert tips, techniques, and strategies to improve your game</p>
-            <div class="blog-preview-grid">
-                <div class="blog-preview-card">
-                    <div class="blog-icon">📝</div>
-                    <h3>5 Common Tennis Mistakes Beginners Make</h3>
-                    <p>Learn about the most common mistakes new players make and how to avoid them from day one.</p>
-                    <a href="blog.html" class="btn-primary">Read Blog →</a>
-                </div>
-                <div class="blog-preview-card">
-                    <div class="blog-icon">🎾</div>
-                    <h3>How to Choose the Right Tennis Racquet</h3>
-                    <p>A comprehensive guide to selecting the perfect racquet for your playing style and skill level.</p>
-                    <a href="blog.html" class="btn-primary">Read Blog →</a>
-                </div>
-                <div class="blog-preview-card">
-                    <div class="blog-icon">💪</div>
-                    <h3>5 Drills to Improve Your Serve</h3>
-                    <p>Master the most important shot in tennis with these proven practice drills and techniques.</p>
-                    <a href="blog.html" class="btn-primary">Read Blog →</a>
-                </div>
-            </div>
+            
             <div style="text-align: center; margin-top: 2rem;">
-                <a href="blog.html" class="btn-primary">View All Blog Posts</a>
+                <a href="faq.html" class="btn-secondary">View All FAQs</a>
             </div>
         </div>
     </section>
 
-    <section id="gallery" class="gallery">
+    <section class="final-cta">
         <div class="container">
-            <h2>Photo Gallery</h2>
-            <div class="gallery-carousel">
-                <div class="gallery-track">
-                <div class="gallery-item featured">
-                    <img src="tennis profile pic.png" alt="Tobi Ojo - Professional Tennis Registry Certified Tennis Coach at Ojo Coaching Academy in San Diego">
+            <h2>Ready to Start Your Tennis Journey?</h2>
+            <p class="final-cta-subtitle">Book your first lesson and see why 95% of students continue beyond 5 lessons</p>
+            
+            <div class="final-cta-buttons">
+                <a href="booking.html" class="btn-primary btn-large">Book Your First Lesson</a>
                 </div>
-                <div class="gallery-item">
-                    <img src="IMG_4946.JPEG" alt="Private tennis lesson at Colina Del Sol Park San Diego">
-                </div>
-                <div class="gallery-item">
-                    <img src="Tennis at sectionals.JPEG" alt="Tennis coaching and training at sectionals tournament">
-                </div>
-                <div class="gallery-item">
-                    <img src="unnamed (1).jpg" alt="Tennis coaching session with Ojo Coaching Academy">
-                </div>
-                <div class="gallery-item">
-                    <img src="unnamed (2).jpg" alt="Professional tennis instruction and training">
-                </div>
-                <div class="gallery-item">
-                    <img src="unnamed (3).jpg" alt="Tennis lesson and skill development coaching">
-                </div>
-                <div class="gallery-item">
-                    <img src="unnamed (4).jpg" alt="Tennis coaching and technique improvement">
-                </div>
-                <div class="gallery-item">
-                    <img src="Photos-and-videos/IMG_0180.jpeg" alt="Tennis coaching session at Ojo Coaching Academy">
-                </div>
-                <div class="gallery-item">
-                    <img src="Photos-and-videos/IMG_0211.JPG" alt="Tennis lesson and skill development">
-                </div>
-                <div class="gallery-item">
-                    <img src="Photos-and-videos/IMG_0212.JPG" alt="Professional tennis instruction">
-                </div>
-                <div class="gallery-item">
-                    <img src="Photos-and-videos/IMG_0412.JPG" alt="Tennis coaching and training">
-                </div>
-                <div class="gallery-item">
-                    <img src="Photos-and-videos/IMG_0786.jpg" alt="Tennis lesson improvement">
-                </div>
-                <div class="gallery-item">
-                    <img src="Photos-and-videos/IMG_1127.jpeg" alt="Tennis student success">
-                </div>
-                <div class="gallery-item">
-                    <img src="Photos-and-videos/IMG_1898.jpeg" alt="Tennis coaching progress">
-                </div>
-                <div class="gallery-item">
-                    <img src="Photos-and-videos/IMG_4401.JPG" alt="Tennis instruction and technique">
-                </div>
-                <div class="gallery-item">
-                    <img src="Photos-and-videos/IMG_5640.jpeg" alt="Tennis lesson development">
-                </div>
-                <div class="gallery-item">
-                    <img src="Photos-and-videos/IMG_6928.jpeg" alt="Tennis coaching results">
-                </div>
-                <div class="gallery-item">
-                    <img src="Photos-and-videos/0605451F-FB8A-4909-B77E-DC5B261EC7BD.JPG" alt="Tennis training session">
-                </div>
-                <div class="gallery-item">
-                    <img src="Photos-and-videos/4581E368-F7BE-4AC4-8958-1EBBC54B363C.JPG" alt="Tennis coaching excellence">
-                </div>
-                <div class="gallery-item">
-                    <img src="Photos-and-videos/69402221513__C4B6F49D-AE82-46AB-B462-553CCDB22A7E.JPG" alt="Tennis lesson achievement">
-                </div>
-                <div class="gallery-item">
-                    <img src="Photos-and-videos/C80AE76A-3EA2-4E7A-BA59-2B3472037B7D.JPG" alt="Professional tennis coaching">
-                </div>
-                <div class="gallery-item">
-                    <img src="Photos-and-videos/C906F1AD-0E91-4B66-91C8-5C806E426F87.JPG" alt="Tennis skill development">
-                </div>
-                <div class="gallery-item">
-                    <img src="Photos-and-videos/E96BB6AE-BABF-4BCB-B5A0-002DC191187D.JPG" alt="Tennis instruction excellence">
-                </div>
-                </div>
-                <div class="carousel-nav">
-                    <button class="carousel-btn prev" aria-label="Previous photos">‹</button>
-                    <button class="carousel-btn next" aria-label="Next photos">›</button>
-                </div>
-            </div>
+            
+            <p class="final-cta-note">Not sure? <a href="mailto:tobi@ojocoachingacademy.com">Email me with questions</a></p>
         </div>
     </section>
 
-    <section id="contact" class="contact">
+    <section id="contact" class="location-contact">
         <div class="container">
-            <h2>Get In Touch</h2>
-            <div class="contact-content">
+            <h2>Location & Contact</h2>
+            
+            <div class="location-grid">
+                <div class="location-info">
+                    <h3>Where We Train</h3>
+                    <p><strong>Primary Location:</strong></p>
+                    <p>Colina Del Sol Park</p>
+                    <p>San Diego, CA</p>
+                </div>
+                
                 <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <div>
-                            <h3>Location</h3>
-                            <p>Colina Del Sol Park<br>5319 Orange Avenue<br>San Diego, CA 92115</p>
-                        </div>
-                    </div>
-                    <div class="contact-item full-width">
-                        <div class="map-container">
+                    <h3>Get In Touch</h3>
+                    <p>Have questions? Reach out anytime:</p>
+                    <div class="contact-methods">
+                        <a href="mailto:tobi@ojocoachingacademy.com" class="contact-method">
+                            <span class="icon">📧</span>
+                            <span>tobi@ojocoachingacademy.com</span>
+                        </a>
+                        <a href="https://www.instagram.com/ojocoachingacademy/" target="_blank" class="contact-method">
+                            <span class="icon">📱</span>
+                            <span>DM on Instagram</span>
+                        </a>
+                </div>
+                    <p class="response-time">Response within 24 hours</p>
+            </div>
+        </div>
+            
+            <div class="map-container" style="margin-top: 3rem;">
                             <iframe 
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3356.8!2d-117.08108937977161!3d32.75292813918476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzLCsDQ1JzEwLjUiTiAxMTfCsDA0JzUxLjkiVw!5e0!3m2!1sen!2sus!4v1734892800000!5m2!1sen!2sus"
                                 width="100%" 
@@ -778,14 +679,6 @@
                                 loading="lazy"
                                 title="Ojo Coaching Academy Location - Colina Del Sol Park, 5319 Orange Avenue, San Diego, CA 92115">
                             </iframe>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">✉️</div>
-                        <div>
-                            <h3>Email</h3>
-                            <p><a href="mailto:tobi@ojocoachingacademy.com" style="color: #00a859 !important; text-decoration: underline !important; cursor: pointer !important;">tobi@ojocoachingacademy.com</a></p>
-                        </div>
                     </div>
                     <div class="contact-item">
                         <div class="contact-icon">📱</div>
@@ -801,11 +694,48 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Ojo Coaching Academy. All rights reserved. | Professional Tennis Registry Certified | San Diego, California</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>OJO Coaching Academy</h4>
+                    <p>Elite tennis coaching with data-driven progress tracking</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <div class="footer-links">
+                        <a href="/">Home</a>
+                        <a href="/#app-features">Technology</a>
+                        <a href="/#pricing">Pricing</a>
+                        <a href="/#testimonials">Testimonials</a>
+                        <a href="/referral.html">Refer a Friend</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>For Students</h4>
+                    <div class="footer-links">
+                        <a href="https://ojocoachingacademyapp.netlify.app" target="_blank">Student Login</a>
+                        <a href="https://ojocoachingacademyapp.netlify.app" target="_blank">Progress Dashboard</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <div class="footer-links">
+                        <a href="mailto:tobi@ojocoachingacademy.com">tobi@ojocoachingacademy.com</a>
+                        <a href="https://www.instagram.com/ojocoachingacademy/" target="_blank">Instagram</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 OJO Coaching Academy. All rights reserved.</p>
+                <p class="footer-location">Colina Del Sol Park, San Diego, CA</p>
             <p style="margin-top: 1rem;">
-                <a href="privacy-policy.html" style="color: var(--white); text-decoration: underline;">Privacy Policy</a> | 
-                <a href="terms.html" style="color: var(--white); text-decoration: underline;">Terms of Service</a>
+                    <a href="privacy-policy.html" style="color: rgba(255, 255, 255, 0.8); text-decoration: underline;">Privacy Policy</a> | 
+                    <a href="terms.html" style="color: rgba(255, 255, 255, 0.8); text-decoration: underline;">Terms of Service</a>
             </p>
+            </div>
         </div>
     </footer>
 

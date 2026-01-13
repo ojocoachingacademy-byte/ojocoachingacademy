@@ -127,19 +127,50 @@ packageTypeInputs.forEach(input => {
     });
 });
 
-// Update price summary when package changes
-const packageInputs = document.querySelectorAll('input[name="package"]');
+// Calculate Stripe processing fee (2.9% + $0.30)
+function calculateStripeFee(amount) {
+    const percentageFee = amount * 0.029; // 2.9%
+    const fixedFee = 0.30;
+    return Math.ceil((percentageFee + fixedFee) * 100) / 100; // Round up to nearest cent
+}
 
+// Update price summary when package changes
 function updateSummary() {
     const selectedPackage = document.querySelector('input[name="package"]:checked');
     if (selectedPackage) {
-        const price = selectedPackage.dataset.price;
+        const basePrice = parseFloat(selectedPackage.dataset.price);
         const name = selectedPackage.dataset.name;
-        summaryPackage.textContent = name;
-        summaryTotal.textContent = `$${parseFloat(price).toFixed(2)}`;
+        const stripeFee = calculateStripeFee(basePrice);
+        const totalPrice = basePrice + stripeFee;
+        
+        // Update package name
+        if (summaryPackage) summaryPackage.textContent = name;
+        
+        // Update price breakdown
+        const basePriceEl = document.getElementById('summary-base-price');
+        const feeEl = document.getElementById('summary-fee');
+        const totalEl = document.getElementById('summary-total');
+        
+        if (basePriceEl) basePriceEl.textContent = `$${basePrice.toFixed(2)}`;
+        if (feeEl) feeEl.textContent = `$${stripeFee.toFixed(2)}`;
+        if (totalEl) totalEl.textContent = `$${totalPrice.toFixed(2)}`;
     }
 }
 
+// Use event delegation to catch all package changes, even for dynamically shown packages
+// Attach listener to the form container so it catches all package input changes
+const bookingForm = document.getElementById('booking-form');
+if (bookingForm) {
+    bookingForm.addEventListener('change', function(event) {
+        // Check if the changed element is a package input
+        if (event.target && event.target.name === 'package' && event.target.type === 'radio') {
+            updateSummary();
+        }
+    });
+}
+
+// Also attach listeners directly to all package inputs (for immediate response)
+const packageInputs = document.querySelectorAll('input[name="package"]');
 packageInputs.forEach(input => {
     input.addEventListener('change', updateSummary);
 });
@@ -237,7 +268,9 @@ async function processPayment(amount, customerInfo, cardElement) {
       const packageType = document.querySelector('input[name="packageType"]:checked')?.value || 'Private';
       
       // Payment successful - store booking data for confirmation page
-      sessionStorage.setItem('bookingPrice', amount.toString());
+      // Store base price (not total with fee) for display purposes
+      const basePrice = customerInfo.basePrice || amount;
+      sessionStorage.setItem('bookingPrice', basePrice.toString());
       sessionStorage.setItem('bookingPackage', customerInfo.package);
       sessionStorage.setItem('bookingPackageType', packageType); // Use actual package type from form
       
@@ -259,7 +292,9 @@ async function processPayment(amount, customerInfo, cardElement) {
       netlifyFormData.append('phone', customerInfo.phone || '');
       netlifyFormData.append('package', customerInfo.package);
       netlifyFormData.append('packageType', packageType);
-      netlifyFormData.append('price', amount.toString());
+      // Store base price (not total with fee) in form submission
+      // basePrice is already declared above, just reuse it
+      netlifyFormData.append('price', basePrice.toString());
       netlifyFormData.append('experience', formData.get('experience') || '');
       netlifyFormData.append('goals', formData.get('goals') || '');
       netlifyFormData.append('referral-code', customerInfo.referralCode || '');
@@ -297,7 +332,7 @@ async function processPayment(amount, customerInfo, cardElement) {
               phone: customerInfo.phone || '',
               package: customerInfo.package,
               packageType: packageType,
-              price: amount.toString(),
+              price: (customerInfo.basePrice || amount).toString(),
               bookingReference: bookingRef,
               experience: formData.get('experience') || '',
               goals: formData.get('goals') || '',
@@ -328,7 +363,7 @@ async function processPayment(amount, customerInfo, cardElement) {
               phone: customerInfo.phone || '',
               package: customerInfo.package,
               packageType: packageType,
-              price: amount.toString(),
+              price: (customerInfo.basePrice || amount).toString(),
               referralCode: customerInfo.referralCode || '',
               paymentIntentId: paymentIntent.id,
               experience: formData.get('experience') || '',
@@ -420,8 +455,10 @@ form.addEventListener('submit', async function(event) {
         return;
     }
     
-    const packagePrice = parseFloat(selectedPackage.dataset.price);
+    const basePrice = parseFloat(selectedPackage.dataset.price);
     const packageName = selectedPackage.dataset.name;
+    const stripeFee = calculateStripeFee(basePrice);
+    const totalPrice = basePrice + stripeFee;
     
     // Prepare customer info for payment
     const firstName = formData.get('firstName');
@@ -436,13 +473,15 @@ form.addEventListener('submit', async function(event) {
         email: customerEmail,
         phone: customerPhone,
         package: packageName,
-        referralCode: referralCode
+        referralCode: referralCode,
+        basePrice: basePrice,
+        stripeFee: stripeFee
     };
     
     try {
-        // Process payment via Netlify Function
+        // Process payment via Netlify Function with total amount (base + fee)
         // processPayment handles button state, form submission, email, and redirect
-        await processPayment(packagePrice, customerInfo, cardElement);
+        await processPayment(totalPrice, customerInfo, cardElement);
         
         // If payment succeeds, processPayment will redirect to confirmation page
         // This code will not execute on success due to redirect
