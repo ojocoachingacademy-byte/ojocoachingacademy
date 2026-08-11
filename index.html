@@ -58,7 +58,6 @@
         
         // Enhanced ecommerce tracking for Google Ads
     </script>
-    <!-- 
     
     <!-- Structured Data (Schema.org) -->
     <script type="application/ld+json">
@@ -139,6 +138,16 @@
             },
             "price": "1400",
             "priceCurrency": "USD"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "30-Hour Private Tennis Lesson Package",
+              "description": "30 one-hour private tennis lessons"
+            },
+            "price": "2000",
+            "priceCurrency": "USD"
           }
         ]
       }
@@ -181,11 +190,11 @@
                 <li><a href="#testimonials">Testimonials</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li class="nav-dropdown">
-                    <a href="#faq">More <span class="dropdown-arrow">▾</span></a>
+                    <a href="javascript:void(0);" data-dropdown="more">More <span class="dropdown-arrow">▾</span></a>
                     <ul class="dropdown-menu">
                         <li><a href="faq.html">FAQ</a></li>
                         <li><a href="blog.html">Blog</a></li>
-                <li><a href="review.html">Leave Review</a></li>
+                        <li><a href="review.html">Leave Review</a></li>
                         <li><a href="referral.html">Refer a Friend</a></li>
                     </ul>
                 </li>
@@ -206,10 +215,10 @@
                 <div class="hero-images">
                     <div class="hero-image-container">
                         <img src="tennis profile pic.png" alt="Coach Tobi Ojo - Professional Tennis Registry Certified Tennis Coach at Ojo Coaching Academy" class="hero-profile-image" loading="eager" width="400" height="400">
-                </div>
+                    </div>
                     <div class="hero-logo-container">
                         <img src="Photos-and-videos/Ojo Coaching Academy Logo.png" alt="Ojo Coaching Academy Logo - Professional Tennis Coaching" class="hero-logo" loading="eager">
-                </div>
+                    </div>
                 </div>
                 
                 <!-- Text content below images -->
@@ -225,16 +234,16 @@
                         <div class="stat">
                             <strong>PTR Certified</strong>
                             <span>Professional Coach</span>
-                </div>
+                        </div>
                         <div class="stat">
                             <strong>22+ Years</strong>
                             <span>Playing Experience</span>
-                </div>
+                        </div>
                         <div class="stat">
                             <strong>200+ Five-Star Reviews</strong>
                             <span>Verified Students</span>
-                </div>
-            </div>
+                        </div>
+                    </div>
                     
                     <div class="hero-cta">
                 <a href="booking.html" class="btn-primary btn-large">Book Your First Lesson</a>
@@ -377,40 +386,39 @@
                         <div class="video-testimonial-info">
                             <h3 class="video-testimonial-name">Cici Hendricks</h3>
                         </div>
-                </div>
+                    </div>
                     <div class="video-testimonial-item">
                         <div class="video-testimonial-embed">
-                    <iframe 
+                            <iframe 
                                 src="https://www.youtube.com/embed/PhhL89ETBss" 
                                 title="Kelly Reyes - Tennis Coaching Testimonial"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen
-                        loading="lazy">
-                    </iframe>
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen
+                                loading="lazy">
+                            </iframe>
                         </div>
                         <div class="video-testimonial-info">
                             <h3 class="video-testimonial-name">Kelly Reyes</h3>
                         </div>
+                    </div>
                 </div>
             </div>
-        </div>
             
             <div style="text-align: center; margin-bottom: 2rem;">
                 <a href="review.html" class="btn-primary" style="display: inline-block;">✍️ Leave a Review</a>
-                </div>
+            </div>
             <div class="testimonials-carousel">
                 <div class="testimonials-track" id="testimonials-track">
                     <!-- Testimonials will be loaded dynamically from Supabase -->
                     <div class="testimonials-loading" style="text-align: center; padding: 2rem; color: #666;">
                         Loading testimonials...
-                </div>
+                    </div>
                 </div>
                 <div class="carousel-nav">
                     <button class="carousel-btn prev" aria-label="Previous testimonials">‹</button>
                     <button class="carousel-btn next" aria-label="Next testimonials">›</button>
                 </div>
             </div>
-        </div>
     </section>
 
     <section id="pricing" class="pricing">
@@ -487,6 +495,25 @@
                         </ul>
                         <p class="conversion-note">*95% of students who reach 5 lessons continue to 20+</p>
                         <a href="booking.html?package=20" class="btn-primary">Book 20-Lesson Package</a>
+                    </div>
+                    <div class="pricing-card">
+                        <h3>Ultimate Commitment</h3>
+                        <div class="price-display">
+                            <span class="base-price">$2000</span>
+                        </div>
+                        <p class="price-subtitle">30-Lesson Package</p>
+                        <p class="price-duration">$66.67 per hour</p>
+                        <ul class="pricing-features">
+                            <li>30 one-hour private lessons</li>
+                            <li>Save $1000 vs. single lessons</li>
+                            <li><strong>Full season of development</strong></li>
+                            <li>Comprehensive progress tracking</li>
+                            <li>Weekly video analysis</li>
+                            <li>Long-term training plan</li>
+                            <li>Priority scheduling</li>
+                        </ul>
+                        <p class="conversion-note">*$2000 total price includes card processing fee</p>
+                        <a href="booking.html?package=30" class="btn-primary">Book 30-Lesson Package</a>
                     </div>
                 </div>
                 <div class="pricing-note">
@@ -596,8 +623,8 @@
                     <h3 class="faq-question">How long until I see results?</h3>
                     <div class="faq-answer">
                         <p>Most students see measurable improvement within 5 lessons. You'll notice better consistency, technique, and understanding of the game. The progress tracking app lets you see your improvement documented over time.</p>
-            </div>
-        </div>
+                    </div>
+                </div>
 
                 <div class="faq-item">
                     <h3 class="faq-question">What makes you different from other coaches?</h3>
@@ -617,14 +644,13 @@
                     <h3 class="faq-question">What's your cancellation policy?</h3>
                     <div class="faq-answer">
                         <p>Life happens! Please contact me at least 24 hours before your scheduled lesson to cancel or reschedule. Cancellations with less than 24 hours notice may be subject to a cancellation fee. Package lessons can be rescheduled to fit your schedule.</p>
+                    </div>
                 </div>
             </div>
-        </div>
             
             <div style="text-align: center; margin-top: 2rem;">
                 <a href="faq.html" class="btn-secondary">View All FAQs</a>
             </div>
-        </div>
     </section>
 
     <section class="final-cta">
@@ -664,32 +690,29 @@
                             <span class="icon">📱</span>
                             <span>DM on Instagram</span>
                         </a>
-                </div>
+                    </div>
                     <p class="response-time">Response within 24 hours</p>
+                </div>
             </div>
-        </div>
             
             <div class="map-container" style="margin-top: 3rem;">
-                            <iframe 
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3356.8!2d-117.08108937977161!3d32.75292813918476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzLCsDQ1JzEwLjUiTiAxMTfCsDA0JzUxLjkiVw!5e0!3m2!1sen!2sus!4v1734892800000!5m2!1sen!2sus"
-                                width="100%" 
-                                height="400" 
-                                style="border:0; border-radius: 15px;" 
-                                allowfullscreen="" 
-                                loading="lazy"
-                                title="Ojo Coaching Academy Location - Colina Del Sol Park, 5319 Orange Avenue, San Diego, CA 92115">
-                            </iframe>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📱</div>
-                        <div>
-                            <h3>Social Media</h3>
-                            <p><a href="https://www.instagram.com/ojocoachingacademy/?hl=en" target="_blank" style="color: #00a859 !important; text-decoration: underline !important; cursor: pointer !important;">Instagram: @ojocoachingacademy</a></p>
-                        </div>
-                    </div>
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3356.8!2d-117.08108937977161!3d32.75292813918476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzLCsDQ1JzEwLjUiTiAxMTfCsDA0JzUxLjkiVw!5e0!3m2!1sen!2sus!4v1734892800000!5m2!1sen!2sus"
+                    width="100%" 
+                    height="400" 
+                    style="border:0; border-radius: 15px;" 
+                    allowfullscreen="" 
+                    loading="lazy"
+                    title="Ojo Coaching Academy Location - Colina Del Sol Park, 5319 Orange Avenue, San Diego, CA 92115">
+                </iframe>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">📱</div>
+                <div>
+                    <h3>Social Media</h3>
+                    <p><a href="https://www.instagram.com/ojocoachingacademy/?hl=en" target="_blank" style="color: #00a859 !important; text-decoration: underline !important; cursor: pointer !important;">Instagram: @ojocoachingacademy</a></p>
                 </div>
             </div>
-        </div>
     </section>
 
     <footer class="footer">

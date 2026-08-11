@@ -11,6 +11,18 @@
     --border-color: #e2e8f0;
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+    /* Purple color variables for consistency */
+    --purple-50: #f3f0ff;
+    --purple-600: #9333ea;
+    --purple-700: #7e22ce;
+    --purple-800: #6b21a8;
+    --purple-900: #4B2C6C;
+    /* Gray color variables for consistency */
+    --gray-50: #f9fafb;
+    --gray-200: #e5e7eb;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
 }
 
 * {
@@ -36,8 +48,11 @@ body {
 .navbar {
     background: var(--white);
     box-shadow: var(--shadow);
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
     z-index: 1000;
     padding: 1rem 0;
 }
@@ -47,6 +62,7 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: 2rem;
+    position: relative;
 }
 
 .nav-brand {
@@ -102,6 +118,12 @@ body {
     flex-direction: column;
     cursor: pointer;
     gap: 4px;
+    z-index: 1001;
+    position: relative;
+    background: var(--white);
+    padding: 0.5rem;
+    border-radius: 4px;
+    flex-shrink: 0;
 }
 
 .hamburger span {
@@ -305,8 +327,8 @@ body {
 /* Sections */
 section {
     padding: 5rem 0;
-    padding-top: 7rem; /* Extra padding at top to account for sticky navbar height */
-    scroll-margin-top: 100px; /* Ensure sections are clickable when scrolled to, accounting for sticky navbar */
+    padding-top: 7rem; /* Extra padding at top to account for fixed navbar height */
+    scroll-margin-top: 100px; /* Ensure sections are clickable when scrolled to, accounting for fixed navbar */
     position: relative;
     z-index: 1; /* Ensure sections are above background but below floating elements */
 }
@@ -1648,9 +1670,16 @@ section h2 {
     color: var(--text-dark);
 }
 
-.contact-item p {
-    color: var(--text-light);
-}
+    .contact-item p {
+        color: var(--text-light);
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .contact-item a {
+        white-space: nowrap;
+        display: inline-block;
+    }
 
 /* Fix contact section links */
 .contact-item a,
@@ -1707,6 +1736,10 @@ section h2 {
     color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
     transition: color 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
 }
 
 .footer-links a:hover {
@@ -1742,7 +1775,7 @@ section h2 {
     font-weight: 700;
     font-size: 1.1rem;
     box-shadow: 0 4px 20px rgba(0, 168, 89, 0.4);
-    z-index: 1002;
+    z-index: 1003; /* Above mobile menu (999) to ensure visibility */
     transition: all 0.3s;
     display: flex;
     align-items: center;
@@ -1779,26 +1812,16 @@ section h2 {
 
 /* Floating reviews widget CSS removed - testimonials are now prominently featured on the page */
 
-/* Ensure floating CTA is always visible on desktop */
-@media (min-width: 1400px) {
-    .floating-cta {
-        display: flex !important;
-        z-index: 1002;
-    }
-}
-            z-index: 1002;
-        }
-    }
-}
-
 /* On desktop, stack review button above Book Now button, perfectly aligned in same column */
 @media (min-width: 1400px) {
     /* Book Now button stays centered */
     .floating-cta {
+        display: flex !important;
         bottom: 30px;
         left: 50%;
         right: auto;
         transform: translateX(-50%);
+        z-index: 1003;
     }
     
     .floating-cta:hover {
@@ -2525,19 +2548,36 @@ section h2 {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    
     .hamburger {
         display: flex;
+        z-index: 1001;
+        position: relative;
+        background: var(--white);
+        padding: 0.5rem;
+        border-radius: 4px;
+        flex-shrink: 0;
     }
 
     .nav-menu {
         position: fixed;
-        left: -100%;
+        left: 50%;
         top: 70px;
+        transform: translateX(-50%) translateY(-100%);
         flex-direction: column;
         background: var(--white);
-        width: 100%;
+        width: 90%;
+        max-width: 500px;
         text-align: left;
-        transition: 0.3s;
+        transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
         box-shadow: var(--shadow-lg);
         padding: 0;
         opacity: 0;
@@ -2545,12 +2585,19 @@ section h2 {
         z-index: 999;
         max-height: calc(100vh - 70px);
         overflow-y: auto;
+        box-sizing: border-box;
+        border-radius: 12px;
+        margin-left: 0;
+        margin-right: 0;
     }
 
     .nav-menu.active {
-        left: 0;
+        left: 50%;
         opacity: 1;
         visibility: visible;
+        transform: translateX(-50%) translateY(0);
+        margin-left: 0;
+        margin-right: 0;
     }
 
     /* Mobile Nav Items */
@@ -2558,6 +2605,7 @@ section h2 {
         width: 100%;
         border-bottom: 1px solid var(--border-color);
         margin: 0;
+        box-sizing: border-box;
     }
 
     .nav-menu > li > a {
@@ -2567,6 +2615,9 @@ section h2 {
         font-weight: 500;
         text-decoration: none;
         transition: background-color 0.2s, color 0.2s;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        box-sizing: border-box;
     }
 
     .nav-menu > li > a:hover,
@@ -2584,6 +2635,8 @@ section h2 {
         border-radius: 8px;
         padding: 0.75rem 1.5rem;
         width: calc(100% - 2rem);
+        box-sizing: border-box;
+        word-break: break-word;
     }
 
     .nav-menu > li > a.btn-primary-nav:hover {
@@ -2605,6 +2658,8 @@ section h2 {
         font-weight: 500;
         text-decoration: none;
         transition: background-color 0.2s, color 0.2s;
+        box-sizing: border-box;
+        word-break: break-word;
     }
 
     .nav-dropdown > a:hover,
@@ -2653,6 +2708,9 @@ section h2 {
         font-weight: 400;
         text-decoration: none;
         transition: background-color 0.2s, color 0.2s;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        box-sizing: border-box;
     }
 
     .dropdown-menu a:hover,
@@ -3152,12 +3210,18 @@ section h2 {
     gap: 3rem;
     max-width: 900px;
     margin: 0 auto;
+    width: 100%;
+    min-width: 0;
 }
 
 .location-info, .contact-info {
     background: var(--bg-light);
     padding: 2rem;
     border-radius: 12px;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .location-info h3, .contact-info h3 {
@@ -3184,19 +3248,36 @@ section h2 {
     flex-direction: column;
     gap: 1rem;
     margin: 1.5rem 0;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: visible;
+    box-sizing: border-box;
 }
 
 .contact-method {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem;
+    gap: 0.4rem;
+    padding: 1rem 0.75rem;
     background: white;
     border: 1px solid var(--secondary-color);
     border-radius: 8px;
     text-decoration: none;
     color: var(--secondary-color);
     transition: all 0.3s ease;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: visible;
+}
+
+.contact-method span:last-child {
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+    overflow: visible;
+    font-size: 0.95rem;
 }
 
 .contact-method:hover {
@@ -3662,17 +3743,7 @@ section h2 {
 }
 
 .step-simple .step-number {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, var(--purple-600) 0%, var(--purple-800) 100%);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    box-shadow: 0 4px 12px rgba(75, 44, 108, 0.3);
+    display: none; /* Remove white circles as requested */
 }
 
 .step-simple h3 {
@@ -4185,9 +4256,7 @@ section h2 {
     }
     
     .step-simple .step-number {
-        width: 36px;
-        height: 36px;
-        font-size: 1.1rem;
+        display: none; /* Remove white circles on mobile too */
     }
     
     .step-simple h3 {
@@ -4573,6 +4642,36 @@ section h2 {
     .location-info,
     .contact-info {
         padding: 1.5rem;
+        overflow: hidden;
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .contact-methods {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+    
+    .contact-method {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow: visible;
+        box-sizing: border-box;
+        gap: 0.4rem;
+        padding: 1rem 0.75rem;
+    }
+    
+    .contact-method span:last-child {
+        white-space: nowrap;
+        flex: 1;
+        min-width: 0;
+        overflow: visible;
+        font-size: 0.9rem;
     }
     
     /* Booking Page - Mobile */
@@ -4661,6 +4760,20 @@ section h2 {
     /* Container Padding - Mobile */
     .container {
         padding: 0 1rem;
+        box-sizing: border-box;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    
+    /* Prevent horizontal scrolling on mobile */
+    body {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+    
+    html {
+        overflow-x: hidden;
+        max-width: 100vw;
     }
     
     /* Video Container - Mobile */
@@ -4682,12 +4795,61 @@ section h2 {
         gap: 2rem;
     }
     
+    /* Fix footer email and Instagram handle on mobile */
+    .footer-section {
+        min-width: 0;
+        overflow: hidden;
+    }
+    
+    .footer-links {
+        min-width: 0;
+    }
+    
+    .footer-links a {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        display: block;
+    }
+    
+    /* Fix contact method boxes on mobile */
+    .contact-method {
+        min-width: 0;
+        width: 100%;
+        box-sizing: border-box;
+        overflow: visible;
+    }
+    
+    .contact-method span:last-child {
+        white-space: nowrap;
+        flex: 1;
+        min-width: 0;
+        overflow: visible;
+    }
+    
+    /* Fix Instagram handle in contact section */
+    .contact-item a {
+        white-space: nowrap;
+        display: inline-block;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
     /* Floating CTA - Mobile */
     .floating-cta {
         bottom: 20px;
         right: 20px;
         padding: 1rem 1.5rem;
         font-size: 1rem;
+        z-index: 1003; /* Ensure it's above mobile menu */
+    }
+    
+    /* When mobile menu is active, ensure floating button stays visible */
+    .nav-menu.active ~ .floating-cta,
+    body:has(.nav-menu.active) .floating-cta {
+        z-index: 1003;
     }
     
     /* Prevent zoom on input focus (iOS) */
@@ -4848,7 +5010,6 @@ section h2 {
     .section-subtitle {
         font-size: 1.05rem;
     }
-}
     
     .contact-btn {
         width: 100%;

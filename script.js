@@ -100,10 +100,20 @@ window.addEventListener('resize', function() {
 // Mobile menu toggle
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
+const floatingCTA = document.querySelector('.floating-cta');
 
 if (hamburger) {
     hamburger.addEventListener('click', function() {
         navMenu.classList.toggle('active');
+        
+        // Ensure floating button stays visible when menu is open
+        if (floatingCTA) {
+            if (navMenu.classList.contains('active')) {
+                floatingCTA.style.zIndex = '1003';
+            } else {
+                floatingCTA.style.zIndex = '';
+            }
+        }
     });
 }
 
@@ -118,11 +128,20 @@ document.addEventListener('click', function(e) {
         
         // Close menu if it's a regular link or a dropdown menu item
         if (!isDropdownToggle || isDropdownItem) {
-        navMenu.classList.remove('active');
+            navMenu.classList.remove('active');
             // Close all dropdowns
             document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
                 dropdown.classList.remove('active');
             });
+            // Show all menu items when menu closes
+            const navItems = Array.from(document.querySelectorAll('.nav-menu > li'));
+            navItems.forEach(item => {
+                item.style.display = '';
+            });
+            // Reset floating button z-index when menu closes
+            if (floatingCTA) {
+                floatingCTA.style.zIndex = '';
+            }
         }
     }
 });
@@ -158,6 +177,9 @@ document.addEventListener('click', function(e) {
         dropdownToggle.addEventListener('click', function(e) {
             if (isMobileView()) {
                 e.preventDefault();
+                e.stopPropagation();
+                
+                const isActive = dropdown.classList.contains('active');
                 
                 // Close other dropdowns
                 dropdowns.forEach(otherDropdown => {
@@ -168,6 +190,26 @@ document.addEventListener('click', function(e) {
                 
                 // Toggle current dropdown
                 dropdown.classList.toggle('active');
+                
+                // Collapse other menu items when "More" is opened
+                const navItems = Array.from(document.querySelectorAll('.nav-menu > li'));
+                const bookNowItem = navItems.find(item => item.querySelector('.btn-primary-nav'));
+                
+                if (!isActive) {
+                    // Hide other menu items (except the dropdown and Book Now button)
+                    navItems.forEach(item => {
+                        if (item !== dropdown && item !== bookNowItem) {
+                            item.style.display = 'none';
+                        }
+                    });
+                } else {
+                    // Show other menu items when "More" is closed
+                    navItems.forEach(item => {
+                        if (item !== dropdown && item !== bookNowItem) {
+                            item.style.display = '';
+                        }
+                    });
+                }
             }
             // On desktop, let the link work normally (hover handles dropdown)
         });
